@@ -231,20 +231,21 @@
             </div>
 
             <!-- Summary Output -->
-            <div class="mb-10 border border-white/10 p-5">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-xs text-white/25 uppercase tracking-widest">Summary Output</span>
-                    <button onclick="copyQuick()" class="text-xs text-white/25 hover:text-white/60 transition-colors border border-white/10 px-3 py-1">Copy</button>
+            <details class="mb-10 border border-white/10">
+                <summary class="px-5 py-4 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Summary Output</summary>
+                <div class="px-5 pb-5 border-t border-white/10">
+                    <div class="flex justify-end mt-3 mb-3">
+                        <button onclick="copyQuick()" class="text-xs text-white/25 hover:text-white/60 transition-colors border border-white/10 px-3 py-1">Copy</button>
+                    </div>
+                    <pre id="quickOutput" class="text-sm text-white/70 font-mono leading-relaxed whitespace-pre-wrap"></pre>
                 </div>
-                <pre id="quickOutput" class="text-sm text-white/70 font-mono leading-relaxed whitespace-pre-wrap"></pre>
-            </div>
+            </details>
 
             <!-- Full Memo -->
             <details class="mb-16 border border-white/10">
-                <summary class="px-5 py-4 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Full Memo (상세 버전)</summary>
+                <summary class="px-5 py-4 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Full Memo</summary>
                 <div class="px-5 pb-5 border-t border-white/10">
-                    <div class="flex justify-between items-center my-3">
-                        <span class="text-xs text-white/25">기관/심사역 전달용</span>
+                    <div class="flex justify-end my-3">
                         <button onclick="copyMemo()" class="text-xs text-white/25 hover:text-white/60 transition-colors border border-white/10 px-3 py-1">Copy</button>
                     </div>
                     <pre id="memoOutput" class="text-xs text-white/50 font-mono overflow-x-auto leading-relaxed whitespace-pre-wrap"></pre>
