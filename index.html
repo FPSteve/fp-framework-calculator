@@ -3,284 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Primary Meta Tags -->
     <title>FP Token Valuation - EV/Holder Revenue Framework</title>
     <meta name="title" content="FP Token Valuation - EV/Holder Revenue Framework">
     <meta name="description" content="Four Pillars의 시그니처 토큰 밸류에이션 프레임워크. Protocol revenue 대비 시가총액이 적정한지 CHEAP/FAIR/EXPENSIVE 기준으로 즉시 판단.">
     <meta name="author" content="Four Pillars">
-
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://4pillars.io/tools/ev-holder-revenue">
     <meta property="og:title" content="FP Token Valuation - EV/Holder Revenue Framework">
     <meta property="og:description" content="토큰이 프로토콜 수익 대비 싼지, 비싼지 판단하는 FP 시그니처 프레임워크">
-    <meta property="og:image" content="https://4pillars.io/tools/ev-holder-revenue/preview.png">
-
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://4pillars.io/tools/ev-holder-revenue">
     <meta property="twitter:title" content="FP Token Valuation - EV/Holder Revenue Framework">
-    <meta property="twitter:description" content="토큰이 프로토콜 수익 대비 싼지, 비싼지 판단하는 FP 시그니처 프레임워크">
-    <meta property="twitter:image" content="https://4pillars.io/tools/ev-holder-revenue/preview.png">
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://4pillars.io/favicon.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@200;400;500;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Pretendard', -apple-system, sans-serif; background: #000; color: #fff; }
-        input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+        input[type=number], select { -webkit-appearance: none; background: transparent; color: #fff; }
+        input[type=number]::placeholder { color: rgba(255,255,255,0.15); }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
-        .tabular { font-variant-numeric: tabular-nums; }
-
-        /* ── FP Design System: Black base + Signal accent colors ──── */
-        /* Neutralize all backgrounds to black */
-        [class*="bg-gray-"], [class*="bg-white"], [class*="bg-blue-"],
-        [class*="bg-purple-"], [class*="bg-indigo-"] {
-            background-color: #000 !important;
-        }
-        .bg-gray-100, .bg-gray-50 { background-color: rgba(255,255,255,0.03) !important; }
-        .bg-blue-600, .bg-blue-700, .bg-purple-600, .bg-purple-700,
-        .bg-purple-500, .bg-gray-500, .bg-gray-600, .bg-gray-700 { background-color: rgba(255,255,255,0.08) !important; }
-        .bg-gray-900 { background-color: #fff !important; color: #000 !important; }
-
-        /* Band signal backgrounds — subtle tint, not flat black */
-        .bg-green-50, .bg-green-100 { background-color: rgba(16,185,129,0.06) !important; }
-        .bg-yellow-50, .bg-yellow-100 { background-color: rgba(245,158,11,0.06) !important; }
-        .bg-orange-50, .bg-orange-100 { background-color: rgba(249,115,22,0.07) !important; }
-        .bg-red-50, .bg-red-100 { background-color: rgba(239,68,68,0.06) !important; }
-
-        /* Text: grays → white opacity */
-        [class*="text-gray-9"], [class*="text-gray-8"], [class*="text-gray-7"] { color: rgba(255,255,255,0.88) !important; }
-        [class*="text-gray-6"], [class*="text-gray-5"] { color: rgba(255,255,255,0.45) !important; }
-        [class*="text-gray-4"], [class*="text-gray-3"] { color: rgba(255,255,255,0.28) !important; }
-        [class*="text-blue-"], [class*="text-indigo-"] { color: rgba(255,255,255,0.55) !important; }
-        [class*="text-purple-"] { color: rgba(255,255,255,0.55) !important; }
-        .text-white { color: #fff !important; }
-
-        /* Band signal text colors — let them show through */
-        .text-green-600, .text-green-700 { color: #34d399 !important; }
-        .text-green-800, .text-green-900 { color: #6ee7b7 !important; }
-        .text-yellow-600, .text-yellow-700 { color: #fbbf24 !important; }
-        .text-yellow-800, .text-yellow-900 { color: #fde68a !important; }
-        .text-orange-600, .text-orange-700 { color: #fb923c !important; }
-        .text-red-600, .text-red-700 { color: #f87171 !important; }
-
-        /* Borders — neutralize most, keep signal borders */
-        [class*="border-gray-"], [class*="border-blue-"], [class*="border-purple-"] { border-color: rgba(255,255,255,0.1) !important; }
-        .border-green-400, .border-green-500 { border-color: rgba(52,211,153,0.5) !important; }
-        .border-yellow-400, .border-yellow-500 { border-color: rgba(251,191,36,0.5) !important; }
-        .border-orange-400, .border-orange-500 { border-color: rgba(251,146,60,0.5) !important; }
-        .border-red-400, .border-red-500 { border-color: rgba(248,113,113,0.5) !important; }
-        .border-l-4 { border-left-width: 2px !important; }
-
-        [class*="rounded"] { border-radius: 0 !important; }
-        [class*="shadow"] { box-shadow: none !important; }
-
-        input, select, textarea {
-            background: rgba(255,255,255,0.03) !important;
-            color: #fff !important;
-            border: 1px solid rgba(255,255,255,0.12) !important;
-        }
-        input::placeholder { color: rgba(255,255,255,0.18) !important; }
-        input:focus, select:focus { outline: none !important; border-color: rgba(255,255,255,0.32) !important; box-shadow: none !important; }
-        option { background: #0a0a0a; color: #fff; }
-
-        a { color: rgba(255,255,255,0.45) !important; }
-        a:hover { color: rgba(255,255,255,0.88) !important; }
-        summary { color: rgba(255,255,255,0.5) !important; }
-        pre { background: rgba(255,255,255,0.03) !important; color: rgba(255,255,255,0.65) !important; border-color: rgba(255,255,255,0.07) !important; }
-        tr:hover td { background: rgba(255,255,255,0.02) !important; }
-        [class*="hover:bg-"]:hover { background-color: rgba(255,255,255,0.03) !important; }
-
-        /* ── Primary CTA button ────────────────────── */
-        button.bg-blue-600, button[onclick="calculateLive()"] {
-            background-color: #fff !important;
-            color: #000 !important;
-            font-weight: 500 !important;
-            letter-spacing: 0.05em !important;
-        }
-        button.bg-blue-600:hover, button[onclick="calculateLive()"]:hover {
-            background-color: rgba(255,255,255,0.9) !important;
-        }
-
-        /* ── Judgment surface: 8rem, weight 200 ──── */
-        #primaryMetric .text-6xl, #primaryMetric .text-7xl, #primaryMetric .text-8xl {
-            font-size: 8rem !important;
-            font-weight: 200 !important;
-            line-height: 1 !important;
-            letter-spacing: -0.04em !important;
-        }
-        /* Band badge in primary metric — show color */
-        #primaryMetric [class*="rounded-full"] {
-            font-size: 0.72rem !important; font-weight: 500 !important;
-            letter-spacing: 0.18em !important; text-transform: uppercase !important;
-            padding: 0.35rem 1rem !important;
-        }
-        #primaryMetric { border: none !important; padding: 0 !important; }
-
-        /* ── Comparison table band badges ─── */
-        #comparisonTable [class*="rounded-full"] {
-            font-size: 0.65rem !important;
-            letter-spacing: 0.12em !important;
-            font-weight: 500 !important;
-        }
-
-        /* ── Typography ─────────────── */
-        h2 { font-weight: 300 !important; letter-spacing: -0.01em; }
-        h3 { font-weight: 300 !important; }
-        .font-semibold { font-weight: 400 !important; }
-
-        #modeIndicator { color: rgba(255,255,255,0.3) !important; background: transparent !important; }
-        #shareBtn { background: rgba(255,255,255,0.06) !important; color: rgba(255,255,255,0.6) !important; }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        .judgment-number { font-size: 8rem; font-weight: 200; line-height: 1; letter-spacing: -0.04em; }
+        @media (max-width: 768px) { .judgment-number { font-size: 5rem; } }
+        ::selection { background: rgba(255,255,255,0.15); }
+        select option { background: #111; color: #fff; }
     </style>
 </head>
-<body class="bg-black text-white min-h-screen py-12">
-    <div class="max-w-4xl mx-auto px-8">
+<body class="min-h-screen py-16">
+    <div class="max-w-3xl mx-auto px-6">
+
         <!-- Header -->
-        <div class="border-b border-white/10 pb-12 mb-16">
-            <div class="flex items-start justify-between mb-4">
-                <div>
-                    <div class="text-xs font-medium uppercase tracking-[0.25em] text-white/30 mb-3">Four Pillars Research</div>
-                    <h1 class="text-3xl md:text-4xl font-extralight text-white tracking-tight">Token Valuation</h1>
+        <div class="mb-20 pb-10 border-b border-white/10">
+            <div class="flex items-start justify-between mb-6">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white text-black font-bold text-sm px-2 py-1 tracking-widest">FP</div>
+                    <span class="text-white/20 text-xs font-mono uppercase tracking-widest">v1.0</span>
                 </div>
-                <span class="text-[11px] text-white/20 font-mono mt-1">v1.0</span>
+                <a href="https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework" target="_blank"
+                   class="text-white/30 hover:text-white/60 text-xs transition-colors">
+                    Framework Reference →
+                </a>
             </div>
-            <p class="text-white/40 text-sm mb-4">EV / Holder Revenue Framework</p>
-            <a href="https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework" target="_blank"
-               class="text-xs text-white/30 hover:text-white/60 transition-colors">
-                Framework Reference →
-            </a>
+            <h1 class="text-3xl font-light text-white mb-3 tracking-tight">Token Valuation</h1>
+            <p class="text-white/40 text-sm">EV/Holder Revenue Framework — Four Pillars Research</p>
         </div>
 
-        <!-- Onboarding: compact single line -->
-        <div class="mb-16">
-            <p class="text-xs text-white/25 tracking-wider">CHEAP &lt;15x &nbsp;·&nbsp; FAIR 15–30x &nbsp;·&nbsp; EXPENSIVE &gt;30x</p>
+        <!-- Onboarding -->
+        <div class="border-l border-white/20 pl-6 mb-20">
+            <div class="space-y-3 text-sm text-white/50 leading-relaxed">
+                <p><span class="text-white/80">What this is</span> — 토큰이 프로토콜 수익 대비 싼지, 비싼지 판단하는 Four Pillars의 시그니처 밸류에이션 프레임워크</p>
+                <p><span class="text-white/80">Who it's for</span> — 토큰 투자/분석/운영 담당자. 홀더 수익이 얼마나 발생하는지, 그에 비해 시가총액이 적정한지 빠르게 검증</p>
+                <p><span class="text-white/80">Bands</span> — CHEAP (&lt;15x) deeper diligence candidate / FAIR (15–30x) market-range / EXPENSIVE (&gt;30x) premium requires justification</p>
+            </div>
         </div>
 
-        <!-- Calculator Inputs -->
-        <div class="border-b border-white/10 pb-16 mb-16">
-            <div class="flex justify-between items-baseline mb-8">
-                <h2 class="text-xs font-medium uppercase tracking-[0.25em] text-white/40">Calculate EV/Holder Revenue</h2>
-                <select id="fpCaseSelector" onchange="loadFromDropdown()" class="text-xs text-white/30 bg-transparent border-none cursor-pointer hover:text-white/60 transition-colors">
-                    <option value="" class="bg-black">Load from FP Case</option>
-                    <option value="HYPE" class="bg-black">HYPE (9.4x)</option>
-                    <option value="JUP" class="bg-black">JUP (12.0x)</option>
-                    <option value="MAPLE" class="bg-black">MAPLE (57.7x)</option>
+        <!-- Case Library -->
+        <div class="mb-20">
+            <div class="flex items-baseline justify-between mb-8">
+                <h2 class="text-xs font-medium text-white/50 uppercase tracking-widest">FP Article Case Library</h2>
+                <span class="text-xs text-white/20 font-mono">4 protocols · Snapshot: Mar 02, 2026</span>
+            </div>
+            <p class="text-xs text-white/25 mb-6">Click to load FP article snapshot data. Not live market data.</p>
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="border-b border-white/10">
+                        <th class="pb-3 text-left text-xs font-medium text-white/25 uppercase tracking-widest">Protocol</th>
+                        <th class="pb-3 text-right text-xs font-medium text-white/25 uppercase tracking-widest">EV/HR</th>
+                        <th class="pb-3 text-right text-xs font-medium text-white/25 uppercase tracking-widest">Accrual</th>
+                        <th class="pb-3 text-center text-xs font-medium text-white/25 uppercase tracking-widest">Band</th>
+                        <th class="pb-3"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium text-white">PUMP</div>
+                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
+                            <div class="text-xs text-white/35 mt-1">Clean waterfall → Low multiple, dilution from token costs</div>
+                        </td>
+                        <td class="py-4 text-right font-light text-white text-lg">3.3x</td>
+                        <td class="py-4 text-right text-white/40 text-sm">100%</td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/20 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-right"><button onclick="loadExample('PUMP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium text-white">HYPE</div>
+                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
+                            <div class="text-xs text-white/35 mt-1">Direct burn mechanism → 100% accrual → Attractive</div>
+                        </td>
+                        <td class="py-4 text-right font-light text-white text-lg">9.4x</td>
+                        <td class="py-4 text-right text-white/40 text-sm">100%</td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/20 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-right"><button onclick="loadExample('HYPE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium text-white">JUP</div>
+                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
+                            <div class="text-xs text-white/35 mt-1">5% leakage → Still high accrual → Market-range</div>
+                        </td>
+                        <td class="py-4 text-right font-light text-white/60 text-lg">12.0x</td>
+                        <td class="py-4 text-right text-white/40 text-sm">95%</td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/10 text-white/50 text-xs tracking-wider">FAIR</span></td>
+                        <td class="py-4 text-right"><button onclick="loadExample('JUP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium text-white/60">MAPLE</div>
+                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
+                            <div class="text-xs text-white/35 mt-1">75% waterfall loss → Low holder revenue → High multiple</div>
+                        </td>
+                        <td class="py-4 text-right font-light text-white/35 text-lg">57.7x</td>
+                        <td class="py-4 text-right text-white/40 text-sm">25%</td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/5 text-white/25 text-xs tracking-wider">EXPENSIVE</span></td>
+                        <td class="py-4 text-right"><button onclick="loadExample('MAPLE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-xs text-white/15 mt-6">
+                ✓ FP Article Case · As of Mar 02, 2026 ·
+                <a href="https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework" target="_blank" class="hover:text-white/40 transition-colors">View source article →</a>
+                ·
+                <a href="https://docs.google.com/spreadsheets/d/1PzqSTo0F3-yUqvo9AW8eoo0gvuLJVYzRD8N9pCmpxrI/edit?usp=sharing" target="_blank" class="hover:text-white/40 transition-colors">View attached sheet →</a>
+            </p>
+        </div>
+
+        <!-- Results — Judgment Surface -->
+        <div id="results" class="hidden mb-20">
+            <div class="flex items-center justify-between mb-12">
+                <div id="modeIndicator" class="inline-flex items-center px-2 py-0.5 border border-white/10 text-[11px] font-medium uppercase tracking-[0.18em] text-white/25">
+                    LIVE CALCULATION
+                </div>
+                <button id="shareBtn" onclick="shareResult()" style="display: none;" class="text-xs text-white/25 hover:text-white/60 transition-colors">
+                    Share Link →
+                </button>
+            </div>
+
+            <!-- Primary Judgment -->
+            <div id="primaryMetric" class="pb-16 mb-16 border-b border-white/10"></div>
+
+            <!-- FP Universe -->
+            <div class="mb-16 pb-16 border-b border-white/10">
+                <h3 class="text-xs font-medium text-white/25 uppercase tracking-widest mb-8">vs FP Universe</h3>
+                <table class="w-full text-xs">
+                    <thead class="border-b border-white/10">
+                        <tr>
+                            <th class="pb-3 text-left font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('name')">Protocol <span class="text-white/15">↕</span></th>
+                            <th class="pb-3 text-right font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('evhr')">EV/HR <span class="text-white/15">↕</span></th>
+                            <th class="pb-3 text-center font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('band')">Band <span class="text-white/15">↕</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonTable"></tbody>
+                </table>
+                <p class="text-xs text-white/15 mt-4">클릭으로 정렬</p>
+            </div>
+
+            <!-- One-line -->
+            <div id="fpOneLine" class="border-l border-white/20 pl-5 py-2 mb-16 text-sm text-white/60 leading-relaxed"></div>
+
+            <!-- Provenance -->
+            <details class="mb-12 border-b border-white/10 pb-12">
+                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest py-3">Why this output? (Provenance)</summary>
+                <div class="mt-6 space-y-5 text-xs">
+                    <div>
+                        <h4 class="text-white/30 uppercase tracking-widest mb-2">Data Source</h4>
+                        <div id="provenanceSource" class="text-white/50 font-mono whitespace-pre-wrap"></div>
+                    </div>
+                    <div>
+                        <h4 class="text-white/30 uppercase tracking-widest mb-2">Calculation Steps</h4>
+                        <div id="calculationSteps" class="space-y-1 text-white/50"></div>
+                    </div>
+                    <div>
+                        <h4 class="text-white/30 uppercase tracking-widest mb-2">Archetype Classification</h4>
+                        <div id="archetypeLogic" class="text-white/50"></div>
+                    </div>
+                    <div>
+                        <h4 class="text-white/30 uppercase tracking-widest mb-2">Closest Match Method</h4>
+                        <p class="text-white/50">Weighted distance: |EV/HR diff|/10 + |Accrual diff|/100</p>
+                        <div id="matchDistance" class="text-white/50 font-mono mt-1"></div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- What to Check Next -->
+            <div id="nextActions" class="border-l border-white/10 pl-5 mb-16">
+                <h3 class="text-xs text-white/30 uppercase tracking-widest mb-5">What to check next</h3>
+                <ul id="actionBullets" class="space-y-3 text-sm text-white/45"></ul>
+            </div>
+
+            <!-- Summary Output -->
+            <div class="mb-10 border border-white/10 p-5">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs text-white/25 uppercase tracking-widest">Summary Output</span>
+                    <button onclick="copyQuick()" class="text-xs text-white/25 hover:text-white/60 transition-colors border border-white/10 px-3 py-1">Copy</button>
+                </div>
+                <pre id="quickOutput" class="text-sm text-white/70 font-mono leading-relaxed whitespace-pre-wrap"></pre>
+            </div>
+
+            <!-- Full Memo -->
+            <details class="mb-16 border border-white/10">
+                <summary class="px-5 py-4 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Full Memo (상세 버전)</summary>
+                <div class="px-5 pb-5 border-t border-white/10">
+                    <div class="flex justify-between items-center my-3">
+                        <span class="text-xs text-white/25">기관/심사역 전달용</span>
+                        <button onclick="copyMemo()" class="text-xs text-white/25 hover:text-white/60 transition-colors border border-white/10 px-3 py-1">Copy</button>
+                    </div>
+                    <pre id="memoOutput" class="text-xs text-white/50 font-mono overflow-x-auto leading-relaxed whitespace-pre-wrap"></pre>
+                </div>
+            </details>
+
+            <!-- FP Interpretation -->
+            <div class="border-l border-white/10 pl-5 mb-16">
+                <h3 class="text-xs text-white/25 uppercase tracking-widest mb-4">FP 프레임워크 상세 해석</h3>
+                <div id="fpInterpretation" class="text-sm text-white/45 leading-relaxed"></div>
+            </div>
+
+            <!-- Secondary Metrics -->
+            <details class="mb-16 border-b border-white/10 pb-10">
+                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest py-3">세부 지표 보기</summary>
+                <div class="mt-8 space-y-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <div>
+                            <h3 class="text-xs text-white/25 uppercase tracking-widest mb-2">Enterprise Value</h3>
+                            <p id="ev" class="text-xl font-light text-white"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-xs text-white/25 uppercase tracking-widest mb-2">Holder Revenue</h3>
+                            <p id="holderRevenue" class="text-xl font-light text-white"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-xs text-white/25 uppercase tracking-widest mb-2">Accrual Discount</h3>
+                            <p id="accrualDiscount" class="text-xl font-light text-white"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-xs text-white/25 uppercase tracking-widest mb-2">Pass-Through</h3>
+                            <p id="passThrough" class="text-xl font-light text-white"></p>
+                        </div>
+                    </div>
+                    <div class="border-t border-white/10 pt-6">
+                        <h3 class="text-xs text-white/25 uppercase tracking-widest mb-4">Revenue Waterfall</h3>
+                        <div id="waterfall" class="space-y-2 text-sm text-white/45 font-mono"></div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- History -->
+            <div id="historySection" style="display: none;" class="mb-16 border-b border-white/10 pb-10">
+                <h3 class="text-xs text-white/25 uppercase tracking-widest mb-6">History — Then vs Now</h3>
+                <div id="historyContent" class="space-y-3 text-xs font-mono"></div>
+                <button onclick="clearHistory()" class="mt-4 text-xs text-white/15 hover:text-white/40 transition-colors">Clear history</button>
+            </div>
+        </div>
+
+        <!-- Calculator -->
+        <div class="mb-20 pb-20 border-b border-white/10">
+            <div class="flex justify-between items-baseline mb-10">
+                <h2 class="text-xs font-medium text-white/50 uppercase tracking-widest">Calculate EV/Holder Revenue</h2>
+                <select id="fpCaseSelector" onchange="loadFromDropdown()" class="text-xs border border-white/15 px-2 py-1 text-white/35 focus:outline-none cursor-pointer">
+                    <option value="">Load from FP Case</option>
+                    <option value="HYPE">HYPE (9.4x, CHEAP)</option>
+                    <option value="JUP">JUP (12.0x, FAIR)</option>
+                    <option value="MAPLE">MAPLE (57.7x, EXPENSIVE)</option>
                 </select>
             </div>
-            <p class="text-xs text-white/25 mb-6">Market Cap, Annual Fees 입력 필수 · Accrual 기본값 100%</p>
+            <p class="text-xs text-white/20 mb-10">Required: Market Cap, Annual Fees (Accrual defaults to 100%)</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
                 <div>
-                    <label class="block text-xs text-white/30 uppercase tracking-wider mb-3">
-                        Market Cap (USD)
-                    </label>
-                    <input type="number" id="marketCap" class="w-full bg-transparent border-b border-white/15 pb-3 text-white text-sm focus:outline-none focus:border-white/50 transition-colors placeholder-white/15" placeholder="e.g. 3,620,000,000" step="1000000">
+                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Market Cap (USD) <span class="text-white/20">*</span></label>
+                    <input type="number" id="marketCap" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 3620000000" step="1000000">
                 </div>
                 <div>
-                    <label class="block text-xs text-white/30 uppercase tracking-wider mb-3">
-                        Annual Gross Fees (USD)
-                    </label>
-                    <input type="number" id="grossFees" class="w-full bg-transparent border-b border-white/15 pb-3 text-white text-sm focus:outline-none focus:border-white/50 transition-colors placeholder-white/15" placeholder="e.g. 899,500,000" step="1000000">
+                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Annual Gross Fees (USD) <span class="text-white/20">*</span></label>
+                    <input type="number" id="grossFees" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 899500000" step="1000000">
                 </div>
             </div>
 
-            <div class="flex gap-4 mb-6">
-                <button onclick="calculateLive()" class="fp-accent-bg text-white px-8 py-3 text-sm font-medium transition-opacity hover:opacity-90">
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button onclick="calculateLive()" class="bg-white text-black py-3.5 text-sm font-medium tracking-wide hover:bg-white/90 transition-colors">
                     Calculate EV/HR
                 </button>
-                <button onclick="saveScenario()" id="saveBtn" class="border border-white/20 text-white/40 px-6 py-3 text-sm hover:border-white/50 hover:text-white transition-colors disabled:opacity-30" disabled>
+                <button onclick="saveScenario()" id="saveBtn" class="border border-white/20 text-white/40 py-3.5 text-sm tracking-wide hover:border-white/40 hover:text-white/70 transition-colors disabled:opacity-25 disabled:cursor-not-allowed" disabled>
                     Save Scenario
                 </button>
             </div>
 
-            <p class="text-xs text-white/20 mb-6">
-                Take Rate 100% · Accrual 100% 기본값 적용 (Advanced에서 수정 가능)
-            </p>
+            <p class="text-xs text-white/15 mb-8">Take Rate 100% · Accrual 100% 기본값 적용 (Advanced에서 수정 가능)</p>
             <input type="hidden" id="accrualRatio" value="100">
 
             <!-- Scenario Comparison -->
-            <div id="scenarioComparison" class="hidden mt-6 border-t border-white/10 pt-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30">Scenario Comparison</h3>
+            <div id="scenarioComparison" class="hidden mt-8 border border-white/10 p-5">
+                <div class="flex justify-between items-center mb-5">
+                    <h3 class="text-xs text-white/35 uppercase tracking-widest">Scenario Comparison</h3>
                     <div class="flex gap-3">
-                        <button onclick="exportScenariosReadable()" class="text-xs text-white/30 hover:text-white/60 transition-colors">Share</button>
-                        <button onclick="exportScenarios()" class="text-xs text-white/30 hover:text-white/60 transition-colors">JSON</button>
-                        <button onclick="clearScenarios()" class="text-xs text-white/30 hover:text-white/60 transition-colors">Clear</button>
+                        <button onclick="exportScenariosReadable()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Share</button>
+                        <button onclick="exportScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">JSON</button>
+                        <button onclick="clearScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Clear</button>
                     </div>
                 </div>
-                <div id="scenarioTable" class="overflow-x-auto text-white/50"></div>
+                <div id="scenarioTable" class="overflow-x-auto"></div>
+                <p class="text-xs text-white/15 mt-3">Export로 스냅샷 저장 가능</p>
             </div>
 
-            <!-- Advanced inputs (collapsed) -->
-            <details>
-                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-[0.15em] pt-4">
-                    Advanced
-                </summary>
-                <div class="mt-6 space-y-6 border-t border-white/10 pt-6">
+            <!-- Advanced -->
+            <details class="mt-10 border-t border-white/10 pt-8">
+                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Advanced Settings</summary>
+                <div class="mt-8 space-y-8">
                     <div>
-                        <h3 class="text-xs text-white/25 uppercase tracking-wider mb-4">시장 데이터</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div>
-                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Circulating Supply</label>
-                                <input type="number" id="circulatingSupply" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="1,000,000,000">
-                            </div>
+                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">시장 데이터</h3>
+                        <div>
+                            <label class="block text-xs text-white/25 mb-2">Circulating Supply</label>
+                            <input type="number" id="circulatingSupply" class="w-full md:w-1/2 pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="1,000,000,000">
                         </div>
                     </div>
-
                     <div>
-                        <h3 class="text-xs text-white/25 uppercase tracking-wider mb-4">Treasury</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Treasury</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Stablecoin Holdings (USD)</label>
-                                <input type="number" id="stablecoins" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="0">
+                                <label class="block text-xs text-white/25 mb-2">Stablecoin Holdings (USD)</label>
+                                <input type="number" id="stablecoins" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Native Token Holdings (USD)</label>
-                                <input type="number" id="nativeTokens" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="0">
+                                <label class="block text-xs text-white/25 mb-2">Native Token Holdings (USD)</label>
+                                <input type="number" id="nativeTokens" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Native Token Haircut (%)</label>
-                                <input type="number" id="haircut" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="50">
+                                <label class="block text-xs text-white/25 mb-2">Native Token Haircut (%)</label>
+                                <input type="number" id="haircut" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="50">
                             </div>
                             <div>
-                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Claim Discount</label>
-                                <select id="claimDiscount" class="w-full bg-black text-white/60 border-b border-white/10 pb-2 text-sm focus:outline-none focus:border-white/30 transition-colors">
-                                    <option value="0" class="bg-black">0% - Automated</option>
-                                    <option value="25" class="bg-black">25% - Active DAO</option>
-                                    <option value="50" class="bg-black">50% - Paper only</option>
-                                    <option value="75" class="bg-black">75% - Weak gov</option>
-                                    <option value="100" class="bg-black">100% - Sealed</option>
+                                <label class="block text-xs text-white/25 mb-2">Claim Discount (%)</label>
+                                <select id="claimDiscount" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors">
+                                    <option value="0">0% - Automated</option>
+                                    <option value="25">25% - Active DAO</option>
+                                    <option value="50">50% - Paper only</option>
+                                    <option value="75">75% - Weak gov</option>
+                                    <option value="100">100% - Sealed</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-
                     <div>
-                        <h3 class="text-xs text-white/25 uppercase tracking-wider mb-4">Revenue</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div>
-                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Take Rate (%)</label>
-                                <input type="number" id="takeRate" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="89.6">
-                            </div>
+                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Revenue</h3>
+                        <div>
+                            <label class="block text-xs text-white/25 mb-2">Revenue Take Rate (%)</label>
+                            <input type="number" id="takeRate" class="w-full md:w-1/2 pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="89.6">
                         </div>
                     </div>
-
                     <div>
-                        <h3 class="text-xs text-white/25 uppercase tracking-wider mb-4">Token Costs</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Token Costs</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Team Compensation (USD/year)</label>
-                                <input type="number" id="teamComp" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="0">
+                                <label class="block text-xs text-white/25 mb-2">Team Compensation (USD/year)</label>
+                                <input type="number" id="teamComp" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Operating Token Costs (USD/year)</label>
-                                <input type="number" id="operatingCosts" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="0">
+                                <label class="block text-xs text-white/25 mb-2">Operating Token Costs (USD/year)</label>
+                                <input type="number" id="operatingCosts" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
                             </div>
                         </div>
                     </div>
@@ -288,431 +372,137 @@
             </details>
         </div>
 
-        <!-- Results (MOVED ABOVE INPUTS - mobile responsive) -->
-        <div id="results" class="border-b border-white/10 pb-16 mb-16">
-            <div class="flex items-start justify-between gap-3 mb-8">
-                <div>
-                    <h2 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30">Framework Output</h2>
-                    <div id="modeIndicator" class="mt-2 inline-flex items-center text-[11px] uppercase tracking-[0.18em] text-white/25">
-                        LIVE CALCULATION
-                    </div>
-                </div>
-                <button id="shareBtn" onclick="shareResult()" style="display: none;" class="text-xs text-white/20 hover:text-white/50 transition-colors">
-                    Share
-                </button>
-            </div>
-
-            <!-- Main Result Layout: Metric + Comparison side by side (stacks on mobile) -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
-                <!-- Primary Metric - EV/HR as main metric -->
-                <div id="primaryMetric">
-                    <div id="primaryMetricPlaceholder">
-                        <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/20 mb-6">Raw Multiple</h3>
-                        <div style="font-size:8rem;font-weight:200;line-height:1;letter-spacing:-0.04em;color:rgba(255,255,255,0.08)">—.—x</div>
-                        <div class="mt-4 text-xs text-white/15 uppercase tracking-[0.2em]">입력 후 Calculate</div>
-                    </div>
-                </div>
-
-                <!-- FP Band Comparison - right next to main result -->
-                <div>
-                    <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30 mb-4">vs FP Universe</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-xs">
-                            <thead>
-                                <tr class="border-b border-white/10">
-                                    <th class="pb-2 text-left text-xs font-normal text-white/25 cursor-pointer" >
-                                        Protocol
-                                    </th>
-                                    <th class="pb-2 text-right text-xs font-normal text-white/25 cursor-pointer" >
-                                        EV/HR
-                                    </th>
-                                    <th class="pb-2 text-center text-xs font-normal text-white/25 cursor-pointer" >
-                                        Band
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="comparisonTable">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FP One-line Interpretation (directly below band) -->
-            <div id="fpOneLine" class="border-l border-white/15 pl-6 mb-8 text-sm text-white/55 leading-relaxed"></div>
-
-            <!-- Provenance Drawer - Why this output? -->
-            <details class="border-t border-white/10 mb-8">
-                <summary class="py-3 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-[0.15em]">
-                    Provenance & Calculation Steps
-                </summary>
-                <div class="pt-4 space-y-4 text-xs">
-                    <div>
-                        <h4 class="text-white/30 uppercase tracking-wider mb-2">Data Source</h4>
-                        <div id="provenanceSource" class="text-white/50 font-mono"></div>
-                    </div>
-                    <div>
-                        <h4 class="text-white/30 uppercase tracking-wider mb-2">Calculation Steps</h4>
-                        <div id="calculationSteps" class="space-y-1 text-white/50"></div>
-                    </div>
-                    <div>
-                        <h4 class="text-white/30 uppercase tracking-wider mb-2">Archetype</h4>
-                        <div id="archetypeLogic" class="text-white/50"></div>
-                    </div>
-                    <div>
-                        <h4 class="text-white/30 uppercase tracking-wider mb-2">Closest Match</h4>
-                        <p class="text-white/30">Weighted distance: |EV/HR diff|/10 + |Accrual diff|/100</p>
-                        <div id="matchDistance" class="text-white/50 font-mono"></div>
-                    </div>
-                </div>
-            </details>
-
-            <!-- Secondary Metrics (collapsed by default) -->
-            <details class="border-t border-white/10 mb-8">
-                <summary class="py-3 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-[0.15em]">
-                    세부 지표 보기
-                </summary>
-                <div class="pt-6 space-y-6">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <div>
-                            <h3 class="text-xs text-white/30 uppercase tracking-wider mb-2">Enterprise Value</h3>
-                            <p id="ev" class="text-xl font-light text-white tabular"></p>
-                        </div>
-                        <div>
-                            <h3 class="text-xs text-white/30 uppercase tracking-wider mb-2">Holder Revenue</h3>
-                            <p id="holderRevenue" class="text-xl font-light text-white tabular"></p>
-                        </div>
-                        <div>
-                            <h3 class="text-xs text-white/30 uppercase tracking-wider mb-2">Accrual Discount</h3>
-                            <p id="accrualDiscount" class="text-xl font-light text-white tabular"></p>
-                        </div>
-                        <div>
-                            <h3 class="text-xs text-white/30 uppercase tracking-wider mb-2">Pass-Through</h3>
-                            <p id="passThrough" class="text-xl font-light text-white tabular"></p>
-                        </div>
-                    </div>
-                    <div class="border-t border-white/10 pt-4">
-                        <h3 class="text-xs text-white/30 uppercase tracking-wider mb-3">Revenue Waterfall</h3>
-                        <div id="waterfall" class="space-y-1 text-sm text-white/50"></div>
-                    </div>
-                </div>
-            </details>
-
-            <!-- History Comparison - Then vs Now -->
-            <div id="historySection" style="display: none;" class="border-t border-white/10 pt-6 mb-8">
-                <h3 class="text-xs text-white/30 uppercase tracking-wider mb-4">History — Then vs Now</h3>
-                <div id="historyContent" class="space-y-2 text-xs text-white/50"></div>
-                <button onclick="clearHistory()" class="mt-3 text-xs text-white/25 hover:text-white/50 transition-colors">Clear history</button>
-            </div>
+        <!-- Formula -->
+        <div class="mb-20 text-center text-xs text-white/20 font-mono tracking-wider">
+            EV/HR = (Market Cap − Treasury) / (Fees × Accrual)
         </div>
 
-        <!-- FP Article Case Library -->
-        <div class="border-b border-white/10 pb-12 mb-16">
-            <div class="flex items-baseline justify-between mb-8">
-                <h2 class="text-sm font-normal uppercase tracking-[0.2em] text-white/50">FP Article Case Library</h2>
-                <span class="text-xs text-white/25">4 protocols · Mar 02, 2026</span>
-            </div>
-
-            <div class="space-y-0">
-                <div class="border-t border-white/8 py-5 flex items-baseline justify-between group cursor-pointer hover:opacity-70 transition-opacity" onclick="loadExample('PUMP')">
-                    <div class="flex-1">
-                        <span class="text-base font-light text-white tracking-tight">PUMP</span>
-                        <span class="ml-4 text-xs text-white/25">100% accrual · token cost dilution → low multiple</span>
-                    </div>
-                    <div class="text-right ml-8 flex-shrink-0">
-                        <span class="text-xl font-extralight text-white tabular">3.3x</span>
-                        <span class="ml-3 text-xs text-white/35 uppercase tracking-[0.15em]">CHEAP</span>
-                    </div>
-                </div>
-                <div class="border-t border-white/8 py-5 flex items-baseline justify-between group cursor-pointer hover:opacity-70 transition-opacity" onclick="loadExample('HYPE')">
-                    <div class="flex-1">
-                        <span class="text-base font-light text-white tracking-tight">HYPE</span>
-                        <span class="ml-4 text-xs text-white/25">direct burn → 100% accrual · clean waterfall</span>
-                    </div>
-                    <div class="text-right ml-8 flex-shrink-0">
-                        <span class="text-xl font-extralight text-white tabular">9.4x</span>
-                        <span class="ml-3 text-xs text-white/35 uppercase tracking-[0.15em]">CHEAP</span>
-                    </div>
-                </div>
-                <div class="border-t border-white/8 py-5 flex items-baseline justify-between group cursor-pointer hover:opacity-70 transition-opacity" onclick="loadExample('JUP')">
-                    <div class="flex-1">
-                        <span class="text-base font-light text-white/70 tracking-tight">JUP</span>
-                        <span class="ml-4 text-xs text-white/20">5% leakage → 95% accrual · market-range</span>
-                    </div>
-                    <div class="text-right ml-8 flex-shrink-0">
-                        <span class="text-xl font-extralight text-white/60 tabular">12.0x</span>
-                        <span class="ml-3 text-xs text-white/25 uppercase tracking-[0.15em]">FAIR</span>
-                    </div>
-                </div>
-                <div class="border-t border-white/8 border-b border-white/8 py-5 flex items-baseline justify-between group cursor-pointer hover:opacity-70 transition-opacity" onclick="loadExample('MAPLE')">
-                    <div class="flex-1">
-                        <span class="text-base font-light text-white/40 tracking-tight">MAPLE</span>
-                        <span class="ml-4 text-xs text-white/15">75% waterfall loss → 25% accrual · high multiple</span>
-                    </div>
-                    <div class="text-right ml-8 flex-shrink-0">
-                        <span class="text-xl font-extralight text-white/30 tabular">57.7x</span>
-                        <span class="ml-3 text-xs text-white/20 uppercase tracking-[0.15em]">EXPENSIVE</span>
-                    </div>
-                </div>
-            </div>
-
-            <p class="text-xs text-white/20 mt-6">
-                FP Article Case · As of Mar 02, 2026 ·
-                <a href="https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework" target="_blank" class="hover:text-white/50 transition-colors">Source article →</a>
-                ·
-                <a href="https://docs.google.com/spreadsheets/d/1PzqSTo0F3-yUqvo9AW8eoo0gvuLJVYzRD8N9pCmpxrI/edit?usp=sharing" target="_blank" class="hover:text-white/50 transition-colors">Attached sheet →</a>
-            </p>
-        </div>
-
-        <!-- Formula Explanation (Simplified) -->
-        <div class="border-t border-white/10 pt-8 mb-8">
-            <div class="text-xs text-white/25 text-center tracking-widest uppercase">
-                EV/HR = (Market Cap − Treasury) / (Fees × Accrual)
-            </div>
-        </div>
     </div>
 
     <script>
-        // Example data with FP article provenance
         const examples = {
             HYPE: {
-                name: 'HYPE',
-                marketCap: 7554100000,
-                circulatingSupply: 1000000000,
-                stablecoins: 0,
-                nativeTokens: 0,
-                haircut: 50,
-                claimDiscount: 0,
-                grossFees: 899500000,
-                takeRate: 89.6,
-                accrualRatio: 100,
-                teamComp: 464900000,
-                operatingCosts: 0,
-                // FP provenance
-                source: 'FP Article',
-                sourceUrl: 'https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework',
-                author: 'Ponyo',
-                publishDate: '2026-03-06',
-                dataSnapshot: '2026-03-06',
-                snapshotTruth: {
-                    rawEvhr: 9.4,
-                    costAdjusted: 22.2
-                }
+                name: 'HYPE', marketCap: 7554100000, circulatingSupply: 1000000000,
+                stablecoins: 0, nativeTokens: 0, haircut: 50, claimDiscount: 0,
+                grossFees: 899500000, takeRate: 89.6, accrualRatio: 100,
+                teamComp: 464900000, operatingCosts: 0,
+                source: 'FP Article', sourceUrl: 'https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework',
+                author: 'Ponyo', publishDate: '2026-03-06', dataSnapshot: '2026-03-06',
+                snapshotTruth: { rawEvhr: 9.4, costAdjusted: 22.2 }
             },
             JUP: {
-                name: 'JUP',
-                marketCap: 8500000000,
-                circulatingSupply: 1350000000,
-                stablecoins: 0,
-                nativeTokens: 0,
-                haircut: 50,
-                claimDiscount: 0,
-                grossFees: 280000000,
-                takeRate: 75,
-                accrualRatio: 95,
-                teamComp: 0,
-                operatingCosts: 0,
-                // FP provenance
-                source: 'FP Article',
-                sourceUrl: 'https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework',
-                author: 'Ponyo',
-                publishDate: '2026-03-06',
-                dataSnapshot: '2026-03-06'
+                name: 'JUP', marketCap: 8500000000, circulatingSupply: 1350000000,
+                stablecoins: 0, nativeTokens: 0, haircut: 50, claimDiscount: 0,
+                grossFees: 280000000, takeRate: 75, accrualRatio: 95,
+                teamComp: 0, operatingCosts: 0,
+                source: 'FP Article', sourceUrl: 'https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework',
+                author: 'Ponyo', publishDate: '2026-03-06', dataSnapshot: '2026-03-06'
             },
             MAPLE: {
-                name: 'MAPLE',
-                marketCap: 272000000,
-                circulatingSupply: 100000000,
-                stablecoins: 9360000,
-                nativeTokens: 0,
-                haircut: 50,
-                claimDiscount: 0,
-                grossFees: 140500000,
-                takeRate: 13.0,
-                accrualRatio: 25.1,
-                teamComp: 0,
-                operatingCosts: 0,
-                // FP provenance
-                source: 'FP Article',
-                sourceUrl: 'https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework',
-                author: 'Ponyo',
-                publishDate: '2026-03-06',
-                dataSnapshot: '2026-03-06'
+                name: 'MAPLE', marketCap: 272000000, circulatingSupply: 100000000,
+                stablecoins: 9360000, nativeTokens: 0, haircut: 50, claimDiscount: 0,
+                grossFees: 140500000, takeRate: 13.0, accrualRatio: 25.1,
+                teamComp: 0, operatingCosts: 0,
+                source: 'FP Article', sourceUrl: 'https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework',
+                author: 'Ponyo', publishDate: '2026-03-06', dataSnapshot: '2026-03-06'
             }
         };
 
         const fpUniverse = [
-            // FP-verified protocols (from 4pillars.io article, 2026-03-06)
-            { name: 'PUMP', evhr: 3.3, accrual: 100, band: 'CHEAP', signal: 'Very Cheap', color: 'text-white', bgColor: '', verified: true },
-            { name: 'HYPE', evhr: 9.4, accrual: 100, band: 'CHEAP', signal: 'Attractive', color: 'text-white', bgColor: '', verified: true },
-            { name: 'JUP', evhr: 12, accrual: 95, band: 'FAIR', signal: 'Good', color: 'text-white/60', bgColor: '', verified: true },
-            { name: 'MAPLE', evhr: 57.7, accrual: 25, band: 'EXPENSIVE', signal: 'Very Expensive', color: 'text-white/35', bgColor: '', verified: true }
+            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-white',    bgColor: 'bg-white/5', verified: true },
+            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-white',    bgColor: 'bg-white/5', verified: true },
+            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-white/55', bgColor: 'bg-white/5', verified: true },
+            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-white/30', bgColor: 'bg-white/5', verified: true }
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP', color: 'text-white', bgColor: '' };
-            if (evhr < 30) return { band: 'FAIR', color: 'text-white/60', bgColor: '' };
-            return { band: 'EXPENSIVE', color: 'text-white/35', bgColor: '' };
+            if (evhr < 15) return { band: 'CHEAP',     color: 'text-white',    bgColor: 'bg-white/5' };
+            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55', bgColor: 'bg-white/5' };
+            return              { band: 'EXPENSIVE', color: 'text-white/30', bgColor: 'bg-white/5' };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
-            // Find closest case by EV/HR and accrual similarity
-            let closest = fpUniverse[0];
-            let minDistance = Infinity;
-
-            for (const fpCase of fpUniverse) {
-                // Weighted distance: EV/HR difference + accrual difference
-                const evhrDist = Math.abs(evhr - fpCase.evhr) / 10; // Normalize by 10
-                const accrualDist = Math.abs(accrualRatio - fpCase.accrual) / 100; // Normalize by 100
-                const distance = evhrDist + accrualDist;
-
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closest = fpCase;
-                }
+            let closest = fpUniverse[0], minDist = Infinity;
+            for (const c of fpUniverse) {
+                const d = Math.abs(evhr - c.evhr) / 10 + Math.abs(accrualRatio - c.accrual) / 100;
+                if (d < minDist) { minDist = d; closest = c; }
             }
-
             return closest;
         }
 
         function getArchetype(evhr, accrualRatio, tokenCosts, holderRevenue) {
-            // Determine archetype based on characteristics
-            const dilutionRatio = holderRevenue > 0 ? tokenCosts / holderRevenue : 0;
-
-            if (accrualRatio >= 90 && evhr < 15 && dilutionRatio < 0.5) {
-                return 'HYPE-type';
-            } else if (accrualRatio >= 90 && evhr < 15 && dilutionRatio >= 0.5) {
-                return 'PUMP-type'; // CHEAP but high dilution
-            } else if (accrualRatio >= 80 && evhr >= 10 && evhr < 20) {
-                return 'JUP-type'; // High accrual, FAIR valuation
-            } else if (accrualRatio < 30 && evhr > 40) {
-                return 'MAPLE-type'; // Low accrual, EXPENSIVE
-            } else if (accrualRatio < 50) {
-                return 'MAPLE-like'; // Waterfall leakage pattern
-            } else if (evhr < 15) {
-                return 'HYPE-like'; // CHEAP pattern
-            } else if (evhr < 30) {
-                return 'JUP-like'; // FAIR pattern
-            } else {
-                return 'High-multiple'; // Generic expensive
-            }
+            const dr = holderRevenue > 0 ? tokenCosts / holderRevenue : 0;
+            if (accrualRatio >= 90 && evhr < 15 && dr < 0.5)  return 'HYPE-type';
+            if (accrualRatio >= 90 && evhr < 15 && dr >= 0.5) return 'PUMP-type';
+            if (accrualRatio >= 80 && evhr >= 10 && evhr < 20) return 'JUP-type';
+            if (accrualRatio < 30 && evhr > 40)  return 'MAPLE-type';
+            if (accrualRatio < 50)  return 'MAPLE-like';
+            if (evhr < 15)          return 'HYPE-like';
+            if (evhr < 30)          return 'JUP-like';
+            return 'High-multiple';
         }
 
-        let currentProtocolName = '';
-        let currentSorted = [];
-        let sortDirection = { name: 1, evhr: 1, band: 1 };
-        let savedScenarios = [];
-        let currentResult = null;
-        let currentProvenance = null;
-        let currentSnapshotTruth = null;
+        let currentProtocolName = '', currentSorted = [], sortDirection = { name: 1, evhr: 1, band: 1 };
+        let savedScenarios = [], currentResult = null, currentProvenance = null, currentSnapshotTruth = null;
 
         function sortComparison(field) {
             sortDirection[field] *= -1;
-            const dir = sortDirection[field];
-
-            if (field === 'name') {
-                currentSorted.sort((a, b) => dir * a.name.localeCompare(b.name));
-            } else if (field === 'evhr') {
-                currentSorted.sort((a, b) => dir * (a.evhr - b.evhr));
-            } else if (field === 'band') {
-                const bandOrder = { 'CHEAP': 1, 'FAIR': 2, 'EXPENSIVE': 3 };
-                currentSorted.sort((a, b) => dir * (bandOrder[a.band] - bandOrder[b.band]));
-            }
-
+            const d = sortDirection[field];
+            if (field === 'name') currentSorted.sort((a, b) => d * a.name.localeCompare(b.name));
+            else if (field === 'evhr') currentSorted.sort((a, b) => d * (a.evhr - b.evhr));
+            else { const bo = { CHEAP: 1, FAIR: 2, EXPENSIVE: 3 }; currentSorted.sort((a, b) => d * (bo[a.band] - bo[b.band])); }
             renderComparisonTable();
         }
 
         function renderComparisonTable() {
             document.getElementById('comparisonTable').innerHTML = currentSorted.map(p => `
-                <tr class="border-b border-white/5 ${p.name === 'Your Input' ? 'border-l border-white/40' : ''}">
-                    <td class="py-2 pr-2 text-xs ${p.name === 'Your Input' ? 'text-white pl-2' : 'text-white/50'}">
-                        ${p.name}
-                        ${p.verified ? '<span class="ml-1 text-white/25">✓</span>' : ''}
-                    </td>
-                    <td class="py-2 text-right tabular text-xs ${p.name === 'Your Input' ? 'text-white font-medium' : 'text-white/50'}">${p.evhr.toFixed(1)}x</td>
-                    <td class="py-2 text-center">
-                        <span class="text-xs uppercase tracking-wider ${p.color}">
-                            ${p.band}
-                        </span>
-                    </td>
-                </tr>
-            `).join('');
+                <tr class="border-b border-white/5 ${p.name === 'Your Input' ? 'border-l-2 border-white/35 pl-3' : ''}">
+                    <td class="py-3 ${p.name === 'Your Input' ? 'pl-3 text-white font-medium' : 'text-white/50'}">${p.name}${p.verified ? '<span class="ml-1 text-white/15" title="FP-verified">✓</span>' : ''}</td>
+                    <td class="py-3 text-right font-light ${p.name === 'Your Input' ? 'text-white' : 'text-white/40'}">${p.evhr.toFixed(1)}x</td>
+                    <td class="py-3 text-center"><span class="${p.color} text-xs">${p.band}</span></td>
+                </tr>`).join('');
         }
 
         function loadExample(name) {
             const data = examples[name];
+            if (!data) return;
             currentProtocolName = data.name;
             currentSnapshotTruth = data.snapshotTruth || null;
-
-            // Capture provenance
-            currentProvenance = {
-                source: data.source,
-                sourceUrl: data.sourceUrl,
-                author: data.author,
-                publishDate: data.publishDate,
-                dataSnapshot: data.dataSnapshot
-            };
-
-            document.getElementById('marketCap').value = data.marketCap;
-            document.getElementById('circulatingSupply').value = data.circulatingSupply;
-            document.getElementById('stablecoins').value = data.stablecoins;
-            document.getElementById('nativeTokens').value = data.nativeTokens;
-            document.getElementById('haircut').value = data.haircut;
-            document.getElementById('claimDiscount').value = data.claimDiscount;
-            document.getElementById('grossFees').value = data.grossFees;
-            document.getElementById('takeRate').value = data.takeRate;
-            document.getElementById('accrualRatio').value = data.accrualRatio;
-            document.getElementById('teamComp').value = data.teamComp;
-            document.getElementById('operatingCosts').value = data.operatingCosts;
-
+            currentProvenance = { source: data.source, sourceUrl: data.sourceUrl, author: data.author, publishDate: data.publishDate, dataSnapshot: data.dataSnapshot };
+            const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+            set('marketCap', data.marketCap); set('circulatingSupply', data.circulatingSupply);
+            set('stablecoins', data.stablecoins); set('nativeTokens', data.nativeTokens);
+            set('haircut', data.haircut); set('claimDiscount', data.claimDiscount);
+            set('grossFees', data.grossFees); set('takeRate', data.takeRate);
+            set('accrualRatio', data.accrualRatio); set('teamComp', data.teamComp);
+            set('operatingCosts', data.operatingCosts);
             calculate();
         }
 
-        function calculateLive() {
-            currentSnapshotTruth = null;
-            calculate();
-        }
+        function calculateLive() { currentSnapshotTruth = null; calculate(); }
 
         function loadFromDropdown() {
-            const selector = document.getElementById('fpCaseSelector');
-            const selected = selector.value;
-            if (selected && examples[selected]) {
-                loadExample(selected);
-            }
+            const v = document.getElementById('fpCaseSelector').value;
+            if (v && examples[v]) loadExample(v);
         }
 
         function copyQuick() {
-            const quick = document.getElementById('quickOutput').textContent;
-            navigator.clipboard.writeText(quick).then(() => {
-                const btn = event.target;
-                btn.textContent = '✓ Copied!';
-                setTimeout(() => btn.textContent = 'Copy', 2000);
+            navigator.clipboard.writeText(document.getElementById('quickOutput').textContent).then(() => {
+                const btn = event.target; btn.textContent = '✓ Copied'; setTimeout(() => btn.textContent = 'Copy', 2000);
             });
         }
 
         function copyMemo() {
-            const memo = document.getElementById('memoOutput').textContent;
-            navigator.clipboard.writeText(memo).then(() => {
-                const btn = event.target;
-                btn.textContent = '✓ Copied!';
-                setTimeout(() => btn.textContent = 'Copy', 2000);
+            navigator.clipboard.writeText(document.getElementById('memoOutput').textContent).then(() => {
+                const btn = event.target; btn.textContent = '✓ Copied'; setTimeout(() => btn.textContent = 'Copy', 2000);
             });
         }
 
         function saveScenario() {
             if (!currentResult) return;
-
-            const scenarioName = prompt('Scenario name (e.g., "Base Case", "Bear Case", "Bull Case"):',
-                savedScenarios.length === 0 ? 'Base Case' :
-                savedScenarios.length === 1 ? 'Bear Case' : 'Bull Case');
-
-            if (!scenarioName) return;
-
-            savedScenarios.push({
-                name: scenarioName,
-                ...currentResult
-            });
-
+            const name = prompt('Scenario name:', savedScenarios.length === 0 ? 'Base Case' : savedScenarios.length === 1 ? 'Bear Case' : 'Bull Case');
+            if (!name) return;
+            savedScenarios.push({ name, ...currentResult });
             renderScenarioComparison();
         }
 
@@ -724,642 +514,315 @@
         }
 
         function renderScenarioComparison() {
-            if (savedScenarios.length === 0) {
-                document.getElementById('scenarioComparison').classList.add('hidden');
-                return;
-            }
-
+            if (!savedScenarios.length) { document.getElementById('scenarioComparison').classList.add('hidden'); return; }
             document.getElementById('scenarioComparison').classList.remove('hidden');
-
-            const table = `
+            document.getElementById('scenarioTable').innerHTML = `
                 <table class="w-full text-xs">
-                    <thead>
-                        <tr class="border-b border-white/10">
-                            <th class="pb-2 text-left text-white/25 font-normal">Scenario</th>
-                            <th class="pb-2 text-right text-white/25 font-normal">EV/HR</th>
-                            <th class="pb-2 text-center text-white/25 font-normal">Band</th>
-                            <th class="pb-2 text-right text-white/25 font-normal">Accrual</th>
+                    <thead class="border-b border-white/10">
+                        <tr>
+                            <th class="pb-3 text-left text-white/25">Scenario</th>
+                            <th class="pb-3 text-right text-white/25">EV/HR</th>
+                            <th class="pb-3 text-center text-white/25">Band</th>
+                            <th class="pb-3 text-right text-white/25">Accrual</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        ${savedScenarios.map(s => `
-                            <tr class="border-b border-white/5">
-                                <td class="py-2 text-white/60 font-medium">${s.name}</td>
-                                <td class="py-2 text-right text-white tabular">${s.evhr.toFixed(1)}x</td>
-                                <td class="py-2 text-center">
-                                    <span class="text-xs uppercase tracking-wider ${s.color}">
-                                        ${s.band}
-                                    </span>
-                                </td>
-                                <td class="py-2 text-right text-white/50">${s.accrualRatio}%</td>
-                            </tr>
-                        `).join('')}
+                    <tbody>${savedScenarios.map(s => `
+                        <tr class="border-b border-white/5">
+                            <td class="py-3 text-white/60 font-medium">${s.name}</td>
+                            <td class="py-3 text-right font-light text-white">${s.evhr.toFixed(1)}x</td>
+                            <td class="py-3 text-center"><span class="text-xs ${s.color}">${s.band}</span></td>
+                            <td class="py-3 text-right text-white/40">${s.accrualRatio}%</td>
+                        </tr>`).join('')}
                     </tbody>
-                </table>
-            `;
-
-            document.getElementById('scenarioTable').innerHTML = table;
+                </table>`;
         }
 
         function exportScenarios() {
-            const snapshot = {
-                timestamp: new Date().toISOString(),
-                scenarios: savedScenarios,
-                version: '1.0'
-            };
-
-            const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `fp-scenarios-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-
-            alert('✅ JSON snapshot exported!\n스냅샷 파일을 공유하거나 나중에 불러올 수 있습니다.');
+            const blob = new Blob([JSON.stringify({ timestamp: new Date().toISOString(), scenarios: savedScenarios, version: '1.0' }, null, 2)], { type: 'application/json' });
+            const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `fp-scenarios-${new Date().toISOString().split('T')[0]}.json` });
+            a.click(); URL.revokeObjectURL(a.href);
         }
 
         function exportScenariosReadable() {
-            const now = new Date();
-            const timestamp = now.toISOString().split('T')[0];
-
-            const readable = `FP EV/HOLDER REVENUE - SCENARIO COMPARISON
-Generated: ${timestamp}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-${savedScenarios.map((s, idx) => `
-[${idx + 1}] ${s.name}
-    EV/HR: ${s.evhr.toFixed(1)}x
-    Band: ${s.band}
-    Accrual: ${s.accrualRatio}%
-    Market Cap: $${(s.marketCap / 1e9).toFixed(2)}B
-    Annual Fees: $${(s.grossFees / 1e6).toFixed(1)}M
-`).join('\n')}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SUMMARY
-${savedScenarios.map(s => `${s.name}: ${s.evhr.toFixed(1)}x (${s.band})`).join(' | ')}
-
-Best Case: ${Math.min(...savedScenarios.map(s => s.evhr)).toFixed(1)}x
-Worst Case: ${Math.max(...savedScenarios.map(s => s.evhr)).toFixed(1)}x
-
-Source: FP EV/Holder Revenue Framework
-4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
-
-            const blob = new Blob([readable], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `fp-scenarios-summary-${timestamp}.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
-
-            // Also copy to clipboard
-            navigator.clipboard.writeText(readable).then(() => {
-                alert('✅ Human-readable snapshot exported & copied!\n파일 다운로드 + 클립보드 복사 완료. 바로 공유 가능합니다.');
-            });
+            const ts = new Date().toISOString().split('T')[0];
+            const text = `FP EV/HOLDER REVENUE - SCENARIO COMPARISON\nGenerated: ${ts}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n${savedScenarios.map((s, i) => `[${i+1}] ${s.name}\n    EV/HR: ${s.evhr.toFixed(1)}x\n    Band: ${s.band}\n    Accrual: ${s.accrualRatio}%\n    Market Cap: $${(s.marketCap/1e9).toFixed(2)}B\n    Annual Fees: $${(s.grossFees/1e6).toFixed(1)}M`).join('\n\n')}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSUMMARY\n${savedScenarios.map(s => `${s.name}: ${s.evhr.toFixed(1)}x (${s.band})`).join(' | ')}\n\nBest: ${Math.min(...savedScenarios.map(s => s.evhr)).toFixed(1)}x\nWorst: ${Math.max(...savedScenarios.map(s => s.evhr)).toFixed(1)}x\n\nSource: FP EV/Holder Revenue Framework\n4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+            const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([text], { type: 'text/plain' })), download: `fp-scenarios-summary-${ts}.txt` });
+            a.click(); URL.revokeObjectURL(a.href);
+            navigator.clipboard.writeText(text).then(() => alert('✅ Exported & copied to clipboard.'));
         }
 
         function calculate() {
-            // Get inputs with smart defaults
-            const marketCap = parseFloat(document.getElementById('marketCap').value) || 0;
-            const stablecoins = parseFloat(document.getElementById('stablecoins').value) || 0;
-            const nativeTokens = parseFloat(document.getElementById('nativeTokens').value) || 0;
-            const haircut = parseFloat(document.getElementById('haircut').value) || 50;
-            const claimDiscount = parseFloat(document.getElementById('claimDiscount').value) || 0;
-            const grossFees = parseFloat(document.getElementById('grossFees').value) || 0;
-            const takeRate = parseFloat(document.getElementById('takeRate').value) || 100; // Default: protocol captures 100%
-            const accrualRatio = parseFloat(document.getElementById('accrualRatio').value) || 100; // Default: 100% to holders
-            const teamComp = parseFloat(document.getElementById('teamComp').value) || 0;
-            const operatingCosts = parseFloat(document.getElementById('operatingCosts').value) || 0;
+            const mc  = parseFloat(document.getElementById('marketCap').value) || 0;
+            const sc  = parseFloat(document.getElementById('stablecoins').value) || 0;
+            const nt  = parseFloat(document.getElementById('nativeTokens').value) || 0;
+            const hc  = parseFloat(document.getElementById('haircut').value) || 50;
+            const cd  = parseFloat(document.getElementById('claimDiscount').value) || 0;
+            const gf  = parseFloat(document.getElementById('grossFees').value) || 0;
+            const tr  = parseFloat(document.getElementById('takeRate').value) || 100;
+            const ar  = parseFloat(document.getElementById('accrualRatio').value) || 100;
+            const tc  = (parseFloat(document.getElementById('teamComp').value) || 0) + (parseFloat(document.getElementById('operatingCosts').value) || 0);
 
-            // Calculate
-            const grossTreasury = stablecoins + (nativeTokens * (1 - haircut / 100));
-            const claimableTreasury = grossTreasury * (1 - claimDiscount / 100);
-            const ev = marketCap - claimableTreasury;
+            const treasury = (sc + nt * (1 - hc / 100)) * (1 - cd / 100);
+            const ev = mc - treasury;
+            const protRev = gf * (tr / 100);
+            const holRev  = protRev * (ar / 100);
+            const evhr    = holRev > 0 ? ev / holRev : (ev > 0 ? 999 : 0);
+            const evProt  = protRev > 0 ? ev / protRev : 0;
+            const accrDisc = holRev > 0 ? evProt / evhr : 1;
+            const passThru = (tr / 100) * (ar / 100) * 100;
+            const costAdj  = (holRev - tc) > 0 ? ev / (holRev - tc) : 0;
 
-            const protocolRevenue = grossFees * (takeRate / 100);
-            const holderRevenue = protocolRevenue * (accrualRatio / 100);
-
-            // Edge case handling for robustness
-            const evhr = holderRevenue > 0 ? ev / holderRevenue : (ev > 0 ? 999 : 0);
-            const evProtocolRev = protocolRevenue > 0 ? ev / protocolRevenue : 0;
-            const accrualDiscount = holderRevenue > 0 ? evProtocolRev / evhr : 1;
-            const passThrough = (takeRate / 100) * (accrualRatio / 100) * 100;
-
-            const tokenCosts = teamComp + operatingCosts;
-            const costAdjustedMultiple = (holderRevenue - tokenCosts) > 0 ? ev / (holderRevenue - tokenCosts) : 0;
-
-            // Display results
             document.getElementById('results').classList.remove('hidden');
 
-            // FP Interpretation based on characteristics
-            let fpInterpretation = '';
-            if (accrualRatio >= 90 && evhr < 15) {
-                fpInterpretation = '<strong class="text-white/70">Clean tokenomics</strong>: 높은 accrual ratio로 프로토콜 수익이 홀더에게 직접 전달됩니다. FP가 선호하는 구조입니다. (HYPE, JUP 유형)';
-            } else if (accrualRatio < 30) {
-                fpInterpretation = '<strong class="text-white/60">Waterfall leakage</strong>: 프로토콜 수익의 대부분이 홀더에게 도달하지 않습니다. 낮은 accrual ratio가 valuation을 왜곡합니다. (MAPLE 유형)';
-            } else if (tokenCosts / holderRevenue > 0.5) {
-                fpInterpretation = '<strong class="text-white/60">High dilution pressure</strong>: Token costs가 holder revenue의 50% 이상입니다. 공급 압력이 수익 성장을 상쇄할 수 있습니다. (PUMP 유형)';
-            } else if (claimDiscount >= 75) {
-                fpInterpretation = '<strong class="text-white/60">Sealed treasury</strong>: Treasury에 홀더가 접근할 수 없습니다. Balance sheet 가치가 제한적입니다.';
-            } else {
-                fpInterpretation = '프로토콜의 value accrual 구조를 위 metrics로 분석하세요. FP는 높은 accrual ratio와 낮은 tokenholder tax를 선호합니다.';
-            }
-            document.getElementById('fpInterpretation').innerHTML = fpInterpretation;
+            // FP Interpretation
+            let fpInterp = '';
+            if (ar >= 90 && evhr < 15) fpInterp = '<strong>Clean tokenomics</strong>: 높은 accrual ratio로 프로토콜 수익이 홀더에게 직접 전달됩니다. FP가 선호하는 구조입니다. (HYPE, JUP 유형)';
+            else if (ar < 30) fpInterp = '<strong>Waterfall leakage</strong>: 프로토콜 수익의 대부분이 홀더에게 도달하지 않습니다. 낮은 accrual ratio가 valuation을 왜곡합니다. (MAPLE 유형)';
+            else if (tc / holRev > 0.5) fpInterp = '<strong>High dilution pressure</strong>: Token costs가 holder revenue의 50% 이상입니다. 공급 압력이 수익 성장을 상쇄할 수 있습니다. (PUMP 유형)';
+            else if (cd >= 75) fpInterp = '<strong>Sealed treasury</strong>: Treasury에 홀더가 접근할 수 없습니다. Balance sheet 가치가 제한적입니다.';
+            else fpInterp = '프로토콜의 value accrual 구조를 위 metrics로 분석하세요. FP는 높은 accrual ratio와 낮은 tokenholder tax를 선호합니다.';
+            document.getElementById('fpInterpretation').innerHTML = fpInterp;
 
-            // Primary metric
-            let signal, interpretation;
-            if (evhr < 5) {
-                signal = 'Very Cheap';
-                interpretation = '매우 저평가. 홀더 수익 대비 탁월한 밸류에이션.';
-            } else if (evhr < 15) {
-                signal = 'Attractive';
-                interpretation = '합리적인 밸류에이션. 홀더 수익 대비 적정 가격.';
-            } else if (evhr < 30) {
-                signal = 'Fair';
-                interpretation = '시장 평균 범위. 적정 가격.';
-            } else if (evhr < 60) {
-                signal = 'Expensive';
-                interpretation = '고평가. 낮은 accrual ratio 또는 프리미엄 반영.';
-            } else {
-                signal = 'Very Expensive';
-                interpretation = '매우 고평가. 홀더 수익 포착이 매우 약함.';
-            }
+            let interpretation;
+            if (evhr < 5) interpretation = '매우 저평가. 홀더 수익 대비 탁월한 밸류에이션.';
+            else if (evhr < 15) interpretation = '합리적인 밸류에이션. 홀더 수익 대비 적정 가격.';
+            else if (evhr < 30) interpretation = '시장 평균 범위. 적정 가격.';
+            else if (evhr < 60) interpretation = '고평가. 낮은 accrual ratio 또는 프리미엄 반영.';
+            else interpretation = '매우 고평가. 홀더 수익 포착이 매우 약함.';
 
-            const isSnapshotMode = Boolean(currentSnapshotTruth);
-            const displayEvhr = currentSnapshotTruth?.rawEvhr ?? evhr;
-            const displayCostAdjusted = currentSnapshotTruth?.costAdjusted ?? costAdjustedMultiple;
-            const bandInfo = getFPBand(displayEvhr);
-            const modeIndicator = document.getElementById('modeIndicator');
-            modeIndicator.textContent = isSnapshotMode ? 'ARTICLE SNAPSHOT' : 'LIVE CALCULATION';
-            modeIndicator.className = isSnapshotMode
-                ? 'inline-flex items-center text-[11px] uppercase tracking-[0.18em] text-white/50'
-                : 'inline-flex items-center text-[11px] uppercase tracking-[0.18em] text-white/20';
-            document.getElementById('primaryMetric').className = 'pb-8';
+            const isSnapshot = Boolean(currentSnapshotTruth);
+            const dispEvhr = currentSnapshotTruth?.rawEvhr ?? evhr;
+            const dispCost = currentSnapshotTruth?.costAdjusted ?? costAdj;
+            const band = getFPBand(dispEvhr);
+
+            const mi = document.getElementById('modeIndicator');
+            mi.textContent = isSnapshot ? 'ARTICLE SNAPSHOT' : 'LIVE CALCULATION';
+            mi.className = isSnapshot
+                ? 'inline-flex items-center px-2 py-0.5 border border-white/25 text-[11px] font-medium uppercase tracking-[0.18em] text-white/45'
+                : 'inline-flex items-center px-2 py-0.5 border border-white/10 text-[11px] font-medium uppercase tracking-[0.18em] text-white/25';
+
             document.getElementById('primaryMetric').innerHTML = `
-                <div>
-                    <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/25 mb-6">Raw Multiple</h3>
-                    <div class="text-[6rem] font-extralight text-white leading-none mb-4 tabular">${displayEvhr.toFixed(1)}x</div>
-                    <div class="text-xs text-white/30 uppercase tracking-wider mb-2">Raw EV / Holder Revenue</div>
-                    <div class="text-xs text-white/25 mb-6">토큰 보유자에게 실제 귀속되는 매출 1달러당 EV</div>
-                    <div class="inline-block text-sm uppercase tracking-[0.25em] ${bandInfo.color} mb-2">
-                        ${bandInfo.band}
-                    </div>
-                    <p class="text-sm text-white/40 mt-2">${interpretation}</p>
-                    ${displayCostAdjusted > 0 ? `
-                    <div class="mt-8 pt-6 border-t border-white/10">
-                        <div class="text-xs text-white/25 uppercase tracking-wider mb-2">Cost-adjusted</div>
-                        <div class="text-4xl font-extralight text-white/60 tabular">${displayCostAdjusted.toFixed(1)}x</div>
-                        <div class="text-xs text-white/20 mt-2">EV / (Holder Revenue − Token Costs)</div>
-                    </div>
-                    ` : ''}
+                <div class="mb-6">
+                    <span class="text-xs text-white/25 uppercase tracking-widest">Raw Multiple · EV / Holder Revenue</span>
                 </div>
-            `;
+                <div class="judgment-number text-white mb-8">${dispEvhr.toFixed(1)}x</div>
+                <div class="flex items-baseline gap-6 mb-4">
+                    <span class="text-sm uppercase tracking-widest ${band.color} font-medium">${band.band}</span>
+                    <span class="text-sm text-white/35">${interpretation}</span>
+                </div>
+                <div class="text-xs text-white/20 mb-8">토큰 보유자에게 실제 귀속되는 매출 1달러당 현재 EV를 얼마나 지불하는지</div>
+                ${dispCost > 0 ? `
+                <div class="border-t border-white/10 pt-8 mt-4">
+                    <div class="text-xs text-white/25 uppercase tracking-widest mb-3">Cost-adjusted Multiple</div>
+                    <div class="text-4xl font-light text-white/45">${dispCost.toFixed(1)}x</div>
+                    <div class="text-xs text-white/15 mt-2">EV / (Holder Revenue − Token Costs)</div>
+                </div>` : ''}`;
 
-            // Find closest FP case and archetype
-            const closestCase = findClosestFPCase(evhr, accrualRatio);
-            const archetype = getArchetype(evhr, accrualRatio, tokenCosts, holderRevenue);
+            const closest = findClosestFPCase(evhr, ar);
+            const archetype = getArchetype(evhr, ar, tc, holRev);
 
-            // FP One-line interpretation (edge case resilient + archetype)
             let oneLine = '';
-            if (holderRevenue <= 0) {
-                oneLine = `🚨 Zero holder revenue - ${accrualRatio}% accrual이지만 실제 홀더 도달 수익 없음 (검증 필요)`;
-            } else if (ev < 0) {
-                oneLine = `⚠️ Negative EV - Treasury ($${(claimableTreasury / 1e6).toFixed(1)}M)가 시총 초과, Balance sheet 중심 평가`;
-            } else if (evhr > 100) {
-                oneLine = `🚨 Extreme overvaluation (${evhr.toFixed(0)}x) - 홀더 수익 대비 비정상적 고평가 또는 accrual 오류`;
-            } else if (accrualRatio >= 90 && evhr < 15) {
-                oneLine = `✅ ${archetype} - Clean waterfall로 ${accrualRatio}% accrual, FP 선호 구조 (vs ${closestCase.name}: ${closestCase.evhr}x)`;
-            } else if (accrualRatio < 30) {
-                oneLine = `⚠️ ${archetype} - Waterfall 누수로 홀더 미도달 (vs ${closestCase.name}: ${closestCase.evhr}x)`;
-            } else if (tokenCosts / holderRevenue > 0.5) {
-                oneLine = `⚠️ ${archetype} - Raw ${displayEvhr.toFixed(1)}x지만 token costs 반영 시 ${displayCostAdjusted.toFixed(1)}x (vs ${closestCase.name}: ${closestCase.evhr}x)`;
-            } else if (claimDiscount >= 75) {
-                oneLine = `⚠️ ${archetype} - Sealed treasury (vs ${closestCase.name}: ${closestCase.evhr}x)`;
-            } else {
-                oneLine = `📊 ${archetype} - ${accrualRatio}% accrual, ${bandInfo.band} 밴드 (vs ${closestCase.name}: ${closestCase.evhr}x)`;
-            }
+            if (holRev <= 0) oneLine = `Zero holder revenue — ${ar}% accrual이지만 실제 홀더 도달 수익 없음 (검증 필요)`;
+            else if (ev < 0) oneLine = `Negative EV — Treasury ($${(treasury/1e6).toFixed(1)}M)가 시총 초과, Balance sheet 중심 평가`;
+            else if (evhr > 100) oneLine = `Extreme overvaluation (${evhr.toFixed(0)}x) — 홀더 수익 대비 비정상적 고평가 또는 accrual 오류`;
+            else if (ar >= 90 && evhr < 15) oneLine = `${archetype} — Clean waterfall로 ${ar}% accrual, FP 선호 구조 (vs ${closest.name}: ${closest.evhr}x)`;
+            else if (ar < 30) oneLine = `${archetype} — Waterfall 누수로 홀더 미도달 (vs ${closest.name}: ${closest.evhr}x)`;
+            else if (tc / holRev > 0.5) oneLine = `${archetype} — Raw ${dispEvhr.toFixed(1)}x지만 token costs 반영 시 ${dispCost.toFixed(1)}x (vs ${closest.name}: ${closest.evhr}x)`;
+            else if (cd >= 75) oneLine = `${archetype} — Sealed treasury (vs ${closest.name}: ${closest.evhr}x)`;
+            else oneLine = `${archetype} — ${ar}% accrual, ${band.band} 밴드 (vs ${closest.name}: ${closest.evhr}x)`;
             document.getElementById('fpOneLine').textContent = oneLine;
 
-            // What to check next - contextual action bullets
-            const actionBullets = [];
-
-            if (holderRevenue <= 0) {
-                actionBullets.push('Waterfall 재확인: Take rate/Accrual이 실제 0인지, 입력값 오류인지 검증');
-                actionBullets.push('토큰노믹스 docs 확인: Revenue sharing 구조가 실제 존재하는지 체크');
-                actionBullets.push('대안 평가: Holder revenue 없으면 P/S, P/E 등 다른 프레임워크 고려');
+            // Action bullets
+            const bullets = [];
+            if (holRev <= 0) {
+                bullets.push('Waterfall 재확인: Take rate/Accrual이 실제 0인지, 입력값 오류인지 검증');
+                bullets.push('토큰노믹스 docs 확인: Revenue sharing 구조가 실제 존재하는지 체크');
+                bullets.push('대안 평가: Holder revenue 없으면 P/S, P/E 등 다른 프레임워크 고려');
             } else if (ev < 0) {
-                actionBullets.push('Balance sheet 정밀 분석: Treasury 실사용 가능성, Lock-up 조건 확인');
-                actionBullets.push('Liquidation value 계산: 실제 청산가치 vs 현재가 비교');
-                actionBullets.push('Treasury 사용 계획: Runway, buyback, burn 스케줄 파악');
+                bullets.push('Balance sheet 정밀 분석: Treasury 실사용 가능성, Lock-up 조건 확인');
+                bullets.push('Liquidation value 계산: 실제 청산가치 vs 현재가 비교');
+                bullets.push('Treasury 사용 계획: Runway, buyback, burn 스케줄 파악');
             } else if (evhr > 100) {
-                actionBullets.push('입력값 재검증: Market cap, treasury, revenue, accrual 모두 더블체크');
-                actionBullets.push('Waterfall 재설계: 실제 홀더 도달 수익이 이렇게 낮은지 원문 확인');
-                actionBullets.push('비교 대상 탐색: 유사 구조 프로토콜에서 정상 범위 벤치마크');
+                bullets.push('입력값 재검증: Market cap, treasury, revenue, accrual 모두 더블체크');
+                bullets.push('Waterfall 재설계: 실제 홀더 도달 수익이 이렇게 낮은지 원문 확인');
+                bullets.push('비교 대상 탐색: 유사 구조 프로토콜에서 정상 범위 벤치마크');
             } else if (archetype.includes('HYPE')) {
-                actionBullets.push('Revenue 지속성 확인: Gross fees 추이, MAU/TVL 성장률 체크');
-                actionBullets.push('Dilution 모니터링: Token unlock, emission schedule 검토');
-                actionBullets.push('포지션 타이밍: CHEAP 밴드에서 진입 고려, Bear case 시나리오도 테스트');
+                bullets.push('Revenue 지속성 확인: Gross fees 추이, MAU/TVL 성장률 체크');
+                bullets.push('Dilution 모니터링: Token unlock, emission schedule 검토');
+                bullets.push('포지션 타이밍: CHEAP 밴드에서 진입 고려, Bear case 시나리오도 테스트');
             } else if (archetype.includes('PUMP')) {
-                actionBullets.push('Dilution 원인 파악: Unlock, emission, incentive 중 어디서 나오는지 추적');
-                actionBullets.push('순수익 재계산: Token costs 제외한 실제 holder value 확인');
-                actionBullets.push('Emission 종료 시점: Dilution pressure가 언제 해소되는지 타임라인 체크');
+                bullets.push('Dilution 원인 파악: Unlock, emission, incentive 중 어디서 나오는지 추적');
+                bullets.push('순수익 재계산: Token costs 제외한 실제 holder value 확인');
+                bullets.push('Emission 종료 시점: Dilution pressure가 언제 해소되는지 타임라인 체크');
             } else if (archetype.includes('JUP')) {
-                actionBullets.push('Accrual 안정성: 90%+ 유지 메커니즘이 governance 변경 가능한지 체크');
-                actionBullets.push('FAIR 밴드 추이: Growth rate vs multiple expansion 비교로 upside 판단');
-                actionBullets.push('경쟁사 비교: 동일 섹터 CHEAP 대안 있는지 탐색');
+                bullets.push('Accrual 안정성: 90%+ 유지 메커니즘이 governance 변경 가능한지 체크');
+                bullets.push('FAIR 밴드 추이: Growth rate vs multiple expansion 비교로 upside 판단');
+                bullets.push('경쟁사 비교: 동일 섹터 CHEAP 대안 있는지 탐색');
             } else if (archetype.includes('MAPLE')) {
-                actionBullets.push('Waterfall 누수 지점: Take rate/Accrual 중 어디서 누수되는지 정밀 분석');
-                actionBullets.push('Governance 로드맵: Accrual 개선 제안, 투표 가능성 탐색');
-                actionBullets.push('Exit 타이밍: EXPENSIVE 밴드는 포지션 축소 고려');
-            } else if (accrualRatio < 30) {
-                actionBullets.push('Waterfall 개선 가능성: Protocol team의 accrual 상향 의지 파악');
-                actionBullets.push('다른 프레임워크 병행: EV/HR 외에 growth multiple, P/S 등으로 재평가');
-                actionBullets.push('섹터 평균 비교: Low accrual이 이 섹터에선 정상인지 체크');
-            } else if (tokenCosts / holderRevenue > 0.5) {
-                actionBullets.push('Emission 스케줄: 언제까지 dilution이 지속되는지 타임라인 확인');
-                actionBullets.push('순수익 기준 재평가: Token costs 제외한 실제 EV/HR 계산');
-                actionBullets.push('Buyback/Burn 계획: Dilution offset 메커니즘 존재 여부');
-            } else if (bandInfo.band === 'CHEAP') {
-                actionBullets.push('진입 타이밍 검토: Bear case 시나리오도 CHEAP이면 적극 고려');
-                actionBullets.push('Catalyst 탐색: Revenue growth driver, partnership, 신규 체인 확장 등');
-                actionBullets.push('Risk 체크: Regulatory, 경쟁사, tech risk 등 downside 시나리오');
-            } else if (bandInfo.band === 'FAIR') {
-                actionBullets.push('Hold 판단: Growth rate가 multiple 정당화하는지 확인');
-                actionBullets.push('CHEAP 대안 탐색: 동일 섹터에서 더 저평가된 옵션 비교');
-                actionBullets.push('Rebalance 기준: EXPENSIVE로 진입 시 비중 축소 트리거 설정');
+                bullets.push('Waterfall 누수 지점: Take rate/Accrual 중 어디서 누수되는지 정밀 분석');
+                bullets.push('Governance 로드맵: Accrual 개선 제안, 투표 가능성 탐색');
+                bullets.push('Exit 타이밍: EXPENSIVE 밴드는 포지션 축소 고려');
+            } else if (ar < 30) {
+                bullets.push('Waterfall 개선 가능성: Protocol team의 accrual 상향 의지 파악');
+                bullets.push('다른 프레임워크 병행: EV/HR 외에 growth multiple, P/S 등으로 재평가');
+                bullets.push('섹터 평균 비교: Low accrual이 이 섹터에선 정상인지 체크');
+            } else if (tc / holRev > 0.5) {
+                bullets.push('Emission 스케줄: 언제까지 dilution이 지속되는지 타임라인 확인');
+                bullets.push('순수익 기준 재평가: Token costs 제외한 실제 EV/HR 계산');
+                bullets.push('Buyback/Burn 계획: Dilution offset 메커니즘 존재 여부');
+            } else if (band.band === 'CHEAP') {
+                bullets.push('진입 타이밍 검토: Bear case 시나리오도 CHEAP이면 적극 고려');
+                bullets.push('Catalyst 탐색: Revenue growth driver, partnership, 신규 체인 확장 등');
+                bullets.push('Risk 체크: Regulatory, 경쟁사, tech risk 등 downside 시나리오');
+            } else if (band.band === 'FAIR') {
+                bullets.push('Hold 판단: Growth rate가 multiple 정당화하는지 확인');
+                bullets.push('CHEAP 대안 탐색: 동일 섹터에서 더 저평가된 옵션 비교');
+                bullets.push('Rebalance 기준: EXPENSIVE로 진입 시 비중 축소 트리거 설정');
             } else {
-                actionBullets.push('Exit 고려: EXPENSIVE 밴드는 기본적으로 포지션 축소 검토');
-                actionBullets.push('Bull case 검증: 고평가 정당화할 growth narrative 있는지 체크');
-                actionBullets.push('재진입 기준: 어느 수준까지 내려오면 다시 매수할지 미리 설정');
+                bullets.push('Exit 고려: EXPENSIVE 밴드는 기본적으로 포지션 축소 검토');
+                bullets.push('Bull case 검증: 고평가 정당화할 growth narrative 있는지 체크');
+                bullets.push('재진입 기준: 어느 수준까지 내려오면 다시 매수할지 미리 설정');
             }
+            document.getElementById('actionBullets').innerHTML = bullets.map(b => `<li class="flex items-start gap-2"><span class="text-white/15 mt-0.5 shrink-0">—</span><span>${b}</span></li>`).join('');
 
-            document.getElementById('actionBullets').innerHTML = actionBullets
-                .map(bullet => `<li class="flex items-start"><span class="mr-2">•</span><span>${bullet}</span></li>`)
-                .join('');
+            // Provenance
+            const now = new Date();
+            const ts = now.toISOString().split('T')[0];
+            const tg = now.toTimeString().split(' ')[0];
+            const provText = currentProvenance
+                ? `Source: ${currentProvenance.source} by ${currentProvenance.author}\nPublished: ${currentProvenance.publishDate} | Data Snapshot: ${currentProvenance.dataSnapshot}\nURL: ${currentProvenance.sourceUrl}\nStatus: ✓ FP-verified`
+                : `Source: Manual Input\nCalculated: ${ts} ${tg}\nStatus: User-provided data (not verified)`;
+            document.getElementById('provenanceSource').textContent = provText;
 
-            // Provenance drawer content
-            const provenanceText = currentProvenance ?
-                `Source: ${currentProvenance.source} by ${currentProvenance.author}
-Published: ${currentProvenance.publishDate} | Data Snapshot: ${currentProvenance.dataSnapshot}
-URL: ${currentProvenance.sourceUrl}
-Status: ✓ FP-verified` :
-                `Source: Manual Input
-Calculated: ${timestamp} ${timeGenerated}
-Status: User-provided data (not verified)`;
+            document.getElementById('calculationSteps').innerHTML = [
+                `1. EV = Market Cap${treasury > 0 ? ' - Claimable Treasury' : ''} = $${(mc/1e6).toFixed(1)}M${treasury > 0 ? ` - $${(treasury/1e6).toFixed(1)}M` : ''} = $${(ev/1e6).toFixed(1)}M`,
+                `2. Protocol Revenue = Gross Fees × Take Rate = $${(gf/1e6).toFixed(1)}M × ${tr}% = $${(protRev/1e6).toFixed(1)}M`,
+                `3. Holder Revenue = Protocol Rev × Accrual = $${(protRev/1e6).toFixed(1)}M × ${ar}% = $${(holRev/1e6).toFixed(1)}M`,
+                `4. EV/HR Multiple = $${(ev/1e6).toFixed(1)}M / $${(holRev/1e6).toFixed(1)}M = ${evhr.toFixed(1)}x`,
+                `5. Band = ${evhr.toFixed(1)}x → ${band.band} (CHEAP <15x, FAIR 15-30x, EXPENSIVE >30x)`
+            ].map(s => `<div class="font-mono text-white/40">${s}</div>`).join('');
 
-            document.getElementById('provenanceSource').textContent = provenanceText;
+            const dr2 = holRev > 0 ? (tc / holRev * 100).toFixed(0) : 0;
+            const arcEx = archetype === 'HYPE-type' ? `High accrual (${ar}% ≥ 90%) + CHEAP (${evhr.toFixed(1)}x < 15) + Low dilution (${dr2}% < 50%)`
+                : archetype === 'PUMP-type' ? `High accrual (${ar}% ≥ 90%) + CHEAP (${evhr.toFixed(1)}x < 15) + High dilution (${dr2}% ≥ 50%)`
+                : archetype === 'JUP-type' ? `High accrual (${ar}% ≥ 80%) + FAIR range (${evhr.toFixed(1)}x: 10-20)`
+                : archetype === 'MAPLE-type' ? `Low accrual (${ar}% < 30%) + EXPENSIVE (${evhr.toFixed(1)}x > 40)`
+                : archetype.includes('MAPLE') ? `Low accrual (${ar}% < 50%) → waterfall leakage`
+                : archetype.includes('HYPE') ? `CHEAP range (${evhr.toFixed(1)}x < 15) → attractive`
+                : `Generic: ${ar}% accrual, ${evhr.toFixed(1)}x multiple`;
+            document.getElementById('archetypeLogic').textContent = arcEx;
 
-            // Calculation steps
-            const steps = [
-                `1. EV = Market Cap${claimableTreasury > 0 ? ' - Claimable Treasury' : ''} = $${(marketCap / 1e6).toFixed(1)}M${claimableTreasury > 0 ? ` - $${(claimableTreasury / 1e6).toFixed(1)}M` : ''} = $${(ev / 1e6).toFixed(1)}M`,
-                `2. Protocol Revenue = Gross Fees × Take Rate = $${(grossFees / 1e6).toFixed(1)}M × ${takeRate}% = $${(protocolRevenue / 1e6).toFixed(1)}M`,
-                `3. Holder Revenue = Protocol Rev × Accrual = $${(protocolRevenue / 1e6).toFixed(1)}M × ${accrualRatio}% = $${(holderRevenue / 1e6).toFixed(1)}M`,
-                `4. EV/HR Multiple = $${(ev / 1e6).toFixed(1)}M / $${(holderRevenue / 1e6).toFixed(1)}M = ${evhr.toFixed(1)}x`,
-                `5. Band Classification = ${evhr.toFixed(1)}x → ${bandInfo.band} (CHEAP <15x, FAIR 15-30x, EXPENSIVE >30x)`
-            ];
-            document.getElementById('calculationSteps').innerHTML = steps
-                .map(step => `<div class="font-mono">${step}</div>`)
-                .join('');
+            const d1 = (Math.abs(evhr - closest.evhr) / 10).toFixed(2);
+            const d2 = (Math.abs(ar - closest.accrual) / 100).toFixed(2);
+            document.getElementById('matchDistance').textContent = `Closest: ${closest.name} (distance: ${(+d1 + +d2).toFixed(2)} = ${d1} + ${d2})`;
 
-            // Archetype logic
-            const dilutionRatio = holderRevenue > 0 ? (tokenCosts / holderRevenue * 100).toFixed(0) : 0;
-            const archetypeExplanation = archetype === 'HYPE-type' ?
-                `High accrual (${accrualRatio}% ≥ 90%) + CHEAP (${evhr.toFixed(1)}x < 15) + Low dilution (${dilutionRatio}% < 50%)` :
-                archetype === 'PUMP-type' ?
-                `High accrual (${accrualRatio}% ≥ 90%) + CHEAP (${evhr.toFixed(1)}x < 15) + High dilution (${dilutionRatio}% ≥ 50%)` :
-                archetype === 'JUP-type' ?
-                `High accrual (${accrualRatio}% ≥ 80%) + FAIR range (${evhr.toFixed(1)}x: 10-20)` :
-                archetype === 'MAPLE-type' ?
-                `Low accrual (${accrualRatio}% < 30%) + EXPENSIVE (${evhr.toFixed(1)}x > 40)` :
-                archetype.includes('MAPLE') ?
-                `Low accrual (${accrualRatio}% < 50%) → waterfall leakage pattern` :
-                archetype.includes('HYPE') ?
-                `CHEAP range (${evhr.toFixed(1)}x < 15) → attractive valuation pattern` :
-                `Generic: ${accrualRatio}% accrual, ${evhr.toFixed(1)}x multiple`;
+            document.getElementById('ev').textContent = `$${(ev/1e6).toFixed(1)}M`;
+            document.getElementById('holderRevenue').textContent = `$${(holRev/1e6).toFixed(1)}M`;
+            document.getElementById('accrualDiscount').textContent = `${accrDisc.toFixed(1)}x`;
+            document.getElementById('passThrough').textContent = `${passThru.toFixed(1)}%`;
 
-            document.getElementById('archetypeLogic').textContent = archetypeExplanation;
-
-            // Match distance
-            const evhrDist = (Math.abs(evhr - closestCase.evhr) / 10).toFixed(2);
-            const accrualDist = (Math.abs(accrualRatio - closestCase.accrual) / 100).toFixed(2);
-            const totalDist = (parseFloat(evhrDist) + parseFloat(accrualDist)).toFixed(2);
-            document.getElementById('matchDistance').textContent =
-                `Closest: ${closestCase.name} (distance: ${totalDist} = ${evhrDist} + ${accrualDist})`;
-
-            // Supporting metrics
-            document.getElementById('ev').textContent = `$${(ev / 1000000).toFixed(1)}M`;
-            document.getElementById('holderRevenue').textContent = `$${(holderRevenue / 1000000).toFixed(1)}M`;
-            document.getElementById('accrualDiscount').textContent = `${accrualDiscount.toFixed(1)}x`;
-            document.getElementById('passThrough').textContent = `${passThrough.toFixed(1)}%`;
-
-            // Waterfall
             document.getElementById('waterfall').innerHTML = `
-                <div class="flex justify-between">
-                    <span class="text-white/30">Gross Fees</span>
-                    <span class="text-white/60 tabular">$${(grossFees / 1000000).toFixed(1)}M</span>
-                </div>
-                <div class="flex justify-between pl-4">
-                    <span class="text-white/30">× Take Rate (${takeRate}%)</span>
-                    <span class="text-white/60 tabular">$${(protocolRevenue / 1000000).toFixed(1)}M</span>
-                </div>
-                <div class="flex justify-between pl-8">
-                    <span class="text-white/30">× Accrual (${accrualRatio}%)</span>
-                    <span class="text-white tabular">$${(holderRevenue / 1000000).toFixed(1)}M ← Holder Revenue</span>
-                </div>
-                ${tokenCosts > 0 ? `
-                <div class="border-t border-white/10 mt-2 pt-2">
-                    <div class="flex justify-between">
-                        <span class="text-white/30">Token Costs</span>
-                        <span class="text-white/40 tabular">−$${(tokenCosts / 1000000).toFixed(1)}M</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-white/30">Cost-Adjusted Multiple</span>
-                        <span class="text-white/60 tabular">${costAdjustedMultiple.toFixed(1)}x</span>
-                    </div>
-                </div>
-                ` : ''}
-            `;
+                <div class="flex justify-between"><span class="text-white/30">Gross Fees</span><span class="text-white/50">$${(gf/1e6).toFixed(1)}M</span></div>
+                <div class="flex justify-between pl-4"><span class="text-white/30">× Take Rate (${tr}%)</span><span class="text-white/50">$${(protRev/1e6).toFixed(1)}M</span></div>
+                <div class="flex justify-between pl-8"><span class="text-white/30">× Accrual (${ar}%)</span><span class="text-white">$${(holRev/1e6).toFixed(1)}M ← Holder Revenue</span></div>
+                ${tc > 0 ? `<div class="border-t border-white/10 mt-3 pt-3">
+                    <div class="flex justify-between"><span class="text-white/30">Token Costs</span><span class="text-white/35">−$${(tc/1e6).toFixed(1)}M</span></div>
+                    <div class="flex justify-between"><span class="text-white/30">Cost-Adjusted</span><span class="text-white/50">${costAdj.toFixed(1)}x</span></div>
+                </div>` : ''}`;
 
-            // Comparison table with bands (sortable)
-            const userBand = getFPBand(evhr);
-            currentSorted = [...fpUniverse, {
-                name: 'Your Input',
-                evhr: evhr,
-                accrual: accrualRatio,
-                band: userBand.band,
-                signal: signal,
-                color: userBand.color,
-                bgColor: userBand.bgColor
-            }].sort((a, b) => a.evhr - b.evhr);
-
+            const ub = getFPBand(evhr);
+            currentSorted = [...fpUniverse, { name: 'Your Input', evhr, accrual: ar, band: ub.band, color: ub.color, bgColor: ub.bgColor }].sort((a, b) => a.evhr - b.evhr);
             renderComparisonTable();
 
-            // Copyable Memo Output (polished for 기관/대표 전달)
-            const now = new Date();
-            const timestamp = now.toISOString().split('T')[0];
-            const timeGenerated = now.toTimeString().split(' ')[0];
-            const protocolLabel = currentProtocolName || 'Custom Protocol';
+            const label = currentProtocolName || 'Custom Protocol';
+            const dataOrigin = currentProvenance
+                ? `Data Origin: ${currentProvenance.source} by ${currentProvenance.author}\nPublished: ${currentProvenance.publishDate} | Data Snapshot: ${currentProvenance.dataSnapshot}\nSource: ${currentProvenance.sourceUrl}`
+                : `Data Origin: Manual Input\nCalculated: ${ts} ${tg}`;
 
-            // Build provenance section
-            const dataOrigin = currentProvenance ?
-                `Data Origin: ${currentProvenance.source} by ${currentProvenance.author}
-Published: ${currentProvenance.publishDate} | Data Snapshot: ${currentProvenance.dataSnapshot}
-Source: ${currentProvenance.sourceUrl}` :
-                `Data Origin: Manual Input
-Calculated: ${timestamp} ${timeGenerated}`;
-
-            // Find closest case for memo
-            const closestForMemo = currentSorted[0]; // Already sorted by similarity
-
-            const memo = `FP EV/HOLDER REVENUE ANALYSIS
-${protocolLabel} | ${timestamp} ${timeGenerated}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📌 SUMMARY (이 4가지가 하나로 고정됨)
-• 기준시점: ${timestamp} ${timeGenerated}
-• 근거값: MC $${(marketCap / 1e9).toFixed(2)}B, Fees $${(grossFees / 1e6).toFixed(1)}M/yr, ${accrualRatio}% accrual → Holder Revenue $${(holderRevenue / 1e6).toFixed(1)}M
-• 비교대상: vs ${closestCase.name} (${closestCase.evhr}x, ${closestCase.accrual}% accrual)
-• 해석결과: ${bandInfo.band} (${displayEvhr.toFixed(1)}x) — ${oneLine}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-DETAILED INPUTS (${timestamp})
-• Market Cap: $${(marketCap / 1e9).toFixed(2)}B
-• Annual Fees: $${(grossFees / 1e6).toFixed(1)}M
-• Accrual: ${accrualRatio}% | Take Rate: ${takeRate}%${claimableTreasury > 0 ? `
-• Treasury: $${(claimableTreasury / 1e6).toFixed(1)}M (${100 - claimDiscount}% claimable)` : ''}${tokenCosts > 0 ? `
-• Token Costs: $${(tokenCosts / 1e6).toFixed(1)}M/year` : ''}
-
-CALCULATION STEPS
-• EV = MC ${claimableTreasury > 0 ? `- Claimable Treasury` : ''} = $${(ev / 1e6).toFixed(1)}M
-• Protocol Revenue = Fees × ${takeRate}% = $${(protocolRevenue / 1e6).toFixed(1)}M
-• Holder Revenue = Protocol Rev × ${accrualRatio}% = $${(holderRevenue / 1e6).toFixed(1)}M
-• EV/HR Multiple = ${displayEvhr.toFixed(1)}x → ${bandInfo.band}
-
-BENCHMARK COMPARISON (vs FP Universe)
-${currentSorted.slice(0, 5).map((p, i) =>
-    `${i === 0 ? '→ ' : '  '}${p.name.padEnd(12)} ${String(p.evhr.toFixed(1) + 'x').padEnd(8)} ${p.band}${i === 0 ? ' ← Closest match' : ''}`
-).join('\n')}
-... (${currentSorted.length - 5} more protocols in universe)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PROVENANCE & REPRODUCIBILITY
-${dataOrigin}
-Framework: FP EV/Holder Revenue
-Reference: 4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
-
+            const memo = `FP EV/HOLDER REVENUE ANALYSIS\n${label} | ${ts} ${tg}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📌 SUMMARY\n• 기준시점: ${ts} ${tg}\n• 근거값: MC $${(mc/1e9).toFixed(2)}B, Fees $${(gf/1e6).toFixed(1)}M/yr, ${ar}% accrual → Holder Revenue $${(holRev/1e6).toFixed(1)}M\n• 비교대상: vs ${closest.name} (${closest.evhr}x, ${closest.accrual}% accrual)\n• 해석결과: ${band.band} (${dispEvhr.toFixed(1)}x) — ${oneLine}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nDETAILED INPUTS (${ts})\n• Market Cap: $${(mc/1e9).toFixed(2)}B\n• Annual Fees: $${(gf/1e6).toFixed(1)}M\n• Accrual: ${ar}% | Take Rate: ${tr}%${treasury > 0 ? `\n• Treasury: $${(treasury/1e6).toFixed(1)}M (${100-cd}% claimable)` : ''}${tc > 0 ? `\n• Token Costs: $${(tc/1e6).toFixed(1)}M/year` : ''}\n\nCALCULATION STEPS\n• EV = MC ${treasury > 0 ? '- Claimable Treasury' : ''} = $${(ev/1e6).toFixed(1)}M\n• Protocol Revenue = Fees × ${tr}% = $${(protRev/1e6).toFixed(1)}M\n• Holder Revenue = Protocol Rev × ${ar}% = $${(holRev/1e6).toFixed(1)}M\n• EV/HR Multiple = ${dispEvhr.toFixed(1)}x → ${band.band}\n\nBENCHMARK COMPARISON\n${currentSorted.slice(0,5).map((p,i) => `${i===0?'→ ':'  '}${p.name.padEnd(12)} ${String(p.evhr.toFixed(1)+'x').padEnd(8)} ${p.band}${i===0?' ← Closest':''}`).join('\n')}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPROVENANCE\n${dataOrigin}\nFramework: FP EV/Holder Revenue\nReference: 4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
             document.getElementById('memoOutput').textContent = memo;
+            document.getElementById('quickOutput').textContent = `${label}: ${band.band} (${dispEvhr.toFixed(1)}x)\n${oneLine}`;
 
-            // Quick Copy (한 줄 판단 + 한 줄 이유)
-            const quickCopy = `${protocolLabel}: ${bandInfo.band} (${displayEvhr.toFixed(1)}x)
-${oneLine}`;
-            document.getElementById('quickOutput').textContent = quickCopy;
-
-            // Save current result for scenario comparison
-            currentResult = {
-                evhr: evhr,
-                band: bandInfo.band,
-                color: bandInfo.color,
-                bgColor: '',
-                accrualRatio: accrualRatio,
-                marketCap: marketCap,
-                grossFees: grossFees
-            };
-
-            // Enable save scenario button
+            currentResult = { evhr, band: band.band, color: band.color, bgColor: band.bgColor, accrualRatio: ar, marketCap: mc, grossFees: gf };
             document.getElementById('saveBtn').disabled = false;
 
-            // Generate permalink (encode state in URL hash)
-            const state = {
-                mc: marketCap,
-                gf: grossFees,
-                ar: accrualRatio,
-                tr: takeRate,
-                ct: claimableTreasury,
-                cd: claimDiscount,
-                tc: tokenCosts,
-                m: isSnapshotMode ? 'snapshot' : 'live',
-                pn: currentProtocolName || null,
-                pv: currentProvenance ? {
-                    s: currentProvenance.source,
-                    a: currentProvenance.author,
-                    pd: currentProvenance.publishDate,
-                    ds: currentProvenance.dataSnapshot,
-                    su: currentProvenance.sourceUrl
-                } : null
-            };
-            const stateString = encodeURIComponent(JSON.stringify(state));
-            const permalink = `${window.location.origin}${window.location.pathname}#calc=${stateString}`;
+            const state = { mc, gf, ar, tr, ct: treasury, cd, tc, m: isSnapshot ? 'snapshot' : 'live', pn: currentProtocolName || null, pv: currentProvenance ? { s: currentProvenance.source, a: currentProvenance.author, pd: currentProvenance.publishDate, ds: currentProvenance.dataSnapshot, su: currentProvenance.sourceUrl } : null };
+            const permalink = `${location.origin}${location.pathname}#calc=${encodeURIComponent(JSON.stringify(state))}`;
+            history.replaceState(null, '', permalink);
+            const sb = document.getElementById('shareBtn');
+            sb.style.display = 'inline-block';
+            sb.setAttribute('data-url', permalink);
 
-            // Update URL without reload
-            window.history.replaceState(null, '', permalink);
+            saveToHistory({ timestamp: ts + ' ' + tg, protocol: label, evhr, band: band.band, accrualRatio: ar, marketCap: mc, grossFees: gf, holderRevenue: holRev });
+            displayHistory(label);
 
-            // Show share button
-            document.getElementById('shareBtn').style.display = 'inline-block';
-            document.getElementById('shareBtn').setAttribute('data-url', permalink);
-
-            // Save to history
-            saveToHistory({
-                timestamp: timestamp + ' ' + timeGenerated,
-                protocol: protocolLabel,
-                evhr: evhr,
-                band: bandInfo.band,
-                accrualRatio: accrualRatio,
-                marketCap: marketCap,
-                grossFees: grossFees,
-                holderRevenue: holderRevenue
-            });
-
-            // Show history comparison if available
-            displayHistory(protocolLabel);
-
-            // Scroll to results (mobile: scroll to top, desktop: smooth scroll)
-            const isMobile = window.innerWidth < 768;
-            if (isMobile) {
-                document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: window.innerWidth < 768 ? 'start' : 'nearest' });
         }
 
         function shareResult() {
             const url = document.getElementById('shareBtn').getAttribute('data-url');
             navigator.clipboard.writeText(url).then(() => {
                 const btn = document.getElementById('shareBtn');
-                const originalText = btn.textContent;
-                btn.textContent = '✓ Link Copied!';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                }, 2000);
+                btn.textContent = '✓ Copied';
+                setTimeout(() => btn.textContent = 'Share Link →', 2000);
             });
         }
 
         function loadFromURL() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#calc=')) {
-                try {
-                    const stateString = decodeURIComponent(hash.substring(6));
-                    const state = JSON.parse(stateString);
-                    const setValue = (id, value) => {
-                        const element = document.getElementById(id);
-                        if (element) {
-                            element.value = value ?? '';
-                        }
-                    };
-
-                    // Restore input values
-                    setValue('marketCap', state.mc);
-                    setValue('grossFees', state.gf);
-                    setValue('accrualRatio', state.ar ?? 100);
-                    setValue('takeRate', state.tr);
-                    // Current UI stores treasury/token costs in decomposed fields,
-                    // so permalink restore maps aggregated values back into the
-                    // simplest equivalent inputs.
-                    setValue('stablecoins', state.ct ?? 0);
-                    setValue('nativeTokens', 0);
-                    setValue('haircut', 50);
-                    setValue('claimDiscount', state.cd ?? 0);
-                    setValue('teamComp', state.tc ?? 0);
-                    setValue('operatingCosts', 0);
-
-                    // Restore protocol name and provenance
-                    if (state.pn) currentProtocolName = state.pn;
-                    if (state.pv) {
-                        currentProvenance = {
-                            source: state.pv.s,
-                            author: state.pv.a,
-                            publishDate: state.pv.pd,
-                            dataSnapshot: state.pv.ds,
-                            sourceUrl: state.pv.su
-                        };
-                    }
-                    const hasSnapshotCase = state.pn && examples[state.pn]?.snapshotTruth;
-                    const inferredSnapshotMode = !state.m && hasSnapshotCase && state.pv;
-                    currentSnapshotTruth = (state.m === 'snapshot' || inferredSnapshotMode)
-                        ? examples[state.pn].snapshotTruth
-                        : null;
-
-                    // Trigger calculation
-                    calculate();
-                } catch (e) {
-                    console.error('Failed to load state from URL:', e);
-                }
-            }
+            const hash = location.hash;
+            if (!hash.startsWith('#calc=')) return;
+            try {
+                const state = JSON.parse(decodeURIComponent(hash.substring(6)));
+                const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v ?? ''; };
+                set('marketCap', state.mc); set('grossFees', state.gf); set('accrualRatio', state.ar ?? 100);
+                set('takeRate', state.tr); set('stablecoins', state.ct ?? 0); set('nativeTokens', 0);
+                set('haircut', 50); set('claimDiscount', state.cd ?? 0); set('teamComp', state.tc ?? 0); set('operatingCosts', 0);
+                if (state.pn) currentProtocolName = state.pn;
+                if (state.pv) currentProvenance = { source: state.pv.s, author: state.pv.a, publishDate: state.pv.pd, dataSnapshot: state.pv.ds, sourceUrl: state.pv.su };
+                const hasSnap = state.pn && examples[state.pn]?.snapshotTruth;
+                currentSnapshotTruth = (state.m === 'snapshot' || (!state.m && hasSnap && state.pv)) ? examples[state.pn].snapshotTruth : null;
+                calculate();
+            } catch(e) { console.error('Failed to load state from URL:', e); }
         }
 
-        // Load from URL on page load
         window.addEventListener('DOMContentLoaded', loadFromURL);
 
-        // History management functions
         function saveToHistory(entry) {
             if (!entry.protocol || entry.protocol === 'Custom Protocol') return;
-
-            const historyKey = `fp_history_${entry.protocol}`;
-            let history = JSON.parse(localStorage.getItem(historyKey) || '[]');
-
-            // Add new entry
-            history.unshift(entry);
-
-            // Keep only last 5 entries
-            history = history.slice(0, 5);
-
-            localStorage.setItem(historyKey, JSON.stringify(history));
+            const key = `fp_history_${entry.protocol}`;
+            let h = JSON.parse(localStorage.getItem(key) || '[]');
+            h = [entry, ...h].slice(0, 5);
+            localStorage.setItem(key, JSON.stringify(h));
         }
 
         function displayHistory(protocol) {
-            if (!protocol || protocol === 'Custom Protocol') {
-                document.getElementById('historySection').style.display = 'none';
-                return;
-            }
-
-            const historyKey = `fp_history_${protocol}`;
-            const history = JSON.parse(localStorage.getItem(historyKey) || '[]');
-
-            if (history.length < 2) {
-                document.getElementById('historySection').style.display = 'none';
-                return;
-            }
-
-            // Show comparison: most recent vs previous
-            const now = history[0];
-            const then = history[1];
-
-            const evhrChange = ((now.evhr - then.evhr) / then.evhr * 100).toFixed(1);
-            const evhrArrow = evhrChange > 0 ? '↑' : evhrChange < 0 ? '↓' : '→';
-            const evhrColor = evhrChange > 0 ? 'text-white/30' : evhrChange < 0 ? 'text-white/80' : 'text-white/40';
-
-            const html = `
-                <div class="grid grid-cols-2 gap-4 font-mono">
+            if (!protocol || protocol === 'Custom Protocol') { document.getElementById('historySection').style.display = 'none'; return; }
+            const h = JSON.parse(localStorage.getItem(`fp_history_${protocol}`) || '[]');
+            if (h.length < 2) { document.getElementById('historySection').style.display = 'none'; return; }
+            const [now, then] = h;
+            const chg = ((now.evhr - then.evhr) / then.evhr * 100).toFixed(1);
+            const arrow = chg > 0 ? '↑' : chg < 0 ? '↓' : '→';
+            const col = chg > 0 ? 'text-white/35' : chg < 0 ? 'text-white/75' : 'text-white/45';
+            document.getElementById('historyContent').innerHTML = `
+                <div class="grid grid-cols-2 gap-6">
                     <div class="border-l border-white/10 pl-4">
-                        <div class="text-white/25 text-xs mb-1">Then (${then.timestamp})</div>
-                        <div class="text-white/60">${then.evhr.toFixed(1)}x · ${then.band}</div>
-                        <div class="text-white/30 text-xs">${then.accrualRatio}% accrual</div>
+                        <div class="text-white/20 mb-2">Then (${then.timestamp})</div>
+                        <div class="font-light text-white/50">${then.evhr.toFixed(1)}x · ${then.band}</div>
+                        <div class="text-white/25 text-xs mt-1">${then.accrualRatio}% accrual</div>
                     </div>
                     <div class="border-l border-white/20 pl-4">
-                        <div class="text-white/25 text-xs mb-1">Now (${now.timestamp})</div>
-                        <div class="text-white">${now.evhr.toFixed(1)}x · ${now.band}</div>
-                        <div class="text-white/30 text-xs">${now.accrualRatio}% accrual</div>
+                        <div class="text-white/20 mb-2">Now (${now.timestamp})</div>
+                        <div class="font-light text-white">${now.evhr.toFixed(1)}x · ${now.band}</div>
+                        <div class="text-white/35 text-xs mt-1">${now.accrualRatio}% accrual</div>
                     </div>
                 </div>
-                <div class="mt-3 text-xs text-white/40">
-                    ${evhrArrow} ${Math.abs(evhrChange)}% ${evhrChange > 0 ? 'more expensive' : evhrChange < 0 ? 'cheaper' : 'no change'}
-                    ${now.band !== then.band ? `(Band changed: ${then.band} → ${now.band})` : ''}
-                </div>
-            `;
-
-            document.getElementById('historyContent').innerHTML = html;
+                <div class="mt-4 ${col}">${arrow} ${Math.abs(chg)}% ${chg > 0 ? 'more expensive' : chg < 0 ? 'cheaper' : 'no change'}${now.band !== then.band ? ` <span class="text-white/30 ml-2">(band: ${then.band} → ${now.band})</span>` : ''}</div>`;
             document.getElementById('historySection').style.display = 'block';
         }
 
         function clearHistory() {
-            const protocol = currentProtocolName;
-            if (!protocol) return;
-
-            const historyKey = `fp_history_${protocol}`;
-            localStorage.removeItem(historyKey);
+            if (!currentProtocolName) return;
+            localStorage.removeItem(`fp_history_${currentProtocolName}`);
             document.getElementById('historySection').style.display = 'none';
         }
     </script>
