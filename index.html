@@ -73,11 +73,11 @@
             </summary>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
                 <div>
-                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Market Cap (USD)</label>
+                    <label class="block text-xs text-white/50 uppercase tracking-widest mb-3">Market Cap (USD)</label>
                     <input type="number" id="marketCap" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 3620000000" step="1000000">
                 </div>
                 <div>
-                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Annual Gross Fees (USD)</label>
+                    <label class="block text-xs text-white/50 uppercase tracking-widest mb-3">Annual Gross Fees (USD)</label>
                     <input type="number" id="grossFees" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 899500000" step="1000000">
                 </div>
             </div>
@@ -104,7 +104,7 @@
 
             <!-- Advanced -->
             <details class="mt-10 border-t border-white/10 pt-8">
-                <summary class="text-xs text-white/20 cursor-pointer hover:text-white/40 transition-colors uppercase tracking-widest">Advanced</summary>
+                <summary class="text-xs text-white/40 cursor-pointer hover:text-white/65 transition-colors uppercase tracking-widest">Advanced</summary>
                 <div class="mt-8 space-y-8">
                     <div>
                         <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">시장 데이터</h3>
@@ -179,18 +179,18 @@
             <div id="primaryMetric" class="pb-12 mb-12 border-b border-white/10">
                 <div class="text-xs font-normal uppercase tracking-widest text-white/20 mb-4">EV / Holder Revenue</div>
                 <div class="judgment-number" style="color:rgba(255,255,255,0.07)">—.—x</div>
-                <div class="mt-6 text-xs text-white/15 uppercase tracking-widest">Enter values · Calculate EV/HR</div>
+                <div class="mt-4 text-xs text-white/30 uppercase tracking-widest">Enter values above</div>
             </div>
 
             <!-- FP Universe -->
             <div class="mb-12 pb-12 border-b border-white/10">
-                <h3 class="text-xs font-medium text-white/25 uppercase tracking-widest mb-6">vs FP Universe</h3>
+                <h3 class="text-xs font-medium text-white/50 uppercase tracking-widest mb-6">vs FP Universe</h3>
                 <table class="w-full text-xs">
                     <thead class="border-b border-white/10">
                         <tr>
-                            <th class="pb-3 text-left font-medium text-white/20 cursor-pointer hover:text-white/40 transition-colors" onclick="sortComparison('name')">Protocol</th>
-                            <th class="pb-3 text-right font-medium text-white/20 cursor-pointer hover:text-white/40 transition-colors" onclick="sortComparison('evhr')">EV/HR</th>
-                            <th class="pb-3 text-center font-medium text-white/20 cursor-pointer hover:text-white/40 transition-colors" onclick="sortComparison('band')">Band</th>
+                            <th class="pb-3 text-left font-medium text-white/40 cursor-pointer hover:text-white/65 transition-colors" onclick="sortComparison('name')">Protocol</th>
+                            <th class="pb-3 text-right font-medium text-white/40 cursor-pointer hover:text-white/65 transition-colors" onclick="sortComparison('evhr')">EV/HR</th>
+                            <th class="pb-3 text-center font-medium text-white/40 cursor-pointer hover:text-white/65 transition-colors" onclick="sortComparison('band')">Band</th>
                         </tr>
                     </thead>
                     <tbody id="comparisonTable"></tbody>
@@ -317,10 +317,10 @@
                         <td class="py-4">
                             <div class="font-medium text-white">PUMP</div>
                             <div class="text-xs text-white/40 mt-0.5">Ponyo · 2026-03-06</div>
-                            <div class="text-xs text-white/45 mt-1">Clean waterfall → Low multiple, dilution from token costs</div>
+                            <div class="text-xs text-white/60 mt-1">Clean waterfall → Low multiple, dilution from token costs</div>
                         </td>
                         <td class="py-4 text-right font-light text-white text-lg">3.3x</td>
-                        <td class="py-4 text-right text-white/40 text-sm">100%</td>
+                        <td class="py-4 text-right text-white/60 text-sm">100%</td>
                         <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('PUMP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
@@ -328,10 +328,10 @@
                         <td class="py-4">
                             <div class="font-medium text-white">HYPE</div>
                             <div class="text-xs text-white/40 mt-0.5">Ponyo · 2026-03-06</div>
-                            <div class="text-xs text-white/45 mt-1">Direct burn mechanism → 100% accrual → Attractive</div>
+                            <div class="text-xs text-white/60 mt-1">Direct burn mechanism → 100% accrual → Attractive</div>
                         </td>
                         <td class="py-4 text-right font-light text-white text-lg">9.4x</td>
-                        <td class="py-4 text-right text-white/40 text-sm">100%</td>
+                        <td class="py-4 text-right text-white/60 text-sm">100%</td>
                         <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('HYPE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
@@ -339,10 +339,10 @@
                         <td class="py-4">
                             <div class="font-medium text-white">JUP</div>
                             <div class="text-xs text-white/40 mt-0.5">Ponyo · 2026-03-06</div>
-                            <div class="text-xs text-white/45 mt-1">5% leakage → Still high accrual → Market-range</div>
+                            <div class="text-xs text-white/60 mt-1">5% leakage → Still high accrual → Market-range</div>
                         </td>
                         <td class="py-4 text-right font-light text-white/60 text-lg">12.0x</td>
-                        <td class="py-4 text-right text-white/40 text-sm">95%</td>
+                        <td class="py-4 text-right text-white/60 text-sm">95%</td>
                         <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/20 text-white/75 text-xs tracking-wider">FAIR</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('JUP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
@@ -350,10 +350,10 @@
                         <td class="py-4">
                             <div class="font-medium text-white/60">MAPLE</div>
                             <div class="text-xs text-white/40 mt-0.5">Ponyo · 2026-03-06</div>
-                            <div class="text-xs text-white/45 mt-1">75% waterfall loss → Low holder revenue → High multiple</div>
+                            <div class="text-xs text-white/60 mt-1">75% waterfall loss → Low holder revenue → High multiple</div>
                         </td>
                         <td class="py-4 text-right font-light text-white/35 text-lg">57.7x</td>
-                        <td class="py-4 text-right text-white/40 text-sm">25%</td>
+                        <td class="py-4 text-right text-white/60 text-sm">25%</td>
                         <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/10 text-white/55 text-xs tracking-wider">EXPENSIVE</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('MAPLE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
@@ -607,12 +607,12 @@
                     <span class="text-base uppercase tracking-widest ${band.color} font-medium">${band.band}</span>
                 </div>
                 <div class="mb-10">
-                    <span class="text-sm text-white/70">${interpretation}</span>
+                    <span class="text-base text-white/90">${interpretation}</span>
                 </div>
                 ${dispCost > 0 ? `
                 <div class="border-t border-white/10 pt-8 mt-4">
-                    <div class="text-xs text-white/25 uppercase tracking-widest mb-3">Cost-adjusted Multiple</div>
-                    <div class="text-4xl font-light text-white/70">${dispCost.toFixed(1)}x</div>
+                    <div class="text-xs text-white/45 uppercase tracking-widest mb-3">Cost-adjusted Multiple</div>
+                    <div class="text-4xl font-light text-white/85">${dispCost.toFixed(1)}x</div>
                     <div class="text-xs text-white/35 mt-2">EV / (Holder Revenue − Token Costs)</div>
                 </div>` : ''}`;
 
