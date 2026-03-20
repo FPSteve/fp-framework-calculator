@@ -411,7 +411,7 @@
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP',     color: 'text-white'    };
+            if (evhr < 15) return { band: 'CHEAP',     color: 'text-emerald-400' };
             if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55' };
             return              { band: 'EXPENSIVE', color: 'text-white/30' };
         }
@@ -602,14 +602,14 @@
             mi.className = 'inline-flex items-center px-2 py-0.5 border text-[11px] font-medium uppercase tracking-[0.18em]' + (isSnapshot ? ' snapshot-mode' : ' border-white/10 text-white/25');
 
             document.getElementById('primaryMetric').innerHTML = `
-                <div class="mb-6">
-                    <span class="text-xs text-white/25 uppercase tracking-widest">Raw Multiple · EV / Holder Revenue</span>
+                <div class="mb-8">
+                    <span class="text-xs text-white/20 uppercase tracking-widest">Raw Multiple · EV / Holder Revenue</span>
                 </div>
-                <div class="judgment-number ${band.color} mb-10">${dispEvhr.toFixed(1)}x</div>
-                <div class="mb-3">
+                <div class="judgment-number ${band.color} mb-16">${dispEvhr.toFixed(1)}x</div>
+                <div class="mb-4">
                     <span class="text-sm uppercase tracking-widest ${band.color} font-medium">${band.band}</span>
                 </div>
-                <div class="mb-12">
+                <div class="mb-16">
                     <span class="text-xs text-white/30">${interpretation}</span>
                 </div>
                 ${dispCost > 0 ? `
