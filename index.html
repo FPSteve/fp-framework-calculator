@@ -320,7 +320,7 @@
                         </td>
                         <td class="py-4 text-right font-light text-white text-lg">3.3x</td>
                         <td class="py-4 text-right text-white/40 text-sm">100%</td>
-                        <td class="py-4 text-center"><span class="text-xs tracking-wider text-emerald-400">CHEAP</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('PUMP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                     <tr>
@@ -403,16 +403,16 @@
         };
 
         const fpUniverse = [
-            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-emerald-400', bgColor: '', verified: true },
-            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-emerald-400', bgColor: '', verified: true },
-            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-amber-400',   bgColor: '', verified: true },
-            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-red-400',     bgColor: '', verified: true }
+            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-white',    bgColor: '', verified: true },
+            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-white',    bgColor: '', verified: true },
+            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-white/55', bgColor: '', verified: true },
+            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-white/30', bgColor: '', verified: true }
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP',     color: 'text-emerald-400', bgColor: '' };
-            if (evhr < 30) return { band: 'FAIR',      color: 'text-amber-400',   bgColor: '' };
-            return              { band: 'EXPENSIVE', color: 'text-red-400',     bgColor: '' };
+            if (evhr < 15) return { band: 'CHEAP',     color: 'text-white'    };
+            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55' };
+            return              { band: 'EXPENSIVE', color: 'text-white/30' };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
@@ -578,11 +578,11 @@
             document.getElementById('fpInterpretation').innerHTML = fpInterp;
 
             let interpretation;
-            if (evhr < 5) interpretation = '매우 저평가. 홀더 수익 대비 탁월한 밸류에이션.';
-            else if (evhr < 15) interpretation = '합리적인 밸류에이션. 홀더 수익 대비 적정 가격.';
-            else if (evhr < 30) interpretation = '시장 평균 범위. 적정 가격.';
-            else if (evhr < 60) interpretation = '고평가. 낮은 accrual ratio 또는 프리미엄 반영.';
-            else interpretation = '매우 고평가. 홀더 수익 포착이 매우 약함.';
+            if (evhr < 5) interpretation = 'Sub-5x. Structural floor.';
+            else if (evhr < 15) interpretation = 'Within CHEAP range.';
+            else if (evhr < 30) interpretation = 'Market range.';
+            else if (evhr < 60) interpretation = 'Premium. Verify accrual.';
+            else interpretation = 'Far above FP universe.';
 
             const isSnapshot = Boolean(currentSnapshotTruth);
             const dispEvhr = currentSnapshotTruth?.rawEvhr ?? evhr;
@@ -597,12 +597,13 @@
                 <div class="mb-6">
                     <span class="text-xs text-white/25 uppercase tracking-widest">Raw Multiple · EV / Holder Revenue</span>
                 </div>
-                <div class="judgment-number ${band.color} mb-8">${dispEvhr.toFixed(1)}x</div>
-                <div class="flex items-baseline gap-6 mb-4">
+                <div class="judgment-number ${band.color} mb-10">${dispEvhr.toFixed(1)}x</div>
+                <div class="mb-3">
                     <span class="text-sm uppercase tracking-widest ${band.color} font-medium">${band.band}</span>
-                    <span class="text-sm text-white/35">${interpretation}</span>
                 </div>
-                <div class="text-xs text-white/20 mb-8">토큰 보유자에게 실제 귀속되는 매출 1달러당 현재 EV를 얼마나 지불하는지</div>
+                <div class="mb-12">
+                    <span class="text-xs text-white/30">${interpretation}</span>
+                </div>
                 ${dispCost > 0 ? `
                 <div class="border-t border-white/10 pt-8 mt-4">
                     <div class="text-xs text-white/25 uppercase tracking-widest mb-3">Cost-adjusted Multiple</div>
