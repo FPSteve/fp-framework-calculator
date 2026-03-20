@@ -61,8 +61,8 @@
         </div>
 
         <!-- Calculator -->
-        <div class="mb-20 pb-20 border-b border-white/10">
-            <div class="flex justify-between items-baseline mb-10">
+        <details id="calculatorPanel" open class="mb-20 pb-20 border-b border-white/10">
+            <summary class="flex justify-between items-baseline mb-10 cursor-pointer list-none">
                 <h2 class="text-xs font-medium text-white/50 uppercase tracking-widest">Calculate EV/Holder Revenue</h2>
                 <select id="fpCaseSelector" onchange="loadFromDropdown()" class="text-xs border border-white/15 px-2 py-1 text-white/35 focus:outline-none cursor-pointer">
                     <option value="">Load from FP Case</option>
@@ -70,7 +70,7 @@
                     <option value="JUP">JUP (12.0x, FAIR)</option>
                     <option value="MAPLE">MAPLE (57.7x, EXPENSIVE)</option>
                 </select>
-            </div>
+            </summary>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
                 <div>
                     <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Market Cap (USD)</label>
@@ -86,8 +86,8 @@
                 <button onclick="calculateLive()" class="fp-cta py-3.5 text-sm font-medium tracking-wide transition-colors">
                     Calculate EV/HR
                 </button>
-                <button onclick="saveScenario()" id="saveBtn" class="border border-white/20 text-white/40 py-3.5 text-sm tracking-wide hover:border-white/40 hover:text-white/70 transition-colors disabled:opacity-25 disabled:cursor-not-allowed" disabled>
-                    Save Scenario
+                <button onclick="saveScenario()" id="saveBtn" style="display:none" class="border border-white/20 text-white/40 py-3.5 text-sm tracking-wide hover:border-white/40 hover:text-white/70 transition-colors disabled:opacity-25 disabled:cursor-not-allowed" disabled>
+                    Save
                 </button>
             </div>
 
@@ -745,7 +745,9 @@
             document.getElementById('quickOutput').textContent = `${label}: ${band.band} (${dispEvhr.toFixed(1)}x)\n${oneLine}`;
 
             currentResult = { evhr, band: band.band, color: band.color, bgColor: band.bgColor, accrualRatio: ar, marketCap: mc, grossFees: gf };
-            document.getElementById('saveBtn').disabled = false;
+            const sb = document.getElementById('saveBtn');
+            sb.disabled = false;
+            sb.style.display = '';
 
             const state = { mc, gf, ar, tr, ct: treasury, cd, tc, m: isSnapshot ? 'snapshot' : 'live', pn: currentProtocolName || null, pv: currentProvenance ? { s: currentProvenance.source, a: currentProvenance.author, pd: currentProvenance.publishDate, ds: currentProvenance.dataSnapshot, su: currentProvenance.sourceUrl } : null };
             const permalink = `${location.origin}${location.pathname}#calc=${encodeURIComponent(JSON.stringify(state))}`;
