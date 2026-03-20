@@ -104,7 +104,7 @@
 
             <!-- Advanced -->
             <details class="mt-10 border-t border-white/10 pt-8">
-                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Advanced</summary>
+                <summary class="text-xs text-white/20 cursor-pointer hover:text-white/40 transition-colors uppercase tracking-widest">Advanced</summary>
                 <div class="mt-8 space-y-8">
                     <div>
                         <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">시장 데이터</h3>
@@ -188,9 +188,9 @@
                 <table class="w-full text-xs">
                     <thead class="border-b border-white/10">
                         <tr>
-                            <th class="pb-3 text-left font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('name')">Protocol</th>
-                            <th class="pb-3 text-right font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('evhr')">EV/HR</th>
-                            <th class="pb-3 text-center font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('band')">Band</th>
+                            <th class="pb-3 text-left font-medium text-white/20 cursor-pointer hover:text-white/40 transition-colors" onclick="sortComparison('name')">Protocol</th>
+                            <th class="pb-3 text-right font-medium text-white/20 cursor-pointer hover:text-white/40 transition-colors" onclick="sortComparison('evhr')">EV/HR</th>
+                            <th class="pb-3 text-center font-medium text-white/20 cursor-pointer hover:text-white/40 transition-colors" onclick="sortComparison('band')">Band</th>
                         </tr>
                     </thead>
                     <tbody id="comparisonTable"></tbody>
@@ -202,7 +202,7 @@
 
             <!-- Provenance -->
             <details class="mb-12 border-b border-white/10 pb-12">
-                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest py-3">Why this output? (Provenance)</summary>
+                <summary class="text-xs text-white/20 cursor-pointer hover:text-white/40 transition-colors uppercase tracking-widest py-3">Provenance</summary>
                 <div class="mt-6 space-y-5 text-xs">
                     <div>
                         <h4 class="text-white/30 uppercase tracking-widest mb-2">Data Source</h4>
@@ -232,7 +232,7 @@
 
             <!-- Summary Output -->
             <details class="mb-10 border border-white/10">
-                <summary class="px-5 py-4 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Summary Output</summary>
+                <summary class="px-5 py-4 text-xs text-white/20 cursor-pointer hover:text-white/40 transition-colors uppercase tracking-widest">Summary Output</summary>
                 <div class="px-5 pb-5 border-t border-white/10">
                     <div class="flex justify-end mt-3 mb-3">
                         <button onclick="copyQuick()" class="text-xs text-white/25 hover:text-white/60 transition-colors border border-white/10 px-3 py-1">Copy</button>
@@ -243,7 +243,7 @@
 
             <!-- Full Memo -->
             <details class="mb-16 border border-white/10">
-                <summary class="px-5 py-4 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Full Memo</summary>
+                <summary class="px-5 py-4 text-xs text-white/20 cursor-pointer hover:text-white/40 transition-colors uppercase tracking-widest">Full Memo</summary>
                 <div class="px-5 pb-5 border-t border-white/10">
                     <div class="flex justify-end my-3">
                         <button onclick="copyMemo()" class="text-xs text-white/25 hover:text-white/60 transition-colors border border-white/10 px-3 py-1">Copy</button>
@@ -260,7 +260,7 @@
 
             <!-- Secondary Metrics -->
             <details class="mb-16 border-b border-white/10 pb-10">
-                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest py-3">세부 지표 보기</summary>
+                <summary class="text-xs text-white/20 cursor-pointer hover:text-white/40 transition-colors uppercase tracking-widest py-3">세부 지표 보기</summary>
                 <div class="mt-8 space-y-8">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                         <div>
@@ -321,7 +321,7 @@
                         </td>
                         <td class="py-4 text-right font-light text-white text-lg">3.3x</td>
                         <td class="py-4 text-right text-white/40 text-sm">100%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-emerald-500/40 text-emerald-400 text-xs tracking-wider">CHEAP</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('PUMP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                     <tr>
@@ -332,7 +332,7 @@
                         </td>
                         <td class="py-4 text-right font-light text-white text-lg">9.4x</td>
                         <td class="py-4 text-right text-white/40 text-sm">100%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-emerald-500/40 text-emerald-400 text-xs tracking-wider">CHEAP</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('HYPE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                     <tr>
@@ -343,7 +343,7 @@
                         </td>
                         <td class="py-4 text-right font-light text-white/60 text-lg">12.0x</td>
                         <td class="py-4 text-right text-white/40 text-sm">95%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/8 text-white/50 text-xs tracking-wider">FAIR</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-amber-500/40 text-amber-300 text-xs tracking-wider">FAIR</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('JUP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                     <tr>
@@ -354,7 +354,7 @@
                         </td>
                         <td class="py-4 text-right font-light text-white/35 text-lg">57.7x</td>
                         <td class="py-4 text-right text-white/40 text-sm">25%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/5 text-white/25 text-xs tracking-wider">EXPENSIVE</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-rose-500/40 text-rose-400 text-xs tracking-wider">EXPENSIVE</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('MAPLE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                 </tbody>
@@ -404,16 +404,16 @@
         };
 
         const fpUniverse = [
-            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-white',    bgColor: '', verified: true },
-            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-white',    bgColor: '', verified: true },
-            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-white/55', bgColor: '', verified: true },
-            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-white/30', bgColor: '', verified: true }
+            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-emerald-400', bgColor: '', verified: true },
+            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-emerald-400', bgColor: '', verified: true },
+            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-amber-300',   bgColor: '', verified: true },
+            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-rose-400',    bgColor: '', verified: true }
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP',     color: 'text-white'    };
-            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55' };
-            return              { band: 'EXPENSIVE', color: 'text-white/30' };
+            if (evhr < 15) return { band: 'CHEAP',     color: 'text-emerald-400' };
+            if (evhr < 30) return { band: 'FAIR',      color: 'text-amber-300'   };
+            return              { band: 'EXPENSIVE', color: 'text-rose-400'    };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
@@ -610,7 +610,7 @@
                     <span class="text-sm uppercase tracking-widest ${band.color} font-medium">${band.band}</span>
                 </div>
                 <div class="mb-16">
-                    <span class="text-xs text-white/30">${interpretation}</span>
+                    <span class="text-xs text-white/60">${interpretation}</span>
                 </div>
                 ${dispCost > 0 ? `
                 <div class="border-t border-white/10 pt-8 mt-4">
