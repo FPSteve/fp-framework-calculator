@@ -57,7 +57,7 @@
 
         <!-- Onboarding -->
         <div class="mb-20">
-            <p class="text-xs text-white/25 tracking-widest uppercase">CHEAP &lt;15x &nbsp;·&nbsp; FAIR 15–30x &nbsp;·&nbsp; EXPENSIVE &gt;30x</p>
+            <p class="text-xs tracking-widest uppercase"><span class="text-emerald-400">CHEAP &lt;15x</span><span class="text-white/30"> &nbsp;·&nbsp; </span><span class="text-amber-400">FAIR 15–30x</span><span class="text-white/30"> &nbsp;·&nbsp; </span><span class="text-rose-400">EXPENSIVE &gt;30x</span></p>
         </div>
 
         <!-- Calculator -->
@@ -321,7 +321,7 @@
                         </td>
                         <td class="py-4 text-right font-light text-white text-lg">3.3x</td>
                         <td class="py-4 text-right text-white/60 text-sm">100%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-emerald-500/40 text-emerald-400 text-xs tracking-wider">CHEAP</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('PUMP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                     <tr>
@@ -332,7 +332,7 @@
                         </td>
                         <td class="py-4 text-right font-light text-white text-lg">9.4x</td>
                         <td class="py-4 text-right text-white/60 text-sm">100%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-emerald-500/40 text-emerald-400 text-xs tracking-wider">CHEAP</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('HYPE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                     <tr>
@@ -343,18 +343,18 @@
                         </td>
                         <td class="py-4 text-right font-light text-white/60 text-lg">12.0x</td>
                         <td class="py-4 text-right text-white/60 text-sm">95%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/20 text-white/75 text-xs tracking-wider">FAIR</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-amber-500/40 text-amber-400 text-xs tracking-wider">FAIR</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('JUP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                     <tr>
                         <td class="py-4">
-                            <div class="font-medium text-white/60">MAPLE</div>
+                            <div class="font-medium text-white">MAPLE</div>
                             <div class="text-xs text-white/40 mt-0.5">Ponyo · 2026-03-06</div>
                             <div class="text-xs text-white/60 mt-1">75% waterfall loss → Low holder revenue → High multiple</div>
                         </td>
-                        <td class="py-4 text-right font-light text-white/35 text-lg">57.7x</td>
+                        <td class="py-4 text-right font-light text-rose-400 text-lg">57.7x</td>
                         <td class="py-4 text-right text-white/60 text-sm">25%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/10 text-white/55 text-xs tracking-wider">EXPENSIVE</span></td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-rose-500/40 text-rose-400 text-xs tracking-wider">EXPENSIVE</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('MAPLE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                 </tbody>
@@ -404,16 +404,16 @@
         };
 
         const fpUniverse = [
-            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-white', bgColor: '', verified: true },
-            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-white', bgColor: '', verified: true },
-            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-white/70', bgColor: '', verified: true },
-            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-white/50', bgColor: '', verified: true }
+            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-emerald-400', bgColor: '', verified: true },
+            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-emerald-400', bgColor: '', verified: true },
+            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-amber-400', bgColor: '', verified: true },
+            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-rose-400', bgColor: '', verified: true }
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP',     color: 'text-white' };
-            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/70' };
-            return              { band: 'EXPENSIVE', color: 'text-white/50' };
+            if (evhr < 15) return { band: 'CHEAP',     color: 'text-emerald-400' };
+            if (evhr < 30) return { band: 'FAIR',      color: 'text-amber-400' };
+            return              { band: 'EXPENSIVE', color: 'text-rose-400' };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
