@@ -60,76 +60,112 @@
             <p class="text-xs text-white/25 tracking-widest uppercase">CHEAP &lt;15x &nbsp;·&nbsp; FAIR 15–30x &nbsp;·&nbsp; EXPENSIVE &gt;30x</p>
         </div>
 
-        <!-- Case Library -->
-        <div class="mb-20">
-            <div class="flex items-baseline justify-between mb-8">
-                <h2 class="text-xs font-medium text-white/50 uppercase tracking-widest">FP Article Case Library</h2>
-                <span class="text-xs text-white/20 font-mono">4 protocols · Snapshot: Mar 02, 2026</span>
+        <!-- Calculator -->
+        <div class="mb-20 pb-20 border-b border-white/10">
+            <div class="flex justify-between items-baseline mb-10">
+                <h2 class="text-xs font-medium text-white/50 uppercase tracking-widest">Calculate EV/Holder Revenue</h2>
+                <select id="fpCaseSelector" onchange="loadFromDropdown()" class="text-xs border border-white/15 px-2 py-1 text-white/35 focus:outline-none cursor-pointer">
+                    <option value="">Load from FP Case</option>
+                    <option value="HYPE">HYPE (9.4x, CHEAP)</option>
+                    <option value="JUP">JUP (12.0x, FAIR)</option>
+                    <option value="MAPLE">MAPLE (57.7x, EXPENSIVE)</option>
+                </select>
             </div>
-            <p class="text-xs text-white/25 mb-6">Click to load FP article snapshot data. Not live market data.</p>
-            <table class="w-full text-sm border-collapse">
-                <thead>
-                    <tr class="border-b border-white/10">
-                        <th class="pb-3 text-left text-xs font-medium text-white/25 uppercase tracking-widest">Protocol</th>
-                        <th class="pb-3 text-right text-xs font-medium text-white/25 uppercase tracking-widest">EV/HR</th>
-                        <th class="pb-3 text-right text-xs font-medium text-white/25 uppercase tracking-widest">Accrual</th>
-                        <th class="pb-3 text-center text-xs font-medium text-white/25 uppercase tracking-widest">Band</th>
-                        <th class="pb-3"></th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-white/5">
-                    <tr>
-                        <td class="py-4">
-                            <div class="font-medium text-white">PUMP</div>
-                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
-                            <div class="text-xs text-white/35 mt-1">Clean waterfall → Low multiple, dilution from token costs</div>
-                        </td>
-                        <td class="py-4 text-right font-light text-white text-lg">3.3x</td>
-                        <td class="py-4 text-right text-white/40 text-sm">100%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
-                        <td class="py-4 text-right"><button onclick="loadExample('PUMP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
-                    </tr>
-                    <tr>
-                        <td class="py-4">
-                            <div class="font-medium text-white">HYPE</div>
-                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
-                            <div class="text-xs text-white/35 mt-1">Direct burn mechanism → 100% accrual → Attractive</div>
-                        </td>
-                        <td class="py-4 text-right font-light text-white text-lg">9.4x</td>
-                        <td class="py-4 text-right text-white/40 text-sm">100%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
-                        <td class="py-4 text-right"><button onclick="loadExample('HYPE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
-                    </tr>
-                    <tr>
-                        <td class="py-4">
-                            <div class="font-medium text-white">JUP</div>
-                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
-                            <div class="text-xs text-white/35 mt-1">5% leakage → Still high accrual → Market-range</div>
-                        </td>
-                        <td class="py-4 text-right font-light text-white/60 text-lg">12.0x</td>
-                        <td class="py-4 text-right text-white/40 text-sm">95%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/8 text-white/50 text-xs tracking-wider">FAIR</span></td>
-                        <td class="py-4 text-right"><button onclick="loadExample('JUP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
-                    </tr>
-                    <tr>
-                        <td class="py-4">
-                            <div class="font-medium text-white/60">MAPLE</div>
-                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
-                            <div class="text-xs text-white/35 mt-1">75% waterfall loss → Low holder revenue → High multiple</div>
-                        </td>
-                        <td class="py-4 text-right font-light text-white/35 text-lg">57.7x</td>
-                        <td class="py-4 text-right text-white/40 text-sm">25%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/5 text-white/25 text-xs tracking-wider">EXPENSIVE</span></td>
-                        <td class="py-4 text-right"><button onclick="loadExample('MAPLE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="text-xs text-white/15 mt-6">
-                ✓ FP Article Case · As of Mar 02, 2026 ·
-                <a href="https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework" target="_blank" class="hover:text-white/40 transition-colors">View source article →</a>
-                ·
-                <a href="https://docs.google.com/spreadsheets/d/1PzqSTo0F3-yUqvo9AW8eoo0gvuLJVYzRD8N9pCmpxrI/edit?usp=sharing" target="_blank" class="hover:text-white/40 transition-colors">View attached sheet →</a>
-            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                <div>
+                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Market Cap (USD) <span class="text-white/20">*</span></label>
+                    <input type="number" id="marketCap" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 3620000000" step="1000000">
+                </div>
+                <div>
+                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Annual Gross Fees (USD) <span class="text-white/20">*</span></label>
+                    <input type="number" id="grossFees" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 899500000" step="1000000">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button onclick="calculateLive()" class="fp-cta py-3.5 text-sm font-medium tracking-wide transition-colors">
+                    Calculate EV/HR
+                </button>
+                <button onclick="saveScenario()" id="saveBtn" class="border border-white/20 text-white/40 py-3.5 text-sm tracking-wide hover:border-white/40 hover:text-white/70 transition-colors disabled:opacity-25 disabled:cursor-not-allowed" disabled>
+                    Save Scenario
+                </button>
+            </div>
+
+            <input type="hidden" id="accrualRatio" value="100">
+
+            <!-- Scenario Comparison -->
+            <div id="scenarioComparison" class="hidden mt-8 border border-white/10 p-5">
+                <div class="flex justify-between items-center mb-5">
+                    <h3 class="text-xs text-white/35 uppercase tracking-widest">Scenario Comparison</h3>
+                    <div class="flex gap-3">
+                        <button onclick="exportScenariosReadable()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Share</button>
+                        <button onclick="exportScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">JSON</button>
+                        <button onclick="clearScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Clear</button>
+                    </div>
+                </div>
+                <div id="scenarioTable" class="overflow-x-auto"></div>
+            </div>
+
+            <!-- Advanced -->
+            <details class="mt-10 border-t border-white/10 pt-8">
+                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Advanced Settings</summary>
+                <div class="mt-8 space-y-8">
+                    <div>
+                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">시장 데이터</h3>
+                        <div>
+                            <label class="block text-xs text-white/25 mb-2">Circulating Supply</label>
+                            <input type="number" id="circulatingSupply" class="w-full md:w-1/2 pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="1,000,000,000">
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Treasury</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs text-white/25 mb-2">Stablecoin Holdings (USD)</label>
+                                <input type="number" id="stablecoins" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-white/25 mb-2">Native Token Holdings (USD)</label>
+                                <input type="number" id="nativeTokens" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-white/25 mb-2">Native Token Haircut (%)</label>
+                                <input type="number" id="haircut" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="50">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-white/25 mb-2">Claim Discount (%)</label>
+                                <select id="claimDiscount" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors">
+                                    <option value="0">0% - Automated</option>
+                                    <option value="25">25% - Active DAO</option>
+                                    <option value="50">50% - Paper only</option>
+                                    <option value="75">75% - Weak gov</option>
+                                    <option value="100">100% - Sealed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Revenue</h3>
+                        <div>
+                            <label class="block text-xs text-white/25 mb-2">Revenue Take Rate (%)</label>
+                            <input type="number" id="takeRate" class="w-full md:w-1/2 pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="89.6">
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Token Costs</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs text-white/25 mb-2">Team Compensation (USD/year)</label>
+                                <input type="number" id="teamComp" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-white/25 mb-2">Operating Token Costs (USD/year)</label>
+                                <input type="number" id="operatingCosts" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </details>
         </div>
 
         <!-- Results — Judgment Surface -->
@@ -163,7 +199,6 @@
                     </thead>
                     <tbody id="comparisonTable"></tbody>
                 </table>
-                <p class="text-xs text-white/15 mt-4">클릭으로 정렬</p>
             </div>
 
             <!-- One-line -->
@@ -263,116 +298,76 @@
             </div>
         </div>
 
-        <!-- Calculator -->
-        <div class="mb-20 pb-20 border-b border-white/10">
-            <div class="flex justify-between items-baseline mb-10">
-                <h2 class="text-xs font-medium text-white/50 uppercase tracking-widest">Calculate EV/Holder Revenue</h2>
-                <select id="fpCaseSelector" onchange="loadFromDropdown()" class="text-xs border border-white/15 px-2 py-1 text-white/35 focus:outline-none cursor-pointer">
-                    <option value="">Load from FP Case</option>
-                    <option value="HYPE">HYPE (9.4x, CHEAP)</option>
-                    <option value="JUP">JUP (12.0x, FAIR)</option>
-                    <option value="MAPLE">MAPLE (57.7x, EXPENSIVE)</option>
-                </select>
+        <!-- Case Library -->
+        <div class="mb-20">
+            <div class="flex items-baseline justify-between mb-8">
+                <h2 class="text-xs font-medium text-white/50 uppercase tracking-widest">FP Article Case Library</h2>
+                <span class="text-xs text-white/20 font-mono">4 protocols · Snapshot: Mar 02, 2026</span>
             </div>
-            <p class="text-xs text-white/20 mb-10">Required: Market Cap, Annual Fees (Accrual defaults to 100%)</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
-                <div>
-                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Market Cap (USD) <span class="text-white/20">*</span></label>
-                    <input type="number" id="marketCap" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 3620000000" step="1000000">
-                </div>
-                <div>
-                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Annual Gross Fees (USD) <span class="text-white/20">*</span></label>
-                    <input type="number" id="grossFees" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 899500000" step="1000000">
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mb-8">
-                <button onclick="calculateLive()" class="fp-cta py-3.5 text-sm font-medium tracking-wide transition-colors">
-                    Calculate EV/HR
-                </button>
-                <button onclick="saveScenario()" id="saveBtn" class="border border-white/20 text-white/40 py-3.5 text-sm tracking-wide hover:border-white/40 hover:text-white/70 transition-colors disabled:opacity-25 disabled:cursor-not-allowed" disabled>
-                    Save Scenario
-                </button>
-            </div>
-
-            <p class="text-xs text-white/15 mb-8">Take Rate 100% · Accrual 100% 기본값 적용 (Advanced에서 수정 가능)</p>
-            <input type="hidden" id="accrualRatio" value="100">
-
-            <!-- Scenario Comparison -->
-            <div id="scenarioComparison" class="hidden mt-8 border border-white/10 p-5">
-                <div class="flex justify-between items-center mb-5">
-                    <h3 class="text-xs text-white/35 uppercase tracking-widest">Scenario Comparison</h3>
-                    <div class="flex gap-3">
-                        <button onclick="exportScenariosReadable()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Share</button>
-                        <button onclick="exportScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">JSON</button>
-                        <button onclick="clearScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Clear</button>
-                    </div>
-                </div>
-                <div id="scenarioTable" class="overflow-x-auto"></div>
-                <p class="text-xs text-white/15 mt-3">Export로 스냅샷 저장 가능</p>
-            </div>
-
-            <!-- Advanced -->
-            <details class="mt-10 border-t border-white/10 pt-8">
-                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Advanced Settings</summary>
-                <div class="mt-8 space-y-8">
-                    <div>
-                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">시장 데이터</h3>
-                        <div>
-                            <label class="block text-xs text-white/25 mb-2">Circulating Supply</label>
-                            <input type="number" id="circulatingSupply" class="w-full md:w-1/2 pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="1,000,000,000">
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Treasury</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs text-white/25 mb-2">Stablecoin Holdings (USD)</label>
-                                <input type="number" id="stablecoins" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-white/25 mb-2">Native Token Holdings (USD)</label>
-                                <input type="number" id="nativeTokens" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-white/25 mb-2">Native Token Haircut (%)</label>
-                                <input type="number" id="haircut" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="50">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-white/25 mb-2">Claim Discount (%)</label>
-                                <select id="claimDiscount" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors">
-                                    <option value="0">0% - Automated</option>
-                                    <option value="25">25% - Active DAO</option>
-                                    <option value="50">50% - Paper only</option>
-                                    <option value="75">75% - Weak gov</option>
-                                    <option value="100">100% - Sealed</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Revenue</h3>
-                        <div>
-                            <label class="block text-xs text-white/25 mb-2">Revenue Take Rate (%)</label>
-                            <input type="number" id="takeRate" class="w-full md:w-1/2 pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="89.6">
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">Token Costs</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs text-white/25 mb-2">Team Compensation (USD/year)</label>
-                                <input type="number" id="teamComp" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-white/25 mb-2">Operating Token Costs (USD/year)</label>
-                                <input type="number" id="operatingCosts" class="w-full pb-2 border-b border-white/10 focus:border-white/35 focus:outline-none text-white/70 text-sm transition-colors" placeholder="0">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </details>
+            <p class="text-xs text-white/25 mb-6">Click to load FP article snapshot data. Not live market data.</p>
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="border-b border-white/10">
+                        <th class="pb-3 text-left text-xs font-medium text-white/25 uppercase tracking-widest">Protocol</th>
+                        <th class="pb-3 text-right text-xs font-medium text-white/25 uppercase tracking-widest">EV/HR</th>
+                        <th class="pb-3 text-right text-xs font-medium text-white/25 uppercase tracking-widest">Accrual</th>
+                        <th class="pb-3 text-center text-xs font-medium text-white/25 uppercase tracking-widest">Band</th>
+                        <th class="pb-3"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium text-white">PUMP</div>
+                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
+                            <div class="text-xs text-white/35 mt-1">Clean waterfall → Low multiple, dilution from token costs</div>
+                        </td>
+                        <td class="py-4 text-right font-light text-white text-lg">3.3x</td>
+                        <td class="py-4 text-right text-white/40 text-sm">100%</td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-right"><button onclick="loadExample('PUMP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium text-white">HYPE</div>
+                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
+                            <div class="text-xs text-white/35 mt-1">Direct burn mechanism → 100% accrual → Attractive</div>
+                        </td>
+                        <td class="py-4 text-right font-light text-white text-lg">9.4x</td>
+                        <td class="py-4 text-right text-white/40 text-sm">100%</td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-right"><button onclick="loadExample('HYPE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium text-white">JUP</div>
+                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
+                            <div class="text-xs text-white/35 mt-1">5% leakage → Still high accrual → Market-range</div>
+                        </td>
+                        <td class="py-4 text-right font-light text-white/60 text-lg">12.0x</td>
+                        <td class="py-4 text-right text-white/40 text-sm">95%</td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/8 text-white/50 text-xs tracking-wider">FAIR</span></td>
+                        <td class="py-4 text-right"><button onclick="loadExample('JUP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium text-white/60">MAPLE</div>
+                            <div class="text-xs text-white/25 mt-0.5">Ponyo · 2026-03-06</div>
+                            <div class="text-xs text-white/35 mt-1">75% waterfall loss → Low holder revenue → High multiple</div>
+                        </td>
+                        <td class="py-4 text-right font-light text-white/35 text-lg">57.7x</td>
+                        <td class="py-4 text-right text-white/40 text-sm">25%</td>
+                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/5 text-white/25 text-xs tracking-wider">EXPENSIVE</span></td>
+                        <td class="py-4 text-right"><button onclick="loadExample('MAPLE')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-xs text-white/15 mt-6">
+                ✓ FP Article Case · As of Mar 02, 2026 ·
+                <a href="https://4pillars.io/en/articles/ev-holder-revenue-token-valuation-framework" target="_blank" class="hover:text-white/40 transition-colors">View source article →</a>
+                ·
+                <a href="https://docs.google.com/spreadsheets/d/1PzqSTo0F3-yUqvo9AW8eoo0gvuLJVYzRD8N9pCmpxrI/edit?usp=sharing" target="_blank" class="hover:text-white/40 transition-colors">View attached sheet →</a>
+            </p>
         </div>
 
         <!-- Formula -->
