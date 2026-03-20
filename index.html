@@ -345,6 +345,7 @@
             <p class="text-xs text-gray-500 text-center mb-4">
                 💡 Take Rate 100% · Accrual 100% 기본값 적용 (Advanced에서 수정 가능)
             </p>
+            <input type="hidden" id="accrualRatio" value="100">
 
             <!-- Scenario Comparison -->
             <div id="scenarioComparison" class="hidden mt-4 p-4 bg-purple-50 border-2 border-purple-300 rounded-lg">
@@ -1199,15 +1200,27 @@ ${oneLine}`;
                 try {
                     const stateString = decodeURIComponent(hash.substring(6));
                     const state = JSON.parse(stateString);
+                    const setValue = (id, value) => {
+                        const element = document.getElementById(id);
+                        if (element) {
+                            element.value = value ?? '';
+                        }
+                    };
 
                     // Restore input values
-                    document.getElementById('marketCap').value = state.mc || '';
-                    document.getElementById('grossFees').value = state.gf || '';
-                    document.getElementById('accrualRatio').value = state.ar || '';
-                    document.getElementById('takeRate').value = state.tr || '';
-                    document.getElementById('claimableTreasury').value = state.ct || '';
-                    document.getElementById('claimDiscount').value = state.cd || '';
-                    document.getElementById('tokenCosts').value = state.tc || '';
+                    setValue('marketCap', state.mc);
+                    setValue('grossFees', state.gf);
+                    setValue('accrualRatio', state.ar ?? 100);
+                    setValue('takeRate', state.tr);
+                    // Current UI stores treasury/token costs in decomposed fields,
+                    // so permalink restore maps aggregated values back into the
+                    // simplest equivalent inputs.
+                    setValue('stablecoins', state.ct ?? 0);
+                    setValue('nativeTokens', 0);
+                    setValue('haircut', 50);
+                    setValue('claimDiscount', state.cd ?? 0);
+                    setValue('teamComp', state.tc ?? 0);
+                    setValue('operatingCosts', 0);
 
                     // Restore protocol name and provenance
                     if (state.pn) currentProtocolName = state.pn;
