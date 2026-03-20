@@ -867,13 +867,21 @@ Source: FP EV/Holder Revenue Framework
             document.getElementById('primaryMetric').className = `p-6 rounded-lg border-2 ${color}`;
             document.getElementById('primaryMetric').innerHTML = `
                 <div class="text-center">
-                    <h3 class="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">Main Metric</h3>
+                    <h3 class="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">Raw Multiple</h3>
                     <div class="text-6xl font-bold text-gray-900 mb-3">${evhr.toFixed(1)}x</div>
-                    <div class="text-sm text-gray-600 mb-4">EV / Holder Revenue</div>
+                    <div class="text-sm text-gray-600 mb-2">Raw EV / Holder Revenue</div>
+                    <div class="text-xs text-gray-500 mb-4">토큰 보유자에게 실제 귀속되는 매출 1달러당 현재 EV를 얼마나 지불하는지</div>
                     <div class="inline-block px-4 py-2 rounded-full ${bandInfo.bgColor} ${bandInfo.color} font-semibold text-lg mb-2">
                         ${bandInfo.band}
                     </div>
                     <p class="text-sm text-gray-600 mt-3">${interpretation}</p>
+                    ${costAdjustedMultiple > 0 ? `
+                    <div class="mt-5 border-t border-gray-200 pt-4">
+                        <div class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Cost-adjusted</div>
+                        <div class="text-2xl font-semibold text-gray-900">${costAdjustedMultiple.toFixed(1)}x</div>
+                        <div class="text-xs text-gray-500 mt-1">EV / (Holder Revenue - Token Costs)</div>
+                    </div>
+                    ` : ''}
                 </div>
             `;
 
@@ -894,7 +902,7 @@ Source: FP EV/Holder Revenue Framework
             } else if (accrualRatio < 30) {
                 oneLine = `⚠️ ${archetype} - Waterfall 누수로 홀더 미도달 (vs ${closestCase.name}: ${closestCase.evhr}x)`;
             } else if (tokenCosts / holderRevenue > 0.5) {
-                oneLine = `⚠️ ${archetype} - High dilution pressure (vs ${closestCase.name}: ${closestCase.evhr}x)`;
+                oneLine = `⚠️ ${archetype} - Raw ${evhr.toFixed(1)}x지만 token costs 반영 시 ${costAdjustedMultiple.toFixed(1)}x (vs ${closestCase.name}: ${closestCase.evhr}x)`;
             } else if (claimDiscount >= 75) {
                 oneLine = `⚠️ ${archetype} - Sealed treasury (vs ${closestCase.name}: ${closestCase.evhr}x)`;
             } else {
