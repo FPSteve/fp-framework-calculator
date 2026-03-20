@@ -586,11 +586,11 @@
             document.getElementById('fpInterpretation').innerHTML = fpInterp;
 
             let interpretation;
-            if (evhr < 5) interpretation = 'Sub-5x. Structural floor.';
-            else if (evhr < 15) interpretation = 'Within CHEAP range.';
-            else if (evhr < 30) interpretation = 'Market range.';
-            else if (evhr < 60) interpretation = 'Premium. Verify accrual.';
-            else interpretation = 'Far above FP universe.';
+            if (evhr < 5) interpretation = 'Sub-5x. Below FP universe floor. Verify accrual inputs.';
+            else if (evhr < 15) interpretation = 'Cheap vs FP range. Check revenue durability.';
+            else if (evhr < 30) interpretation = 'FAIR band. Inline with FP comps. Verify accrual structure.';
+            else if (evhr < 60) interpretation = 'Premium to FP range. High accrual needed to justify.';
+            else interpretation = 'Expensive vs all FP cases. Accrual and growth must be exceptional.';
 
             const isSnapshot = Boolean(currentSnapshotTruth);
             const dispEvhr = currentSnapshotTruth?.rawEvhr ?? evhr;
