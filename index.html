@@ -104,7 +104,7 @@
 
             <!-- Advanced -->
             <details class="mt-10 border-t border-white/10 pt-8">
-                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Advanced Settings</summary>
+                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-widest">Advanced</summary>
                 <div class="mt-8 space-y-8">
                     <div>
                         <h3 class="text-xs text-white/20 uppercase tracking-widest mb-5">시장 데이터</h3>
@@ -320,7 +320,7 @@
                         </td>
                         <td class="py-4 text-right font-light text-white text-lg">3.3x</td>
                         <td class="py-4 text-right text-white/40 text-sm">100%</td>
-                        <td class="py-4 text-center"><span class="px-2 py-0.5 border border-white/15 text-white text-xs tracking-wider">CHEAP</span></td>
+                        <td class="py-4 text-center"><span class="text-xs tracking-wider text-emerald-400">CHEAP</span></td>
                         <td class="py-4 text-right"><button onclick="loadExample('PUMP')" class="text-xs text-white/25 hover:text-white/70 transition-colors">Load</button></td>
                     </tr>
                     <tr>
@@ -403,16 +403,16 @@
         };
 
         const fpUniverse = [
-            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-white',    bgColor: '', verified: true },
-            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-white',    bgColor: '', verified: true },
-            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-white/55', bgColor: '', verified: true },
-            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-white/30', bgColor: '', verified: true }
+            { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-emerald-400', bgColor: '', verified: true },
+            { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-emerald-400', bgColor: '', verified: true },
+            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-amber-400',   bgColor: '', verified: true },
+            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-red-400',     bgColor: '', verified: true }
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP',     color: 'text-white',    bgColor: '' };
-            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55', bgColor: '' };
-            return              { band: 'EXPENSIVE', color: 'text-white/30', bgColor: '' };
+            if (evhr < 15) return { band: 'CHEAP',     color: 'text-emerald-400', bgColor: '' };
+            if (evhr < 30) return { band: 'FAIR',      color: 'text-amber-400',   bgColor: '' };
+            return              { band: 'EXPENSIVE', color: 'text-red-400',     bgColor: '' };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
