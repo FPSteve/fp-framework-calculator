@@ -31,6 +31,9 @@
         @media (max-width: 768px) { .judgment-number { font-size: 5rem; } }
         ::selection { background: rgba(255,255,255,0.15); }
         select option { background: #111; color: #fff; }
+        .fp-cta { background: rgba(99,102,241,0.8) !important; color: #fff !important; }
+        .fp-cta:hover { background: rgba(99,102,241,1) !important; }
+        #modeIndicator.snapshot-mode { border-color: rgba(99,102,241,0.5) !important; color: rgba(99,102,241,0.9) !important; }
     </style>
 </head>
 <body class="min-h-screen py-16">
@@ -53,12 +56,8 @@
         </div>
 
         <!-- Onboarding -->
-        <div class="border-l border-white/20 pl-6 mb-20">
-            <div class="space-y-3 text-sm text-white/50 leading-relaxed">
-                <p><span class="text-white/80">What this is</span> — 토큰이 프로토콜 수익 대비 싼지, 비싼지 판단하는 Four Pillars의 시그니처 밸류에이션 프레임워크</p>
-                <p><span class="text-white/80">Who it's for</span> — 토큰 투자/분석/운영 담당자. 홀더 수익이 얼마나 발생하는지, 그에 비해 시가총액이 적정한지 빠르게 검증</p>
-                <p><span class="text-white/80">Bands</span> — CHEAP (&lt;15x) deeper diligence candidate / FAIR (15–30x) market-range / EXPENSIVE (&gt;30x) premium requires justification</p>
-            </div>
+        <div class="mb-20">
+            <p class="text-xs text-white/25 tracking-widest uppercase">CHEAP &lt;15x &nbsp;·&nbsp; FAIR 15–30x &nbsp;·&nbsp; EXPENSIVE &gt;30x</p>
         </div>
 
         <!-- Case Library -->
@@ -416,12 +415,9 @@
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP', color: 'text-white', bgColor: '' };
-            if (evhr < 30) return { band: 'FAIR', color: 'text-white/55', bgColor: '' };
-            return { band: 'EXPENSIVE', color: 'text-white/30', bgColor: '' };
-        };
-            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55', bgColor: '' };
-            return              { band: 'EXPENSIVE', color: 'text-white/30', bgColor: '' };
+            if (evhr < 15) return { band: 'CHEAP',     color: 'text-emerald-400', bgColor: '' };
+            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55',    bgColor: '' };
+            return              { band: 'EXPENSIVE', color: 'text-white/30',    bgColor: '' };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
