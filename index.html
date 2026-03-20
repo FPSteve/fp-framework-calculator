@@ -177,14 +177,14 @@
 
             <!-- Primary Judgment -->
             <div id="primaryMetric" class="pb-12 mb-12 border-b border-white/10">
-                <div class="text-xs font-normal uppercase tracking-widest text-white/40 mb-8">Raw Multiple · EV / Holder Revenue</div>
+                <div class="text-xs font-normal uppercase tracking-widest text-white/20 mb-4">EV / Holder Revenue</div>
                 <div class="judgment-number" style="color:rgba(255,255,255,0.07)">—.—x</div>
                 <div class="mt-6 text-xs text-white/15 uppercase tracking-widest">Enter values · Calculate EV/HR</div>
             </div>
 
             <!-- FP Universe -->
             <div class="mb-12 pb-12 border-b border-white/10">
-                <h3 class="text-xs font-medium text-white/40 uppercase tracking-widest mb-8">vs FP Universe</h3>
+                <h3 class="text-xs font-medium text-white/25 uppercase tracking-widest mb-6">vs FP Universe</h3>
                 <table class="w-full text-xs">
                     <thead class="border-b border-white/10">
                         <tr>
@@ -198,7 +198,7 @@
             </div>
 
             <!-- One-line -->
-            <div id="fpOneLine" class="border-l border-white/25 pl-5 py-2 mb-12 text-sm text-white/65 leading-relaxed"></div>
+            <div id="fpOneLine" class="border-l border-white/15 pl-5 py-1 mb-12 text-xs text-white/45 leading-relaxed"></div>
 
             <!-- Provenance -->
             <details class="mb-12 border-b border-white/10 pb-12">
@@ -225,10 +225,10 @@
             </details>
 
             <!-- What to Check Next -->
-            <div id="nextActions" class="border-l border-white/10 pl-5 mb-16">
-                <h3 class="text-xs text-white/45 uppercase tracking-widest mb-5">What to check next</h3>
-                <ul id="actionBullets" class="space-y-3 text-sm text-white/65"></ul>
-            </div>
+            <details id="nextActions" class="mb-16">
+                <summary class="text-xs text-white/20 cursor-pointer hover:text-white/40 transition-colors uppercase tracking-widest py-2 list-none">What to check next</summary>
+                <ul id="actionBullets" class="space-y-3 text-xs text-white/55 mt-5 border-l border-white/10 pl-5"></ul>
+            </details>
 
             <!-- Summary Output -->
             <details class="mb-10 border border-white/10">
@@ -586,11 +586,11 @@
             document.getElementById('fpInterpretation').innerHTML = fpInterp;
 
             let interpretation;
-            if (evhr < 5) interpretation = 'Sub-5x. Below FP universe floor. Verify accrual inputs.';
-            else if (evhr < 15) interpretation = 'Cheap vs FP range. Check revenue durability.';
-            else if (evhr < 30) interpretation = 'FAIR band. Inline with FP comps. Verify accrual structure.';
-            else if (evhr < 60) interpretation = 'Premium to FP range. High accrual needed to justify.';
-            else interpretation = 'Expensive vs all FP cases. Accrual and growth must be exceptional.';
+            if (evhr < 5) interpretation = 'Sub-5x. Strongest accrual signal in FP universe.';
+            else if (evhr < 15) interpretation = 'CHEAP. Revenue flows to holders.';
+            else if (evhr < 30) interpretation = 'FAIR. Inline with FP comps.';
+            else if (evhr < 60) interpretation = 'EXPENSIVE. High accrual needed to justify.';
+            else interpretation = 'Far above FP universe.';
 
             const isSnapshot = Boolean(currentSnapshotTruth);
             const dispEvhr = currentSnapshotTruth?.rawEvhr ?? evhr;
@@ -602,15 +602,12 @@
             mi.className = 'inline-flex items-center px-2 py-0.5 border text-[11px] font-medium uppercase tracking-[0.18em]' + (isSnapshot ? ' snapshot-mode' : ' border-white/10 text-white/25');
 
             document.getElementById('primaryMetric').innerHTML = `
-                <div class="mb-8">
-                    <span class="text-xs text-white/35 uppercase tracking-widest">Raw Multiple · EV / Holder Revenue</span>
-                </div>
-                <div class="judgment-number ${band.color} mb-6">${dispEvhr.toFixed(1)}x</div>
+                <div class="judgment-number ${band.color} mb-4">${dispEvhr.toFixed(1)}x</div>
                 <div class="mb-2">
-                    <span class="text-sm uppercase tracking-widest ${band.color} font-medium">${band.band}</span>
+                    <span class="text-base uppercase tracking-widest ${band.color} font-medium">${band.band}</span>
                 </div>
                 <div class="mb-10">
-                    <span class="text-xs text-white/80">${interpretation}</span>
+                    <span class="text-sm text-white/70">${interpretation}</span>
                 </div>
                 ${dispCost > 0 ? `
                 <div class="border-t border-white/10 pt-8 mt-4">
