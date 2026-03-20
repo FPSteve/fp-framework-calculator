@@ -222,16 +222,16 @@
         </div>
 
         <!-- Results (MOVED ABOVE INPUTS - mobile responsive) -->
-        <div id="results" class="hidden bg-white rounded-lg shadow-lg p-4 md:p-8 mb-6">
-            <div class="flex items-start justify-between gap-3 mb-4">
+        <div id="results" class="hidden border-b border-white/10 pb-16 mb-16">
+            <div class="flex items-start justify-between gap-3 mb-8">
                 <div>
-                    <h2 class="text-sm font-medium text-gray-500">Framework Output</h2>
-                    <div id="modeIndicator" class="mt-2 inline-flex items-center px-2 py-1 rounded border text-[11px] font-medium uppercase tracking-[0.18em] text-gray-400 border-gray-200 bg-white">
+                    <h2 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30">Framework Output</h2>
+                    <div id="modeIndicator" class="mt-2 inline-flex items-center text-[11px] uppercase tracking-[0.18em] text-white/25">
                         LIVE CALCULATION
                     </div>
                 </div>
-                <button id="shareBtn" onclick="shareResult()" style="display: none;" class="px-3 py-1 bg-gray-900 text-white text-xs rounded hover:bg-gray-700 font-medium">
-                    🔗 Share Link
+                <button id="shareBtn" onclick="shareResult()" style="display: none;" class="px-3 py-1.5 border border-white/20 text-white/50 text-xs hover:border-white/50 hover:text-white transition-colors">
+                    Share →
                 </button>
             </div>
 
@@ -242,19 +242,19 @@
 
                 <!-- FP Band Comparison - right next to main result -->
                 <div>
-                    <h3 class="text-sm font-medium text-gray-700 mb-3">📊 vs FP Universe</h3>
+                    <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30 mb-4">vs FP Universe</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-xs">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-2 py-2 text-left text-xs cursor-pointer hover:bg-gray-100" onclick="sortComparison('name')">
-                                        Protocol <span class="text-gray-400">↕</span>
+                            <thead>
+                                <tr class="border-b border-white/10">
+                                    <th class="pb-2 text-left text-xs font-normal text-white/25 cursor-pointer" onclick="sortComparison('name')">
+                                        Protocol ↕
                                     </th>
-                                    <th class="px-2 py-2 text-right text-xs cursor-pointer hover:bg-gray-100" onclick="sortComparison('evhr')">
-                                        EV/HR <span class="text-gray-400">↕</span>
+                                    <th class="pb-2 text-right text-xs font-normal text-white/25 cursor-pointer" onclick="sortComparison('evhr')">
+                                        EV/HR ↕
                                     </th>
-                                    <th class="px-2 py-2 text-center text-xs cursor-pointer hover:bg-gray-100" onclick="sortComparison('band')">
-                                        Band <span class="text-gray-400">↕</span>
+                                    <th class="pb-2 text-center text-xs font-normal text-white/25 cursor-pointer" onclick="sortComparison('band')">
+                                        Band ↕
                                     </th>
                                 </tr>
                             </thead>
@@ -262,259 +262,237 @@
                             </tbody>
                         </table>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2">💡 클릭으로 정렬 가능</p>
+                    <p class="text-xs text-white/20 mt-2">클릭으로 정렬</p>
                 </div>
             </div>
 
             <!-- FP One-line Interpretation (directly below band) -->
-            <div id="fpOneLine" class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-4 mb-4 text-sm font-medium text-blue-900"></div>
+            <div id="fpOneLine" class="border-l border-white/20 pl-6 mb-8 text-sm text-white/60"></div>
 
             <!-- Provenance Drawer - Why this output? -->
-            <details class="border border-gray-300 rounded-lg mb-4 bg-white">
-                <summary class="px-4 py-3 font-semibold text-gray-700 cursor-pointer hover:bg-gray-50 text-sm">
-                    🔍 Why this output? (Provenance & Calculation Steps)
+            <details class="border-t border-white/10 mb-8">
+                <summary class="py-3 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-[0.15em]">
+                    Provenance & Calculation Steps
                 </summary>
-                <div class="p-4 border-t border-gray-200 space-y-3 text-xs">
-                    <!-- Data Source -->
+                <div class="pt-4 space-y-4 text-xs">
                     <div>
-                        <h4 class="font-semibold text-gray-900 mb-1">Data Source</h4>
-                        <div id="provenanceSource" class="text-gray-700 font-mono text-xs"></div>
+                        <h4 class="text-white/30 uppercase tracking-wider mb-2">Data Source</h4>
+                        <div id="provenanceSource" class="text-white/50 font-mono"></div>
                     </div>
-
-                    <!-- Calculation Steps -->
                     <div>
-                        <h4 class="font-semibold text-gray-900 mb-1">Calculation Steps</h4>
-                        <div id="calculationSteps" class="space-y-1 text-gray-700"></div>
+                        <h4 class="text-white/30 uppercase tracking-wider mb-2">Calculation Steps</h4>
+                        <div id="calculationSteps" class="space-y-1 text-white/50"></div>
                     </div>
-
-                    <!-- Archetype Logic -->
                     <div>
-                        <h4 class="font-semibold text-gray-900 mb-1">Archetype Classification Logic</h4>
-                        <div id="archetypeLogic" class="text-gray-700"></div>
+                        <h4 class="text-white/30 uppercase tracking-wider mb-2">Archetype</h4>
+                        <div id="archetypeLogic" class="text-white/50"></div>
                     </div>
-
-                    <!-- Comparison Method -->
                     <div>
-                        <h4 class="font-semibold text-gray-900 mb-1">Closest Match Method</h4>
-                        <p class="text-gray-700">Weighted distance: |EV/HR diff|/10 + |Accrual diff|/100</p>
-                        <div id="matchDistance" class="text-gray-700 font-mono"></div>
+                        <h4 class="text-white/30 uppercase tracking-wider mb-2">Closest Match</h4>
+                        <p class="text-white/30">Weighted distance: |EV/HR diff|/10 + |Accrual diff|/100</p>
+                        <div id="matchDistance" class="text-white/50 font-mono"></div>
                     </div>
                 </div>
             </details>
 
             <!-- What to Check Next - Action Bullets -->
-            <div id="nextActions" class="bg-yellow-50 border-l-4 border-yellow-500 rounded-lg p-4 mb-6">
-                <h3 class="text-sm font-semibold text-yellow-800 mb-2">🔍 What to check next</h3>
-                <ul id="actionBullets" class="space-y-1 text-sm text-yellow-900">
+            <div id="nextActions" class="border-l border-white/20 pl-6 mb-8">
+                <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30 mb-3">What to check next</h3>
+                <ul id="actionBullets" class="space-y-2 text-sm text-white/50">
                 </ul>
             </div>
 
             <!-- Summary Output -->
-            <div class="border-2 border-blue-500 rounded-lg p-4 mb-4 bg-blue-50">
-                <div class="flex justify-between items-center mb-2">
-                    <h3 class="font-semibold text-blue-900">Summary Output</h3>
-                    <button onclick="copyQuick()" class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 font-medium">
+            <div class="border-t border-white/10 pt-8 mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30">Summary Output</h3>
+                    <button onclick="copyQuick()" class="px-3 py-1.5 border border-white/20 text-white/40 text-xs hover:border-white/50 hover:text-white transition-colors">
                         Copy
                     </button>
                 </div>
-                <pre id="quickOutput" class="text-sm bg-white p-3 rounded border font-mono leading-relaxed"></pre>
-                <p class="text-xs text-blue-700 mt-2">One-line framework band + interpretation</p>
+                <pre id="quickOutput" class="text-sm text-white/70 font-mono leading-relaxed"></pre>
             </div>
 
             <!-- Full Memo (detailed) -->
-            <details class="border-2 border-green-500 rounded-lg bg-green-50">
-                <summary class="px-4 py-3 font-semibold text-green-900 cursor-pointer hover:bg-green-100">
-                    📋 Full Memo (상세 버전)
+            <details class="border-t border-white/10 mb-8">
+                <summary class="py-3 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-[0.15em]">
+                    Full Memo (기관/심사역 전달용)
                 </summary>
-                <div class="p-4 border-t border-green-300">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm text-green-800">기관/심사역 전달용 - 모든 입력값 포함</span>
-                        <button onclick="copyMemo()" class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 font-medium">
+                <div class="pt-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs text-white/30">모든 입력값 포함</span>
+                        <button onclick="copyMemo()" class="px-3 py-1.5 border border-white/20 text-white/40 text-xs hover:border-white/50 hover:text-white transition-colors">
                             Copy
                         </button>
                     </div>
-                    <pre id="memoOutput" class="text-xs bg-white p-3 rounded border overflow-x-auto font-mono leading-relaxed"></pre>
+                    <pre id="memoOutput" class="text-xs text-white/50 overflow-x-auto font-mono leading-relaxed"></pre>
                 </div>
             </details>
 
             <!-- FP Detailed Interpretation -->
-            <div class="border-l-4 border-gray-300 bg-gray-50 rounded-lg p-4 mb-6">
-                <h3 class="font-semibold text-gray-700 mb-2">🧠 FP 프레임워크 상세 해석</h3>
-                <div id="fpInterpretation" class="text-sm text-gray-700"></div>
+            <div class="border-l border-white/15 pl-6 mb-8">
+                <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30 mb-3">FP 프레임워크 해석</h3>
+                <div id="fpInterpretation" class="text-sm text-white/55"></div>
             </div>
 
             <!-- Secondary Metrics (collapsed by default) -->
-            <details class="border rounded-lg">
-                <summary class="px-4 py-3 font-medium text-gray-700 cursor-pointer hover:bg-gray-50">
-                    📈 세부 지표 보기
+            <details class="border-t border-white/10 mb-8">
+                <summary class="py-3 text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-[0.15em]">
+                    세부 지표 보기
                 </summary>
-                <div class="p-4 border-t space-y-4">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="pt-6 space-y-6">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <div>
-                            <h3 class="text-xs font-medium text-gray-500 mb-1">Enterprise Value</h3>
-                            <p id="ev" class="text-lg font-bold text-gray-900"></p>
+                            <h3 class="text-xs text-white/30 uppercase tracking-wider mb-2">Enterprise Value</h3>
+                            <p id="ev" class="text-xl font-light text-white tabular"></p>
                         </div>
                         <div>
-                            <h3 class="text-xs font-medium text-gray-500 mb-1">Holder Revenue</h3>
-                            <p id="holderRevenue" class="text-lg font-bold text-gray-900"></p>
+                            <h3 class="text-xs text-white/30 uppercase tracking-wider mb-2">Holder Revenue</h3>
+                            <p id="holderRevenue" class="text-xl font-light text-white tabular"></p>
                         </div>
                         <div>
-                            <h3 class="text-xs font-medium text-gray-500 mb-1">Accrual Discount</h3>
-                            <p id="accrualDiscount" class="text-lg font-bold text-gray-900"></p>
+                            <h3 class="text-xs text-white/30 uppercase tracking-wider mb-2">Accrual Discount</h3>
+                            <p id="accrualDiscount" class="text-xl font-light text-white tabular"></p>
                         </div>
                         <div>
-                            <h3 class="text-xs font-medium text-gray-500 mb-1">Pass-Through</h3>
-                            <p id="passThrough" class="text-lg font-bold text-gray-900"></p>
+                            <h3 class="text-xs text-white/30 uppercase tracking-wider mb-2">Pass-Through</h3>
+                            <p id="passThrough" class="text-xl font-light text-white tabular"></p>
                         </div>
                     </div>
-
-                    <div class="border-t pt-4">
-                        <h3 class="text-sm font-medium text-gray-700 mb-2">💧 Revenue Waterfall</h3>
-                        <div id="waterfall" class="space-y-1 text-sm"></div>
+                    <div class="border-t border-white/10 pt-4">
+                        <h3 class="text-xs text-white/30 uppercase tracking-wider mb-3">Revenue Waterfall</h3>
+                        <div id="waterfall" class="space-y-1 text-sm text-white/50"></div>
                     </div>
                 </div>
             </details>
 
             <!-- History Comparison - Then vs Now -->
-            <div id="historySection" style="display: none;" class="border border-gray-300 rounded-lg p-4 mb-6 bg-gray-50">
-                <h3 class="text-sm font-semibold text-gray-700 mb-3">📈 History — Then vs Now</h3>
-                <div id="historyContent" class="space-y-2 text-xs"></div>
-                <button onclick="clearHistory()" class="mt-2 text-xs text-red-600 hover:underline">Clear history for this protocol</button>
+            <div id="historySection" style="display: none;" class="border-t border-white/10 pt-6 mb-8">
+                <h3 class="text-xs text-white/30 uppercase tracking-wider mb-4">History — Then vs Now</h3>
+                <div id="historyContent" class="space-y-2 text-xs text-white/50"></div>
+                <button onclick="clearHistory()" class="mt-3 text-xs text-white/25 hover:text-white/50 transition-colors">Clear history</button>
             </div>
         </div>
 
         <!-- Calculator Inputs -->
-        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <div class="flex justify-between items-center mb-2">
-                <h2 class="text-lg font-semibold">Calculate EV/Holder Revenue</h2>
-                <div class="flex items-center gap-2">
-                    <select id="fpCaseSelector" onchange="loadFromDropdown()" class="text-xs px-2 py-1 border rounded bg-purple-50 text-purple-700 font-medium">
-                        <option value="">📚 Load from FP Case</option>
-                        <option value="HYPE">HYPE (9.4x, CHEAP band)</option>
-                        <option value="JUP">JUP (12.0x, FAIR band)</option>
-                        <option value="MAPLE">MAPLE (57.7x, EXPENSIVE band)</option>
-                    </select>
-                </div>
+        <div class="border-b border-white/10 pb-16 mb-16">
+            <div class="flex justify-between items-baseline mb-8">
+                <h2 class="text-xs font-medium uppercase tracking-[0.25em] text-white/40">Calculate EV/Holder Revenue</h2>
+                <select id="fpCaseSelector" onchange="loadFromDropdown()" class="text-xs text-white/30 bg-transparent border-none cursor-pointer hover:text-white/60 transition-colors">
+                    <option value="" class="bg-black">Load from FP Case</option>
+                    <option value="HYPE" class="bg-black">HYPE (9.4x)</option>
+                    <option value="JUP" class="bg-black">JUP (12.0x)</option>
+                    <option value="MAPLE" class="bg-black">MAPLE (57.7x)</option>
+                </select>
             </div>
-            <p class="text-xs text-gray-600 mb-4">Required: Market Cap, Annual Fees (Accrual defaults to 100%)</p>
+            <p class="text-xs text-white/25 mb-6">Market Cap, Annual Fees 입력 필수 · Accrual 기본값 100%</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                        Market Cap (USD) <span class="text-red-500">*</span>
+                    <label class="block text-xs text-white/30 uppercase tracking-wider mb-3">
+                        Market Cap (USD)
                     </label>
-                    <input type="number" id="marketCap" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g. 3620000000" step="1000000">
+                    <input type="number" id="marketCap" class="w-full bg-transparent border-b border-white/15 pb-3 text-white text-sm focus:outline-none focus:border-white/50 transition-colors placeholder-white/15" placeholder="e.g. 3,620,000,000" step="1000000">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                        Annual Gross Fees (USD) <span class="text-red-500">*</span>
+                    <label class="block text-xs text-white/30 uppercase tracking-wider mb-3">
+                        Annual Gross Fees (USD)
                     </label>
-                    <input type="number" id="grossFees" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g. 899500000" step="1000000">
+                    <input type="number" id="grossFees" class="w-full bg-transparent border-b border-white/15 pb-3 text-white text-sm focus:outline-none focus:border-white/50 transition-colors placeholder-white/15" placeholder="e.g. 899,500,000" step="1000000">
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 mb-3">
-                <button onclick="calculateLive()" class="bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 shadow-sm">
+            <div class="flex gap-4 mb-6">
+                <button onclick="calculateLive()" class="bg-white text-black px-8 py-3 text-sm font-medium hover:bg-white/90 transition-colors">
                     Calculate EV/HR
                 </button>
-                <button onclick="saveScenario()" id="saveBtn" class="bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 shadow-sm disabled:bg-gray-300" disabled>
+                <button onclick="saveScenario()" id="saveBtn" class="border border-white/20 text-white/40 px-6 py-3 text-sm hover:border-white/50 hover:text-white transition-colors disabled:opacity-30" disabled>
                     Save Scenario
                 </button>
             </div>
 
-            <p class="text-xs text-gray-500 text-center mb-4">
-                💡 Take Rate 100% · Accrual 100% 기본값 적용 (Advanced에서 수정 가능)
+            <p class="text-xs text-white/20 mb-6">
+                Take Rate 100% · Accrual 100% 기본값 적용 (Advanced에서 수정 가능)
             </p>
             <input type="hidden" id="accrualRatio" value="100">
 
             <!-- Scenario Comparison -->
-            <div id="scenarioComparison" class="hidden mt-4 p-4 bg-purple-50 border-2 border-purple-300 rounded-lg">
-                <div class="flex justify-between items-center mb-3">
-                    <h3 class="font-semibold text-purple-900">📊 Scenario Comparison</h3>
-                    <div class="flex gap-2">
-                        <button onclick="exportScenariosReadable()" class="text-xs px-2 py-1 bg-purple-600 text-white rounded hover:bg-purple-700">
-                            📤 Share
-                        </button>
-                        <button onclick="exportScenarios()" class="text-xs px-2 py-1 bg-purple-500 text-white rounded hover:bg-purple-600">
-                            📥 JSON
-                        </button>
-                        <button onclick="clearScenarios()" class="text-xs px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600">
-                            Clear
-                        </button>
+            <div id="scenarioComparison" class="hidden mt-6 border-t border-white/10 pt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/30">Scenario Comparison</h3>
+                    <div class="flex gap-3">
+                        <button onclick="exportScenariosReadable()" class="text-xs text-white/30 hover:text-white/60 transition-colors">Share</button>
+                        <button onclick="exportScenarios()" class="text-xs text-white/30 hover:text-white/60 transition-colors">JSON</button>
+                        <button onclick="clearScenarios()" class="text-xs text-white/30 hover:text-white/60 transition-colors">Clear</button>
                     </div>
                 </div>
-                <div id="scenarioTable" class="overflow-x-auto"></div>
-                <p class="text-xs text-purple-700 mt-2">💡 Export로 스냅샷 저장 가능</p>
+                <div id="scenarioTable" class="overflow-x-auto text-white/50"></div>
             </div>
 
             <!-- Advanced inputs (collapsed) -->
             <details>
-                <summary class="text-sm font-medium text-gray-700 cursor-pointer hover:text-blue-600">
-                    ⚙️ Advanced Settings
+                <summary class="text-xs text-white/25 cursor-pointer hover:text-white/50 transition-colors uppercase tracking-[0.15em] pt-4">
+                    Advanced Settings
                 </summary>
-                <div class="mt-4 space-y-4 border-t pt-4">
-                    <!-- Market Data -->
+                <div class="mt-6 space-y-6 border-t border-white/10 pt-6">
                     <div>
-                        <h3 class="text-sm font-medium text-gray-600 mb-2">시장 데이터</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <h3 class="text-xs text-white/25 uppercase tracking-wider mb-4">시장 데이터</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-xs text-gray-600 mb-1">Circulating Supply</label>
-                                <input type="number" id="circulatingSupply" class="w-full px-2 py-1 text-sm border rounded" placeholder="1,000,000,000">
+                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Circulating Supply</label>
+                                <input type="number" id="circulatingSupply" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="1,000,000,000">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Treasury -->
                     <div>
-                        <h3 class="text-sm font-medium text-gray-600 mb-2">Treasury</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <h3 class="text-xs text-white/25 uppercase tracking-wider mb-4">Treasury</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-xs text-gray-600 mb-1">Stablecoin Holdings (USD)</label>
-                                <input type="number" id="stablecoins" class="w-full px-2 py-1 text-sm border rounded" placeholder="0">
+                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Stablecoin Holdings (USD)</label>
+                                <input type="number" id="stablecoins" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-xs text-gray-600 mb-1">Native Token Holdings (USD)</label>
-                                <input type="number" id="nativeTokens" class="w-full px-2 py-1 text-sm border rounded" placeholder="0">
+                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Native Token Holdings (USD)</label>
+                                <input type="number" id="nativeTokens" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-xs text-gray-600 mb-1">Native Token Haircut (%)</label>
-                                <input type="number" id="haircut" class="w-full px-2 py-1 text-sm border rounded" placeholder="50">
+                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Native Token Haircut (%)</label>
+                                <input type="number" id="haircut" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="50">
                             </div>
                             <div>
-                                <label class="block text-xs text-gray-600 mb-1">Claim Discount (%)</label>
-                                <select id="claimDiscount" class="w-full px-2 py-1 text-sm border rounded">
-                                    <option value="0">0% - Automated</option>
-                                    <option value="25">25% - Active DAO</option>
-                                    <option value="50">50% - Paper only</option>
-                                    <option value="75">75% - Weak gov</option>
-                                    <option value="100">100% - Sealed</option>
+                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Claim Discount</label>
+                                <select id="claimDiscount" class="w-full bg-black text-white/60 border-b border-white/10 pb-2 text-sm focus:outline-none focus:border-white/30 transition-colors">
+                                    <option value="0" class="bg-black">0% - Automated</option>
+                                    <option value="25" class="bg-black">25% - Active DAO</option>
+                                    <option value="50" class="bg-black">50% - Paper only</option>
+                                    <option value="75" class="bg-black">75% - Weak gov</option>
+                                    <option value="100" class="bg-black">100% - Sealed</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Revenue -->
                     <div>
-                        <h3 class="text-sm font-medium text-gray-600 mb-2">Revenue</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <h3 class="text-xs text-white/25 uppercase tracking-wider mb-4">Revenue</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-xs text-gray-600 mb-1">Revenue Take Rate (%)</label>
-                                <input type="number" id="takeRate" class="w-full px-2 py-1 text-sm border rounded" placeholder="89.6">
+                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Take Rate (%)</label>
+                                <input type="number" id="takeRate" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="89.6">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Token Costs -->
                     <div>
-                        <h3 class="text-sm font-medium text-gray-600 mb-2">Token Costs</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <h3 class="text-xs text-white/25 uppercase tracking-wider mb-4">Token Costs</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-xs text-gray-600 mb-1">Team Compensation (USD/year)</label>
-                                <input type="number" id="teamComp" class="w-full px-2 py-1 text-sm border rounded" placeholder="0">
+                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Team Compensation (USD/year)</label>
+                                <input type="number" id="teamComp" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-xs text-gray-600 mb-1">Operating Token Costs (USD/year)</label>
-                                <input type="number" id="operatingCosts" class="w-full px-2 py-1 text-sm border rounded" placeholder="0">
+                                <label class="block text-xs text-white/30 uppercase tracking-wider mb-2">Operating Token Costs (USD/year)</label>
+                                <input type="number" id="operatingCosts" class="w-full bg-transparent border-b border-white/10 pb-2 text-white/70 text-sm focus:outline-none focus:border-white/30 transition-colors placeholder-white/10" placeholder="0">
                             </div>
                         </div>
                     </div>
@@ -523,11 +501,9 @@
         </div>
 
         <!-- Formula Explanation (Simplified) -->
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 mb-6">
-            <div class="text-sm text-center">
-                <span class="font-semibold">EV/HR</span> =
-                <span class="text-blue-600">(Market Cap - Treasury)</span> /
-                <span class="text-green-600">(Fees × Accrual)</span>
+        <div class="border-t border-white/10 pt-8 mb-8">
+            <div class="text-xs text-white/25 text-center tracking-widest uppercase">
+                EV/HR = (Market Cap − Treasury) / (Fees × Accrual)
             </div>
         </div>
     </div>
