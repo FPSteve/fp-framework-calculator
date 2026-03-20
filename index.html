@@ -133,7 +133,7 @@
         </div>
 
         <!-- Results — Judgment Surface -->
-        <div id="results" class="hidden mb-20">
+        <div id="results" class="mb-20">
             <div class="flex items-center justify-between mb-12">
                 <div id="modeIndicator" class="inline-flex items-center px-2 py-0.5 border border-white/10 text-[11px] font-medium uppercase tracking-[0.18em] text-white/25">
                     LIVE CALCULATION
@@ -144,7 +144,11 @@
             </div>
 
             <!-- Primary Judgment -->
-            <div id="primaryMetric" class="pb-16 mb-16 border-b border-white/10"></div>
+            <div id="primaryMetric" class="pb-16 mb-16 border-b border-white/10">
+                <div class="text-xs font-normal uppercase tracking-widest text-white/20 mb-8">Raw Multiple · EV / Holder Revenue</div>
+                <div class="judgment-number" style="color:rgba(255,255,255,0.07)">—.—x</div>
+                <div class="mt-6 text-xs text-white/15 uppercase tracking-widest">Enter values · Calculate EV/HR</div>
+            </div>
 
             <!-- FP Universe -->
             <div class="mb-16 pb-16 border-b border-white/10">
@@ -284,7 +288,7 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4 mb-8">
-                <button onclick="calculateLive()" class="bg-white text-black py-3.5 text-sm font-medium tracking-wide hover:bg-white/90 transition-colors">
+                <button onclick="calculateLive()" class="fp-cta py-3.5 text-sm font-medium tracking-wide transition-colors">
                     Calculate EV/HR
                 </button>
                 <button onclick="saveScenario()" id="saveBtn" class="border border-white/20 text-white/40 py-3.5 text-sm tracking-wide hover:border-white/40 hover:text-white/70 transition-colors disabled:opacity-25 disabled:cursor-not-allowed" disabled>
@@ -415,9 +419,9 @@
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP',     color: 'text-emerald-400', bgColor: '' };
-            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55',    bgColor: '' };
-            return              { band: 'EXPENSIVE', color: 'text-white/30',    bgColor: '' };
+            if (evhr < 15) return { band: 'CHEAP',     color: 'text-white',    bgColor: '' };
+            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55', bgColor: '' };
+            return              { band: 'EXPENSIVE', color: 'text-white/30', bgColor: '' };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
@@ -571,7 +575,7 @@
             const passThru = (tr / 100) * (ar / 100) * 100;
             const costAdj  = (holRev - tc) > 0 ? ev / (holRev - tc) : 0;
 
-            document.getElementById('results').classList.remove('hidden');
+            // results always visible (no hidden toggle needed)
 
             // FP Interpretation
             let fpInterp = '';
@@ -596,9 +600,7 @@
 
             const mi = document.getElementById('modeIndicator');
             mi.textContent = isSnapshot ? 'ARTICLE SNAPSHOT' : 'LIVE CALCULATION';
-            mi.className = isSnapshot
-                ? 'inline-flex items-center px-2 py-0.5 border border-white/25 text-[11px] font-medium uppercase tracking-[0.18em] text-white/45'
-                : 'inline-flex items-center px-2 py-0.5 border border-white/10 text-[11px] font-medium uppercase tracking-[0.18em] text-white/25';
+            mi.className = 'inline-flex items-center px-2 py-0.5 border text-[11px] font-medium uppercase tracking-[0.18em]' + (isSnapshot ? ' snapshot-mode' : ' border-white/10 text-white/25');
 
             document.getElementById('primaryMetric').innerHTML = `
                 <div class="mb-6">
