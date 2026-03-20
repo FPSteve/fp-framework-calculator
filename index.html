@@ -162,7 +162,7 @@
                     </div>
                 </div>
             </details>
-        </div>
+        </details>
 
         <!-- Results — Judgment Surface -->
         <div id="results" class="mb-20">
@@ -472,9 +472,16 @@
             set('accrualRatio', data.accrualRatio); set('teamComp', data.teamComp);
             set('operatingCosts', data.operatingCosts);
             calculate();
+            const panel = document.getElementById('calculatorPanel');
+            if (panel) panel.removeAttribute('open');
         }
 
-        function calculateLive() { currentSnapshotTruth = null; calculate(); }
+        function calculateLive() {
+            currentSnapshotTruth = null;
+            calculate();
+            const panel = document.getElementById('calculatorPanel');
+            if (panel) panel.removeAttribute('open');
+        }
 
         function loadFromDropdown() {
             const v = document.getElementById('fpCaseSelector').value;
