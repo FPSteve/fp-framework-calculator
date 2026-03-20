@@ -73,11 +73,11 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
                 <div>
-                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Market Cap (USD) <span class="text-white/20">*</span></label>
+                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Market Cap (USD)</label>
                     <input type="number" id="marketCap" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 3620000000" step="1000000">
                 </div>
                 <div>
-                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Annual Gross Fees (USD) <span class="text-white/20">*</span></label>
+                    <label class="block text-xs text-white/30 uppercase tracking-widest mb-3">Annual Gross Fees (USD)</label>
                     <input type="number" id="grossFees" class="w-full pb-2 border-b border-white/15 focus:border-white/45 focus:outline-none text-white text-sm transition-colors" placeholder="e.g. 899500000" step="1000000">
                 </div>
             </div>
@@ -97,11 +97,7 @@
             <div id="scenarioComparison" class="hidden mt-8 border border-white/10 p-5">
                 <div class="flex justify-between items-center mb-5">
                     <h3 class="text-xs text-white/35 uppercase tracking-widest">Scenario Comparison</h3>
-                    <div class="flex gap-3">
-                        <button onclick="exportScenariosReadable()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Share</button>
-                        <button onclick="exportScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">JSON</button>
-                        <button onclick="clearScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Clear</button>
-                    </div>
+                    <button onclick="clearScenarios()" class="text-xs text-white/25 hover:text-white/55 transition-colors border border-white/10 px-2 py-1">Clear</button>
                 </div>
                 <div id="scenarioTable" class="overflow-x-auto"></div>
             </div>
@@ -192,9 +188,9 @@
                 <table class="w-full text-xs">
                     <thead class="border-b border-white/10">
                         <tr>
-                            <th class="pb-3 text-left font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('name')">Protocol <span class="text-white/15">↕</span></th>
-                            <th class="pb-3 text-right font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('evhr')">EV/HR <span class="text-white/15">↕</span></th>
-                            <th class="pb-3 text-center font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('band')">Band <span class="text-white/15">↕</span></th>
+                            <th class="pb-3 text-left font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('name')">Protocol</th>
+                            <th class="pb-3 text-right font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('evhr')">EV/HR</th>
+                            <th class="pb-3 text-center font-medium text-white/25 cursor-pointer hover:text-white/50 transition-colors" onclick="sortComparison('band')">Band</th>
                         </tr>
                     </thead>
                     <tbody id="comparisonTable"></tbody>
@@ -574,11 +570,11 @@
 
             // FP Interpretation
             let fpInterp = '';
-            if (ar >= 90 && evhr < 15) fpInterp = '<strong>Clean tokenomics</strong>: 높은 accrual ratio로 프로토콜 수익이 홀더에게 직접 전달됩니다. FP가 선호하는 구조입니다. (HYPE, JUP 유형)';
-            else if (ar < 30) fpInterp = '<strong>Waterfall leakage</strong>: 프로토콜 수익의 대부분이 홀더에게 도달하지 않습니다. 낮은 accrual ratio가 valuation을 왜곡합니다. (MAPLE 유형)';
-            else if (tc / holRev > 0.5) fpInterp = '<strong>High dilution pressure</strong>: Token costs가 holder revenue의 50% 이상입니다. 공급 압력이 수익 성장을 상쇄할 수 있습니다. (PUMP 유형)';
-            else if (cd >= 75) fpInterp = '<strong>Sealed treasury</strong>: Treasury에 홀더가 접근할 수 없습니다. Balance sheet 가치가 제한적입니다.';
-            else fpInterp = '프로토콜의 value accrual 구조를 위 metrics로 분석하세요. FP는 높은 accrual ratio와 낮은 tokenholder tax를 선호합니다.';
+            if (ar >= 90 && evhr < 15) fpInterp = '<strong>Clean structure.</strong> Revenue flows directly to holders. FP-preferred.';
+            else if (ar < 30) fpInterp = '<strong>Leaking waterfall.</strong> Most protocol revenue doesn\'t reach holders. Multiple is distorted.';
+            else if (tc / holRev > 0.5) fpInterp = '<strong>Dilution pressure.</strong> Token costs exceed 50% of holder revenue. Net yield is weak.';
+            else if (cd >= 75) fpInterp = '<strong>Sealed treasury.</strong> Balance sheet value is nominal.';
+            else fpInterp = 'Accrual structure is neutral. No dominant signal.';
             document.getElementById('fpInterpretation').innerHTML = fpInterp;
 
             let interpretation;
@@ -618,14 +614,14 @@
             const archetype = getArchetype(evhr, ar, tc, holRev);
 
             let oneLine = '';
-            if (holRev <= 0) oneLine = `Zero holder revenue — ${ar}% accrual이지만 실제 홀더 도달 수익 없음 (검증 필요)`;
-            else if (ev < 0) oneLine = `Negative EV — Treasury ($${(treasury/1e6).toFixed(1)}M)가 시총 초과, Balance sheet 중심 평가`;
-            else if (evhr > 100) oneLine = `Extreme overvaluation (${evhr.toFixed(0)}x) — 홀더 수익 대비 비정상적 고평가 또는 accrual 오류`;
-            else if (ar >= 90 && evhr < 15) oneLine = `${archetype} — Clean waterfall로 ${ar}% accrual, FP 선호 구조 (vs ${closest.name}: ${closest.evhr}x)`;
-            else if (ar < 30) oneLine = `${archetype} — Waterfall 누수로 홀더 미도달 (vs ${closest.name}: ${closest.evhr}x)`;
-            else if (tc / holRev > 0.5) oneLine = `${archetype} — Raw ${dispEvhr.toFixed(1)}x지만 token costs 반영 시 ${dispCost.toFixed(1)}x (vs ${closest.name}: ${closest.evhr}x)`;
-            else if (cd >= 75) oneLine = `${archetype} — Sealed treasury (vs ${closest.name}: ${closest.evhr}x)`;
-            else oneLine = `${archetype} — ${ar}% accrual, ${band.band} 밴드 (vs ${closest.name}: ${closest.evhr}x)`;
+            if (holRev <= 0) oneLine = `No holder revenue. Verify accrual inputs.`;
+            else if (ev < 0) oneLine = `Treasury exceeds market cap. Balance-sheet driven.`;
+            else if (evhr > 100) oneLine = `${evhr.toFixed(0)}x. Verify inputs.`;
+            else if (ar >= 90 && evhr < 15) oneLine = `${band.band}. ${ar}% accrual. Clean structure. Closest: ${closest.name} ${closest.evhr}x.`;
+            else if (ar < 30) oneLine = `${band.band}. ${ar}% reaches holders. Waterfall leakage. Closest: ${closest.name} ${closest.evhr}x.`;
+            else if (tc / holRev > 0.5) oneLine = `${band.band}. Raw ${dispEvhr.toFixed(1)}x — cost-adjusted ${dispCost.toFixed(1)}x. Closest: ${closest.name} ${closest.evhr}x.`;
+            else if (cd >= 75) oneLine = `${band.band}. Sealed treasury. Closest: ${closest.name} ${closest.evhr}x.`;
+            else oneLine = `${band.band}. ${ar}% accrual. Closest: ${closest.name} ${closest.evhr}x.`;
             document.getElementById('fpOneLine').textContent = oneLine;
 
             // Action bullets
