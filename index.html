@@ -37,52 +37,76 @@
         input[type=number] { -moz-appearance: textfield; }
         .tabular { font-variant-numeric: tabular-nums; }
 
-        /* ── Monochrome Override System ─────────────────────────────── */
+        /* ── FP Design System: Black base + Signal accent colors ──── */
+        /* Neutralize all backgrounds to black */
         [class*="bg-gray-"], [class*="bg-white"], [class*="bg-blue-"],
-        [class*="bg-green-"], [class*="bg-yellow-"], [class*="bg-orange-"],
-        [class*="bg-red-"], [class*="bg-purple-"], [class*="bg-indigo-"] {
+        [class*="bg-purple-"], [class*="bg-indigo-"] {
             background-color: #000 !important;
         }
-        .bg-gray-100 { background-color: rgba(255,255,255,0.03) !important; }
-        .bg-blue-600, .bg-blue-700, .bg-green-600, .bg-green-700,
-        .bg-gray-600, .bg-gray-700, .bg-purple-600, .bg-purple-700,
-        .bg-purple-500, .bg-gray-500 { background-color: rgba(255,255,255,0.08) !important; }
+        .bg-gray-100, .bg-gray-50 { background-color: rgba(255,255,255,0.03) !important; }
+        .bg-blue-600, .bg-blue-700, .bg-purple-600, .bg-purple-700,
+        .bg-purple-500, .bg-gray-500, .bg-gray-600, .bg-gray-700 { background-color: rgba(255,255,255,0.08) !important; }
         .bg-gray-900 { background-color: #fff !important; color: #000 !important; }
 
+        /* Band signal backgrounds — subtle tint, not flat black */
+        .bg-green-50, .bg-green-100 { background-color: rgba(16,185,129,0.06) !important; }
+        .bg-yellow-50, .bg-yellow-100 { background-color: rgba(245,158,11,0.06) !important; }
+        .bg-orange-50, .bg-orange-100 { background-color: rgba(249,115,22,0.07) !important; }
+        .bg-red-50, .bg-red-100 { background-color: rgba(239,68,68,0.06) !important; }
+
+        /* Text: grays → white opacity */
         [class*="text-gray-9"], [class*="text-gray-8"], [class*="text-gray-7"] { color: rgba(255,255,255,0.88) !important; }
-        [class*="text-gray-6"], [class*="text-gray-5"] { color: rgba(255,255,255,0.42) !important; }
+        [class*="text-gray-6"], [class*="text-gray-5"] { color: rgba(255,255,255,0.45) !important; }
         [class*="text-gray-4"], [class*="text-gray-3"] { color: rgba(255,255,255,0.28) !important; }
-        [class*="text-blue-"], [class*="text-indigo-"] { color: rgba(255,255,255,0.6) !important; }
-        [class*="text-green-"] { color: rgba(255,255,255,0.82) !important; }
-        [class*="text-yellow-"] { color: rgba(255,255,255,0.58) !important; }
-        [class*="text-orange-"] { color: rgba(255,255,255,0.48) !important; }
-        [class*="text-red-"] { color: rgba(255,255,255,0.38) !important; }
-        [class*="text-purple-"] { color: rgba(255,255,255,0.6) !important; }
+        [class*="text-blue-"], [class*="text-indigo-"] { color: rgba(255,255,255,0.55) !important; }
+        [class*="text-purple-"] { color: rgba(255,255,255,0.55) !important; }
         .text-white { color: #fff !important; }
 
-        [class*="border-gray-"], [class*="border-blue-"], [class*="border-green-"],
-        [class*="border-yellow-"], [class*="border-orange-"], [class*="border-red-"],
-        [class*="border-purple-"] { border-color: rgba(255,255,255,0.1) !important; }
-        .border-l-4 { border-left-width: 1px !important; border-left-color: rgba(255,255,255,0.22) !important; }
+        /* Band signal text colors — let them show through */
+        .text-green-600, .text-green-700 { color: #34d399 !important; }
+        .text-green-800, .text-green-900 { color: #6ee7b7 !important; }
+        .text-yellow-600, .text-yellow-700 { color: #fbbf24 !important; }
+        .text-yellow-800, .text-yellow-900 { color: #fde68a !important; }
+        .text-orange-600, .text-orange-700 { color: #fb923c !important; }
+        .text-red-600, .text-red-700 { color: #f87171 !important; }
+
+        /* Borders — neutralize most, keep signal borders */
+        [class*="border-gray-"], [class*="border-blue-"], [class*="border-purple-"] { border-color: rgba(255,255,255,0.1) !important; }
+        .border-green-400, .border-green-500 { border-color: rgba(52,211,153,0.5) !important; }
+        .border-yellow-400, .border-yellow-500 { border-color: rgba(251,191,36,0.5) !important; }
+        .border-orange-400, .border-orange-500 { border-color: rgba(251,146,60,0.5) !important; }
+        .border-red-400, .border-red-500 { border-color: rgba(248,113,113,0.5) !important; }
+        .border-l-4 { border-left-width: 2px !important; }
 
         [class*="rounded"] { border-radius: 0 !important; }
         [class*="shadow"] { box-shadow: none !important; }
 
         input, select, textarea {
-            background: rgba(255,255,255,0.04) !important;
+            background: rgba(255,255,255,0.03) !important;
             color: #fff !important;
             border: 1px solid rgba(255,255,255,0.12) !important;
         }
-        input::placeholder { color: rgba(255,255,255,0.2) !important; }
+        input::placeholder { color: rgba(255,255,255,0.18) !important; }
         input:focus, select:focus { outline: none !important; border-color: rgba(255,255,255,0.32) !important; box-shadow: none !important; }
         option { background: #0a0a0a; color: #fff; }
 
-        a { color: rgba(255,255,255,0.48) !important; }
+        a { color: rgba(255,255,255,0.45) !important; }
         a:hover { color: rgba(255,255,255,0.88) !important; }
-        summary { color: rgba(255,255,255,0.55) !important; }
-        pre { background: rgba(255,255,255,0.03) !important; color: rgba(255,255,255,0.7) !important; border-color: rgba(255,255,255,0.07) !important; }
+        summary { color: rgba(255,255,255,0.5) !important; }
+        pre { background: rgba(255,255,255,0.03) !important; color: rgba(255,255,255,0.65) !important; border-color: rgba(255,255,255,0.07) !important; }
         tr:hover td { background: rgba(255,255,255,0.02) !important; }
-        [class*="hover:bg-"]:hover { background-color: rgba(255,255,255,0.04) !important; }
+        [class*="hover:bg-"]:hover { background-color: rgba(255,255,255,0.03) !important; }
+
+        /* ── Primary CTA button ────────────────────── */
+        button.bg-blue-600, button[onclick="calculateLive()"] {
+            background-color: #fff !important;
+            color: #000 !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.05em !important;
+        }
+        button.bg-blue-600:hover, button[onclick="calculateLive()"]:hover {
+            background-color: rgba(255,255,255,0.9) !important;
+        }
 
         /* ── Judgment surface: 8rem, weight 200 ──── */
         #primaryMetric .text-6xl, #primaryMetric .text-7xl, #primaryMetric .text-8xl {
@@ -91,26 +115,28 @@
             line-height: 1 !important;
             letter-spacing: -0.04em !important;
         }
+        /* Band badge in primary metric — show color */
         #primaryMetric [class*="rounded-full"] {
-            font-size: 0.7rem !important; font-weight: 400 !important;
-            letter-spacing: 0.22em !important; text-transform: uppercase !important;
-            background: transparent !important; border: 1px solid rgba(255,255,255,0.18) !important;
-            color: rgba(255,255,255,0.5) !important; padding: 0.3rem 0.9rem !important;
+            font-size: 0.72rem !important; font-weight: 500 !important;
+            letter-spacing: 0.18em !important; text-transform: uppercase !important;
+            padding: 0.35rem 1rem !important;
         }
         #primaryMetric { border: none !important; padding: 0 !important; }
 
-        /* ── Apple-precision spacing ─────────────── */
-        .px-4 { padding-left: 2rem !important; padding-right: 2rem !important; }
+        /* ── Comparison table band badges ─── */
+        #comparisonTable [class*="rounded-full"] {
+            font-size: 0.65rem !important;
+            letter-spacing: 0.12em !important;
+            font-weight: 500 !important;
+        }
+
+        /* ── Typography ─────────────── */
         h2 { font-weight: 300 !important; letter-spacing: -0.01em; }
         h3 { font-weight: 300 !important; }
         .font-semibold { font-weight: 400 !important; }
 
-        #modeIndicator { border-color: rgba(255,255,255,0.12) !important; color: rgba(255,255,255,0.35) !important; background: transparent !important; }
-        #shareBtn { background: rgba(255,255,255,0.07) !important; color: rgba(255,255,255,0.65) !important; }
-        #comparisonTable [class*="rounded-full"] {
-            background: transparent !important; border: 1px solid rgba(255,255,255,0.14) !important;
-            color: rgba(255,255,255,0.5) !important;
-        }
+        #modeIndicator { color: rgba(255,255,255,0.3) !important; background: transparent !important; }
+        #shareBtn { background: rgba(255,255,255,0.06) !important; color: rgba(255,255,255,0.6) !important; }
     </style>
 </head>
 <body class="bg-black text-white min-h-screen py-12">
