@@ -579,16 +579,16 @@
 
         const fpUniverse = [
             // FP-verified protocols (from 4pillars.io article, 2026-03-06)
-            { name: 'PUMP', evhr: 3.3, accrual: 100, band: 'CHEAP', signal: '✅ Very Cheap', color: 'text-green-600', bgColor: 'bg-green-50', verified: true },
-            { name: 'HYPE', evhr: 9.4, accrual: 100, band: 'CHEAP', signal: '✅ Attractive', color: 'text-green-600', bgColor: 'bg-green-50', verified: true },
-            { name: 'JUP', evhr: 12, accrual: 95, band: 'FAIR', signal: '✅ Good', color: 'text-green-600', bgColor: 'bg-yellow-50', verified: true },
-            { name: 'MAPLE', evhr: 57.7, accrual: 25, band: 'EXPENSIVE', signal: '🚨 Very Expensive', color: 'text-red-600', bgColor: 'bg-red-50', verified: true }
+            { name: 'PUMP', evhr: 3.3, accrual: 100, band: 'CHEAP', signal: 'Very Cheap', color: 'text-white', bgColor: '', verified: true },
+            { name: 'HYPE', evhr: 9.4, accrual: 100, band: 'CHEAP', signal: 'Attractive', color: 'text-white', bgColor: '', verified: true },
+            { name: 'JUP', evhr: 12, accrual: 95, band: 'FAIR', signal: 'Good', color: 'text-white/60', bgColor: '', verified: true },
+            { name: 'MAPLE', evhr: 57.7, accrual: 25, band: 'EXPENSIVE', signal: 'Very Expensive', color: 'text-white/35', bgColor: '', verified: true }
         ];
 
         function getFPBand(evhr) {
-            if (evhr < 15) return { band: 'CHEAP', color: 'text-green-700', bgColor: 'bg-green-50' };
-            if (evhr < 30) return { band: 'FAIR', color: 'text-yellow-700', bgColor: 'bg-yellow-50' };
-            return { band: 'EXPENSIVE', color: 'text-orange-700', bgColor: 'bg-orange-50' };
+            if (evhr < 15) return { band: 'CHEAP', color: 'text-white', bgColor: '' };
+            if (evhr < 30) return { band: 'FAIR', color: 'text-white/60', bgColor: '' };
+            return { band: 'EXPENSIVE', color: 'text-white/35', bgColor: '' };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
@@ -660,14 +660,14 @@
 
         function renderComparisonTable() {
             document.getElementById('comparisonTable').innerHTML = currentSorted.map(p => `
-                <tr class="${p.name === 'Your Input' ? 'border-l-4 border-blue-500 font-semibold' : ''}">
-                    <td class="px-2 py-2 text-xs">
+                <tr class="border-b border-white/5 ${p.name === 'Your Input' ? 'border-l border-white/40' : ''}">
+                    <td class="py-2 pr-2 text-xs ${p.name === 'Your Input' ? 'text-white pl-2' : 'text-white/50'}">
                         ${p.name}
-                        ${p.verified ? '<span class="ml-1 text-green-600" title="FP-verified">✓</span>' : ''}
+                        ${p.verified ? '<span class="ml-1 text-white/25">✓</span>' : ''}
                     </td>
-                    <td class="px-2 py-2 text-right font-bold text-xs">${p.evhr.toFixed(1)}x</td>
-                    <td class="px-2 py-2 text-center">
-                        <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${p.bgColor} ${p.color}">
+                    <td class="py-2 text-right tabular text-xs ${p.name === 'Your Input' ? 'text-white font-medium' : 'text-white/50'}">${p.evhr.toFixed(1)}x</td>
+                    <td class="py-2 text-center">
+                        <span class="text-xs uppercase tracking-wider ${p.color}">
                             ${p.band}
                         </span>
                     </td>
@@ -769,25 +769,25 @@
 
             const table = `
                 <table class="w-full text-xs">
-                    <thead class="bg-purple-100">
-                        <tr>
-                            <th class="px-2 py-2 text-left">Scenario</th>
-                            <th class="px-2 py-2 text-right">EV/HR</th>
-                            <th class="px-2 py-2 text-center">Band</th>
-                            <th class="px-2 py-2 text-right">Accrual</th>
+                    <thead>
+                        <tr class="border-b border-white/10">
+                            <th class="pb-2 text-left text-white/25 font-normal">Scenario</th>
+                            <th class="pb-2 text-right text-white/25 font-normal">EV/HR</th>
+                            <th class="pb-2 text-center text-white/25 font-normal">Band</th>
+                            <th class="pb-2 text-right text-white/25 font-normal">Accrual</th>
                         </tr>
                     </thead>
                     <tbody>
                         ${savedScenarios.map(s => `
-                            <tr class="border-b border-purple-200">
-                                <td class="px-2 py-2 font-semibold">${s.name}</td>
-                                <td class="px-2 py-2 text-right font-bold">${s.evhr.toFixed(1)}x</td>
-                                <td class="px-2 py-2 text-center">
-                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${s.bgColor} ${s.color}">
+                            <tr class="border-b border-white/5">
+                                <td class="py-2 text-white/60 font-medium">${s.name}</td>
+                                <td class="py-2 text-right text-white tabular">${s.evhr.toFixed(1)}x</td>
+                                <td class="py-2 text-center">
+                                    <span class="text-xs uppercase tracking-wider ${s.color}">
                                         ${s.band}
                                     </span>
                                 </td>
-                                <td class="px-2 py-2 text-right">${s.accrualRatio}%</td>
+                                <td class="py-2 text-right text-white/50">${s.accrualRatio}%</td>
                             </tr>
                         `).join('')}
                     </tbody>
@@ -892,39 +892,34 @@ Source: FP EV/Holder Revenue Framework
             // FP Interpretation based on characteristics
             let fpInterpretation = '';
             if (accrualRatio >= 90 && evhr < 15) {
-                fpInterpretation = '✅ <strong>Clean tokenomics</strong>: 높은 accrual ratio로 프로토콜 수익이 홀더에게 직접 전달됩니다. FP가 선호하는 구조입니다. (HYPE, JUP 유형)';
+                fpInterpretation = '<strong class="text-white/70">Clean tokenomics</strong>: 높은 accrual ratio로 프로토콜 수익이 홀더에게 직접 전달됩니다. FP가 선호하는 구조입니다. (HYPE, JUP 유형)';
             } else if (accrualRatio < 30) {
-                fpInterpretation = '⚠️ <strong>Waterfall leakage</strong>: 프로토콜 수익의 대부분이 홀더에게 도달하지 않습니다. 낮은 accrual ratio가 valuation을 왜곡합니다. (MAPLE 유형)';
+                fpInterpretation = '<strong class="text-white/60">Waterfall leakage</strong>: 프로토콜 수익의 대부분이 홀더에게 도달하지 않습니다. 낮은 accrual ratio가 valuation을 왜곡합니다. (MAPLE 유형)';
             } else if (tokenCosts / holderRevenue > 0.5) {
-                fpInterpretation = '⚠️ <strong>High dilution pressure</strong>: Token costs가 holder revenue의 50% 이상입니다. 공급 압력이 수익 성장을 상쇄할 수 있습니다. (PUMP 유형)';
+                fpInterpretation = '<strong class="text-white/60">High dilution pressure</strong>: Token costs가 holder revenue의 50% 이상입니다. 공급 압력이 수익 성장을 상쇄할 수 있습니다. (PUMP 유형)';
             } else if (claimDiscount >= 75) {
-                fpInterpretation = '⚠️ <strong>Sealed treasury</strong>: Treasury에 홀더가 접근할 수 없습니다. Balance sheet 가치가 제한적입니다.';
+                fpInterpretation = '<strong class="text-white/60">Sealed treasury</strong>: Treasury에 홀더가 접근할 수 없습니다. Balance sheet 가치가 제한적입니다.';
             } else {
-                fpInterpretation = '📊 프로토콜의 value accrual 구조를 위 metrics로 분석하세요. FP는 높은 accrual ratio와 낮은 tokenholder tax를 선호합니다.';
+                fpInterpretation = '프로토콜의 value accrual 구조를 위 metrics로 분석하세요. FP는 높은 accrual ratio와 낮은 tokenholder tax를 선호합니다.';
             }
             document.getElementById('fpInterpretation').innerHTML = fpInterpretation;
 
             // Primary metric
-            let signal, color, interpretation;
+            let signal, interpretation;
             if (evhr < 5) {
-                signal = '✅ Very Cheap';
-                color = 'bg-green-100 border-green-500';
+                signal = 'Very Cheap';
                 interpretation = '매우 저평가. 홀더 수익 대비 탁월한 밸류에이션.';
             } else if (evhr < 15) {
-                signal = '✅ Attractive';
-                color = 'bg-green-50 border-green-400';
+                signal = 'Attractive';
                 interpretation = '합리적인 밸류에이션. 홀더 수익 대비 적정 가격.';
             } else if (evhr < 30) {
-                signal = '⚡ Fair';
-                color = 'bg-yellow-50 border-yellow-400';
+                signal = 'Fair';
                 interpretation = '시장 평균 범위. 적정 가격.';
             } else if (evhr < 60) {
-                signal = '⚠️ Expensive';
-                color = 'bg-orange-50 border-orange-400';
+                signal = 'Expensive';
                 interpretation = '고평가. 낮은 accrual ratio 또는 프리미엄 반영.';
             } else {
-                signal = '🚨 Very Expensive';
-                color = 'bg-red-50 border-red-400';
+                signal = 'Very Expensive';
                 interpretation = '매우 고평가. 홀더 수익 포착이 매우 약함.';
             }
 
@@ -935,24 +930,24 @@ Source: FP EV/Holder Revenue Framework
             const modeIndicator = document.getElementById('modeIndicator');
             modeIndicator.textContent = isSnapshotMode ? 'ARTICLE SNAPSHOT' : 'LIVE CALCULATION';
             modeIndicator.className = isSnapshotMode
-                ? 'mt-2 inline-flex items-center px-2 py-1 rounded border text-[11px] font-medium uppercase tracking-[0.18em] text-gray-500 border-gray-300 bg-gray-50'
-                : 'mt-2 inline-flex items-center px-2 py-1 rounded border text-[11px] font-medium uppercase tracking-[0.18em] text-gray-400 border-gray-200 bg-white';
-            document.getElementById('primaryMetric').className = `p-6 rounded-lg border-2 ${color}`;
+                ? 'inline-flex items-center text-[11px] uppercase tracking-[0.18em] text-white/50'
+                : 'inline-flex items-center text-[11px] uppercase tracking-[0.18em] text-white/20';
+            document.getElementById('primaryMetric').className = 'pb-8';
             document.getElementById('primaryMetric').innerHTML = `
-                <div class="text-center">
-                    <h3 class="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wider">Raw Multiple</h3>
-                    <div class="text-6xl font-bold text-gray-900 mb-3">${displayEvhr.toFixed(1)}x</div>
-                    <div class="text-sm text-gray-600 mb-2">Raw EV / Holder Revenue</div>
-                    <div class="text-xs text-gray-500 mb-4">토큰 보유자에게 실제 귀속되는 매출 1달러당 현재 EV를 얼마나 지불하는지</div>
-                    <div class="inline-block px-4 py-2 rounded-full ${bandInfo.bgColor} ${bandInfo.color} font-semibold text-lg mb-2">
+                <div>
+                    <h3 class="text-xs font-normal uppercase tracking-[0.2em] text-white/25 mb-6">Raw Multiple</h3>
+                    <div class="text-[6rem] font-extralight text-white leading-none mb-4 tabular">${displayEvhr.toFixed(1)}x</div>
+                    <div class="text-xs text-white/30 uppercase tracking-wider mb-2">Raw EV / Holder Revenue</div>
+                    <div class="text-xs text-white/25 mb-6">토큰 보유자에게 실제 귀속되는 매출 1달러당 EV</div>
+                    <div class="inline-block text-sm uppercase tracking-[0.25em] ${bandInfo.color} mb-2">
                         ${bandInfo.band}
                     </div>
-                    <p class="text-sm text-gray-600 mt-3">${interpretation}</p>
+                    <p class="text-sm text-white/40 mt-2">${interpretation}</p>
                     ${displayCostAdjusted > 0 ? `
-                    <div class="mt-5 border-t border-gray-200 pt-4">
-                        <div class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Cost-adjusted</div>
-                        <div class="text-2xl font-semibold text-gray-900">${displayCostAdjusted.toFixed(1)}x</div>
-                        <div class="text-xs text-gray-500 mt-1">EV / (Holder Revenue - Token Costs)</div>
+                    <div class="mt-8 pt-6 border-t border-white/10">
+                        <div class="text-xs text-white/25 uppercase tracking-wider mb-2">Cost-adjusted</div>
+                        <div class="text-4xl font-extralight text-white/60 tabular">${displayCostAdjusted.toFixed(1)}x</div>
+                        <div class="text-xs text-white/20 mt-2">EV / (Holder Revenue − Token Costs)</div>
                     </div>
                     ` : ''}
                 </div>
@@ -1098,26 +1093,26 @@ Status: User-provided data (not verified)`;
             // Waterfall
             document.getElementById('waterfall').innerHTML = `
                 <div class="flex justify-between">
-                    <span class="text-gray-600">Gross Fees:</span>
-                    <span class="font-semibold">$${(grossFees / 1000000).toFixed(1)}M</span>
+                    <span class="text-white/30">Gross Fees</span>
+                    <span class="text-white/60 tabular">$${(grossFees / 1000000).toFixed(1)}M</span>
                 </div>
                 <div class="flex justify-between pl-4">
-                    <span class="text-gray-600">× Take Rate (${takeRate}%):</span>
-                    <span class="font-semibold">$${(protocolRevenue / 1000000).toFixed(1)}M</span>
+                    <span class="text-white/30">× Take Rate (${takeRate}%)</span>
+                    <span class="text-white/60 tabular">$${(protocolRevenue / 1000000).toFixed(1)}M</span>
                 </div>
                 <div class="flex justify-between pl-8">
-                    <span class="text-gray-600">× Accrual (${accrualRatio}%):</span>
-                    <span class="font-semibold text-blue-600">$${(holderRevenue / 1000000).toFixed(1)}M ← Holder Revenue</span>
+                    <span class="text-white/30">× Accrual (${accrualRatio}%)</span>
+                    <span class="text-white tabular">$${(holderRevenue / 1000000).toFixed(1)}M ← Holder Revenue</span>
                 </div>
                 ${tokenCosts > 0 ? `
-                <div class="border-t mt-2 pt-2">
+                <div class="border-t border-white/10 mt-2 pt-2">
                     <div class="flex justify-between">
-                        <span class="text-gray-600">Token Costs:</span>
-                        <span class="font-semibold text-red-600">-$${(tokenCosts / 1000000).toFixed(1)}M</span>
+                        <span class="text-white/30">Token Costs</span>
+                        <span class="text-white/40 tabular">−$${(tokenCosts / 1000000).toFixed(1)}M</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-gray-600">Cost-Adjusted Multiple:</span>
-                        <span class="font-semibold">${costAdjustedMultiple.toFixed(1)}x</span>
+                        <span class="text-white/30">Cost-Adjusted Multiple</span>
+                        <span class="text-white/60 tabular">${costAdjustedMultiple.toFixed(1)}x</span>
                     </div>
                 </div>
                 ` : ''}
@@ -1204,7 +1199,7 @@ ${oneLine}`;
                 evhr: evhr,
                 band: bandInfo.band,
                 color: bandInfo.color,
-                bgColor: bandInfo.bgColor,
+                bgColor: '',
                 accrualRatio: accrualRatio,
                 marketCap: marketCap,
                 grossFees: grossFees
@@ -1370,26 +1365,24 @@ ${oneLine}`;
 
             const evhrChange = ((now.evhr - then.evhr) / then.evhr * 100).toFixed(1);
             const evhrArrow = evhrChange > 0 ? '↑' : evhrChange < 0 ? '↓' : '→';
-            const evhrColor = evhrChange > 0 ? 'text-red-600' : evhrChange < 0 ? 'text-green-600' : 'text-gray-600';
+            const evhrColor = evhrChange > 0 ? 'text-white/30' : evhrChange < 0 ? 'text-white/80' : 'text-white/40';
 
             const html = `
-                <div class="grid grid-cols-2 gap-3 font-mono">
-                    <div class="bg-white p-2 rounded border">
-                        <div class="text-gray-500 mb-1">Then (${then.timestamp})</div>
-                        <div class="font-bold">${then.evhr.toFixed(1)}x · ${then.band}</div>
-                        <div class="text-gray-600">${then.accrualRatio}% accrual</div>
+                <div class="grid grid-cols-2 gap-4 font-mono">
+                    <div class="border-l border-white/10 pl-4">
+                        <div class="text-white/25 text-xs mb-1">Then (${then.timestamp})</div>
+                        <div class="text-white/60">${then.evhr.toFixed(1)}x · ${then.band}</div>
+                        <div class="text-white/30 text-xs">${then.accrualRatio}% accrual</div>
                     </div>
-                    <div class="bg-white p-2 rounded border">
-                        <div class="text-gray-500 mb-1">Now (${now.timestamp})</div>
-                        <div class="font-bold">${now.evhr.toFixed(1)}x · ${now.band}</div>
-                        <div class="text-gray-600">${now.accrualRatio}% accrual</div>
+                    <div class="border-l border-white/20 pl-4">
+                        <div class="text-white/25 text-xs mb-1">Now (${now.timestamp})</div>
+                        <div class="text-white">${now.evhr.toFixed(1)}x · ${now.band}</div>
+                        <div class="text-white/30 text-xs">${now.accrualRatio}% accrual</div>
                     </div>
                 </div>
-                <div class="mt-2 p-2 bg-white rounded border text-center">
-                    <span class="font-semibold ${evhrColor}">
-                        ${evhrArrow} ${Math.abs(evhrChange)}% ${evhrChange > 0 ? 'more expensive' : evhrChange < 0 ? 'cheaper' : 'no change'}
-                    </span>
-                    ${now.band !== then.band ? `<span class="ml-2 text-orange-600 font-semibold">(Band changed: ${then.band} → ${now.band})</span>` : ''}
+                <div class="mt-3 text-xs text-white/40">
+                    ${evhrArrow} ${Math.abs(evhrChange)}% ${evhrChange > 0 ? 'more expensive' : evhrChange < 0 ? 'cheaper' : 'no change'}
+                    ${now.band !== then.band ? `(Band changed: ${then.band} → ${now.band})` : ''}
                 </div>
             `;
 
