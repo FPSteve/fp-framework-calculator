@@ -406,14 +406,14 @@
         const fpUniverse = [
             { name: 'PUMP',  evhr: 3.3,  accrual: 100, band: 'CHEAP',     color: 'text-white', bgColor: '', verified: true },
             { name: 'HYPE',  evhr: 9.4,  accrual: 100, band: 'CHEAP',     color: 'text-white', bgColor: '', verified: true },
-            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-white/55',   bgColor: '', verified: true },
-            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-white/30',    bgColor: '', verified: true }
+            { name: 'JUP',   evhr: 12,   accrual: 95,  band: 'FAIR',      color: 'text-white/70', bgColor: '', verified: true },
+            { name: 'MAPLE', evhr: 57.7, accrual: 25,  band: 'EXPENSIVE', color: 'text-white/50', bgColor: '', verified: true }
         ];
 
         function getFPBand(evhr) {
             if (evhr < 15) return { band: 'CHEAP',     color: 'text-white' };
-            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/55'   };
-            return              { band: 'EXPENSIVE', color: 'text-white/30'    };
+            if (evhr < 30) return { band: 'FAIR',      color: 'text-white/70' };
+            return              { band: 'EXPENSIVE', color: 'text-white/50' };
         }
 
         function findClosestFPCase(evhr, accrualRatio) {
@@ -636,53 +636,53 @@
             // Action bullets
             const bullets = [];
             if (holRev <= 0) {
-                bullets.push('Waterfall 재확인: Take rate/Accrual이 실제 0인지, 입력값 오류인지 검증');
-                bullets.push('토큰노믹스 docs 확인: Revenue sharing 구조가 실제 존재하는지 체크');
-                bullets.push('대안 평가: Holder revenue 없으면 P/S, P/E 등 다른 프레임워크 고려');
+                bullets.push('Verify take rate and accrual inputs.');
+                bullets.push('Check tokenomics docs — does revenue sharing exist?');
+                bullets.push('Consider P/S or P/E if holder revenue is structurally zero.');
             } else if (ev < 0) {
-                bullets.push('Balance sheet 정밀 분석: Treasury 실사용 가능성, Lock-up 조건 확인');
-                bullets.push('Liquidation value 계산: 실제 청산가치 vs 현재가 비교');
-                bullets.push('Treasury 사용 계획: Runway, buyback, burn 스케줄 파악');
+                bullets.push('Verify treasury composition — stablecoins vs native tokens.');
+                bullets.push('Calculate liquidation value vs current price.');
+                bullets.push('Check treasury usage plan: runway, buyback, burn schedule.');
             } else if (evhr > 100) {
-                bullets.push('입력값 재검증: Market cap, treasury, revenue, accrual 모두 더블체크');
-                bullets.push('Waterfall 재설계: 실제 홀더 도달 수익이 이렇게 낮은지 원문 확인');
-                bullets.push('비교 대상 탐색: 유사 구조 프로토콜에서 정상 범위 벤치마크');
+                bullets.push('Recheck all inputs: market cap, treasury, revenue, accrual.');
+                bullets.push('Confirm actual holder revenue from source docs.');
+                bullets.push('Benchmark against similar protocols for sanity check.');
             } else if (archetype.includes('HYPE')) {
-                bullets.push('Revenue 지속성 확인: Gross fees 추이, MAU/TVL 성장률 체크');
-                bullets.push('Dilution 모니터링: Token unlock, emission schedule 검토');
-                bullets.push('포지션 타이밍: CHEAP 밴드에서 진입 고려, Bear case 시나리오도 테스트');
+                bullets.push('Verify fee sustainability — gross fees trend, MAU/TVL growth.');
+                bullets.push('Monitor dilution: token unlock and emission schedule.');
+                bullets.push('Stress-test bear case — does it stay CHEAP under lower fees?');
             } else if (archetype.includes('PUMP')) {
-                bullets.push('Dilution 원인 파악: Unlock, emission, incentive 중 어디서 나오는지 추적');
-                bullets.push('순수익 재계산: Token costs 제외한 실제 holder value 확인');
-                bullets.push('Emission 종료 시점: Dilution pressure가 언제 해소되는지 타임라인 체크');
+                bullets.push('Identify dilution source — unlock, emission, or incentives.');
+                bullets.push('Recalculate net holder value excluding token costs.');
+                bullets.push('Check emission end date — when does dilution pressure resolve?');
             } else if (archetype.includes('JUP')) {
-                bullets.push('Accrual 안정성: 90%+ 유지 메커니즘이 governance 변경 가능한지 체크');
-                bullets.push('FAIR 밴드 추이: Growth rate vs multiple expansion 비교로 upside 판단');
-                bullets.push('경쟁사 비교: 동일 섹터 CHEAP 대안 있는지 탐색');
+                bullets.push('Verify accrual stability — can governance change the 90%+ mechanism?');
+                bullets.push('Compare growth rate vs multiple expansion for upside.');
+                bullets.push('Scan sector for CHEAP alternatives before committing.');
             } else if (archetype.includes('MAPLE')) {
-                bullets.push('Waterfall 누수 지점: Take rate/Accrual 중 어디서 누수되는지 정밀 분석');
-                bullets.push('Governance 로드맵: Accrual 개선 제안, 투표 가능성 탐색');
-                bullets.push('Exit 타이밍: EXPENSIVE 밴드는 포지션 축소 고려');
+                bullets.push('Identify waterfall leak — take rate or accrual?');
+                bullets.push('Check governance roadmap for accrual improvement proposals.');
+                bullets.push('EXPENSIVE band. Consider position reduction.');
             } else if (ar < 30) {
-                bullets.push('Waterfall 개선 가능성: Protocol team의 accrual 상향 의지 파악');
-                bullets.push('다른 프레임워크 병행: EV/HR 외에 growth multiple, P/S 등으로 재평가');
-                bullets.push('섹터 평균 비교: Low accrual이 이 섹터에선 정상인지 체크');
+                bullets.push('Assess protocol team willingness to improve accrual.');
+                bullets.push('Run parallel P/S or growth multiple to cross-check.');
+                bullets.push('Verify if low accrual is normal for this sector.');
             } else if (tc / holRev > 0.5) {
-                bullets.push('Emission 스케줄: 언제까지 dilution이 지속되는지 타임라인 확인');
-                bullets.push('순수익 기준 재평가: Token costs 제외한 실제 EV/HR 계산');
-                bullets.push('Buyback/Burn 계획: Dilution offset 메커니즘 존재 여부');
+                bullets.push('Check emission schedule — when does dilution resolve?');
+                bullets.push('Recalculate EV/HR net of token costs.');
+                bullets.push('Look for buyback or burn mechanism offsetting dilution.');
             } else if (band.band === 'CHEAP') {
-                bullets.push('진입 타이밍 검토: Bear case 시나리오도 CHEAP이면 적극 고려');
-                bullets.push('Catalyst 탐색: Revenue growth driver, partnership, 신규 체인 확장 등');
-                bullets.push('Risk 체크: Regulatory, 경쟁사, tech risk 등 downside 시나리오');
+                bullets.push('Stress-test: does it stay CHEAP in bear case?');
+                bullets.push('Identify revenue growth catalyst.');
+                bullets.push('Check regulatory, competitive, and tech downside.');
             } else if (band.band === 'FAIR') {
-                bullets.push('Hold 판단: Growth rate가 multiple 정당화하는지 확인');
-                bullets.push('CHEAP 대안 탐색: 동일 섹터에서 더 저평가된 옵션 비교');
-                bullets.push('Rebalance 기준: EXPENSIVE로 진입 시 비중 축소 트리거 설정');
+                bullets.push('Confirm growth rate justifies current multiple.');
+                bullets.push('Scan sector for cheaper alternatives.');
+                bullets.push('Set EXPENSIVE threshold as trim trigger.');
             } else {
-                bullets.push('Exit 고려: EXPENSIVE 밴드는 기본적으로 포지션 축소 검토');
-                bullets.push('Bull case 검증: 고평가 정당화할 growth narrative 있는지 체크');
-                bullets.push('재진입 기준: 어느 수준까지 내려오면 다시 매수할지 미리 설정');
+                bullets.push('EXPENSIVE band. Default to position reduction.');
+                bullets.push('Verify bull case narrative for premium justification.');
+                bullets.push('Define re-entry level in advance.');
             }
             document.getElementById('actionBullets').innerHTML = bullets.map(b => `<li class="flex items-start gap-2"><span class="text-white/15 mt-0.5 shrink-0">—</span><span>${b}</span></li>`).join('');
 
